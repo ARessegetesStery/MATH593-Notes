@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage{../refalg}
+
+\begin{document}
+\Makepagesectionhead{MATH 593 - Ring}{ARessegetes Stery}
+
+\tableofcontents
+\newpage
+
+\section{Ring homomorphism, Quotient Ring}
+
+\begin{definition}[Ring Homomorphism]
+    Let $X, Y$ be rings. A \textbf{Ring Homomorphism} is a map $f: X\to Y$ satisfying the following properties:
+    \begin{itemize}
+        \item $f(1) = 1$.
+        \item $\forall x_1, x_2\in X, f(x_1) + f(x_2) = f(x_1 + x_2)$.
+        \item $\forall x_1, x_2\in X, f(x_1 x_2) = f(x_1) f(x_2)$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[Quotient Ring]
+    Let $R$ be a ring and $I \subseteq R$ a two-sided ideal. The \textbf{Quotient Ring} $(R/I)$ is defined as $(R/\sim)$ with an equivalence relation $\sim$ where $a\sim b$ if and only if $a - b = I$. Elements in $(R/I)$ are denoted as $\bar{a}$, where $\bar{a} = \bar{b}$ if and only if $a\sim b$.
+\end{definition}
+
+The natural homomorphism $\pi_I: R\to (R/I)$ is defined as $\pi(a) = \bar{a}$, which satisfies the \emph{universal property of quotient rings}:
+
+\begin{theorem}[Fundamental Theorem of Ring Homomorphisms]
+    Let $\varphi: R\to S$ be a ring homomorphism, $I$ a two-sided ideal s.t. $I\subseteq \ker \varphi$, and $\pi$ be the natural ring homomorphism from $R$ to $(R/I)$. Then there exists a unique ring homomorphism $f: R/I \to S$ s.t. the following diagram commutes,
+    \begin{figure}[htbp]
+        \centering    
+        \begin{tikzcd}[]
+            R \arrow[rrdd, two heads, "\pi"] \arrow[rr, "\varphi"] & & S \\
+            & & \\
+            & & \tilde R/I \arrow[uu, "f"'] 
+        \end{tikzcd}
+    \end{figure}
+    i.e. $\varphi = f\circ \pi$.
+\end{theorem}
+
+\begin{proof}
+    It suffices to prove that $f$ exists and is unique, and verify that $f$ is indeed a ring homomorphism.
+    \begin{itemize}
+        \item \textbf{Uniqueness.} By the requirement that $f$ should make the diagram commute, $f(\bar{a}) = \varphi(a),\ \forall a\in R$. Uniqueness of $f$ follows from the fact that $\varphi$ maps every element in $R$ to a unique element in $S$.
+        \item \textbf{Existence.} It suffices to verify that $f$ is well-defined, i.e. does not vary w.r.t. change of representative in $(R/I)$. For all $a, b\in R$ s.t. $\bar{a} = \bar{b}$, $(a - b)\in I \implies \varphi(a - b) = 0 \implies \varphi(a) = \varphi(b)$ since $\varphi$ is a ring homomorphism. By the uniqueness of $f$ it is specified that $f(\bar{a}) = \varphi(a)$, which implies that for all $\bar{a} = \bar{b}\in (R/I), f(\bar{a}) = \varphi(a) = \varphi(b) = f(\bar{b})$.
+        \item \textbf{$f$ is indeed a homomorphism.} This follows from the fact that $\varphi$ is a ring homomorphism.
+    \end{itemize}
+\end{proof}
+
+\section{Ring of Fractions}
+
+\subsection{Localization of a Ring}
+
+\section{Polynomial Rings}
+
+\section{Ideals}
+
+\section{Euclidean Domain, PIDs and UFDs}
+
+\end{document}
