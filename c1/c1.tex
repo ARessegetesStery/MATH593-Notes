@@ -31,7 +31,7 @@ The natural homomorphism $\pi_I: R\to (R/I)$ is defined as $\pi(a) = \bar{a}$, w
         \begin{tikzcd}[]
             R \arrow[rrdd, two heads, "\pi"] \arrow[rr, "\varphi"] & & S \\
             & & \\
-            & & \tilde R/I \arrow[uu, "f"'] 
+            & & R/I \arrow[uu, "f"'] 
         \end{tikzcd}
     \end{figure}
     i.e. $\varphi = f\circ \pi$.
@@ -46,11 +46,193 @@ The natural homomorphism $\pi_I: R\to (R/I)$ is defined as $\pi(a) = \bar{a}$, w
     \end{itemize}
 \end{proof}
 
+\newpage
 \section{Ring of Fractions}
+
+\begin{definition}[Multiplicative System]
+    A subset $S\subseteq R$ for a ring $R$ is a \textbf{multiplicative system} if $1\in S$, and $\forall s_1, s_2\in S, s_1\cdot s_2\in S$, where $\cdot$ is the multiplication in $R$.
+\end{definition}
+
+\begin{definition}[Ring of Fractions]
+    Let $R$ be a commutative ring, with $S\subseteq R$ a multiplicative subset, the \textbf{ring of fraction} $S^{-1}R$ is defined as $R\times S / \sim$, where $(s_1, r_1) \sim (s_2, r_2)$ if and only if there exists $t\in R$ s.t. $t(s_1 r_2 - s_2 r_1) = 0$. $(s, r) \in S^{-1}R$ is denoted as $\frac{s}{r}$. The definition of operations follows directly from analogy of that in $\Q$.
+
+    The natural homomorphism (inclusion map) from $R$ to $S^{-1}R$ is defined as $r \hookrightarrow \frac{r}{1}$.
+\end{definition}
+
+\begin{remark}\upshape
+    If $R$ is an integral domain, then $(s_1, r_1) \sim (s_2, r_2)$ iff $s_1 r_2 = s_2 r_1$, as for $\Q$.
+\end{remark}
+
+\begin{remark}
+    If $R$ is not an integral domain, and $S$ contains zero divisors, then the inclusion map ceases to be injective, as choosing $t$ s.t. it satisfies $ts_1 = ts_2 = 0$ for some $s_1, s_2$ that are zero divisors gives $\varphi(s_1) = \varphi(s_2)$. Changing $R$ to an integral domain guarantees that the inclusion map $\varphi$ is injective.
+\end{remark}
+
+\begin{proposition}
+    $\sim$ is an equivalence relation.
+\end{proposition}
+
+\begin{proof}
+    It is clear that $\sim$ is reflexive and symmetric. For transitivity, consider $(s_1, r_1)\sim (s_2, r_2) \wedge (s_2, r_2)\sim (s_3, r_3)$. That is, there exists some $t_1, t_2\in R$ s.t. 
+    \[
+        \begin{cases}
+            t_1 (s_1 r_2 - s_2 r_1) = 0 \\ t_2 (s_2 r_3 - s_3 r_2) = 0 
+        \end{cases}
+        \ \implies\ t_1 t_2 (s_1 r_2 s_3 - s_2 r_1 s_3) = t_1 t_2 (s_1 s_2 r_3 - s_2 r_1 s_3) = t_1 t_2 s_2 (s_1 r_3 - s_3 r_1) = 0
+    \]
+\end{proof}
+
+\begin{remark}
+    Notice that if $s\in S, then \frac{s}{a}$ for $a\in R$ is invertible. This tends more to a field, with more elements being ``reachable'' via multiplying an element from one side. A direct consequence is that less ideals exist in $S^{-1}R$, with ideals in $R$ whose generators differ by a factor that divides $s$ being identified in $S^{-1}R$. 
+\end{remark}
+
+\begin{remark}
+    It is required that $R$ is commutative is to preserve the most structures from $R$, i.e. ensure that $S^{-1}I$ is an ideal for all ideals in $R$. This is due to the addition in action:
+    \[
+        \forall\ \frac{r_1}{s_1}, \frac{r_2}{s_2} \in S^{-1}R, \qquad \frac{r_1}{s_1} + \frac{r_2}{s_2} = \frac{r_1 s_2 + s_1 r_2}{s_1 s_2} 
+    \]
+    which indicates that $S^{-1}I$ is a two-sided ideal if and only if $I\subseteq R$ is a two-sided ideal. For one-sided (left/right) ideal the property is not fully inherited. 
+\end{remark}
+
+\begin{theorem}[Universal Property of Ring of Fractions]
+    Suppose $R$ and $T$ are commutative rings, with $\varphi$ the inclusion of $R$ into $S^{-1}R$. Then for $f: R\to T$ s.t. $\forall s\in S, f(s)$ is invertible in $T$, there exists a unique ring homomorphism $g$ s.t. $f = g\circ \varphi$, i.e. make the following diagram commute:
+    \begin{figure}[htbp]
+        \centering    
+        \begin{tikzcd}[]
+            R \arrow[rrdd, "f"] \arrow[rr, hookrightarrow, "\varphi"] & & S^{-1}R \arrow[dd, "g"]  \\
+            & & \\
+            & & T
+        \end{tikzcd}
+    \end{figure}
+\end{theorem}
+
+\begin{proof}
+    Adopt the same strategy as in the previous section: 
+    \begin{itemize}
+        \item \textbf{Existence.} For all $\frac{a}{s}\in S^{-1}R$, $g(\frac{a}{s}) := f(a) (f(s))^{-1}$ which is well-defined since $f$ is required to map all elements in $S$ to invertible elements. $g$ being a ring homomorphism follows from the fact that $f$ is a ring homomorphism. 
+        \item \textbf{Uniqueness.} Follows from specifying $g(\frac{a}{s}) := f(a) (f(s))^{-1}$.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    If $S := R\smallsetminus\{0\}$, then $S^{-1}R$ is the whole field, with localization equivalent to completion of inverse of $R$.
+\end{remark}
 
 \subsection{Localization of a Ring}
 
+\newpage
 \section{Polynomial Rings}
+
+\begin{definition}[R-algebra]
+    Let $R$ be a ring. Then a ring $S$ is an \textbf{$R$-algebra} for the specific $R$ mentioned if there exists a ring homomorphism $\varphi: R\to S$ s.t. $\forall r\in R, s\in S, \varphi(r)s = s\varphi(r)$. When the homomorphism needs to be specified, the algebra is often denoted as a pair $\pair{S, \varphi}$
+\end{definition}
+
+\begin{remark}
+    An $R$-algebra is a two-sided $R$-module, which can be regarded as a generalization of the structure in $R$. $R$ itself is not necessarily commutative, which implies that the associated homomorphism maps $R$ to the center of $S$.
+\end{remark}
+
+\begin{definition}[Morphism of $R$-algebras]
+    Let $\pair{R_1, f_1}, \pair{R_2, f_2}$ be $R$-algebras. A \textbf{Morphism of $R$-algebras} is a ring homomorphism $\varphi: R_1 \to R_2$ s.t. the following diagram commute; i.e. $f_2 = \varphi \circ f_1$:
+    \begin{figure}[htbp]
+        \centering    
+        \begin{tikzcd}[]
+            R \arrow[rrdd, "f_2"] \arrow[rr, "f_1"] & & R_1 \arrow[dd, "\varphi"]  \\
+            & & \\
+            & & R_2
+        \end{tikzcd}
+    \end{figure}
+\end{definition}
+
+\begin{definition}[$R$-subalgebra]
+    Let $\pair{S, f_s}$ be a $R$-algebra for $R$ a ring. $\pair{T, f_t}$ is a \textbf{$R$-subalgebra} of $S$ if $T$ is a $R$-algebra, with $f_t(R) \subseteq S$ ; and there exists a morphism $\varphi$ from $T$ to $S$, i.e. $\varphi$ makes the following diagram commute:
+    \begin{figure}[htbp]
+        \centering    
+        \begin{tikzcd}[]
+            R \arrow[rrdd, "f_s"] \arrow[rr, "f_t"] & & T \arrow[dd, hookrightarrow, "\varphi"]  \\
+            & & \\
+            & & S
+        \end{tikzcd}
+    \end{figure}
+\end{definition}
+
+\begin{definition}[Polynomial Ring]
+    Let $R$ be a commutative ring. The \textbf{polynomial ring of $R$}, denoted $R[x]$, is defined as
+    $$
+        R[x] := \left\{ \sum\limits_{i=0}^{n} c_i x^i \mid n\in\N, c_i\in R \right\}
+    $$
+    with the addition and multiplication the same as in polynomials over $\Z$. The natural inclusion from $R$ to $R[x]$ is defined as $r\mapsto r$ which is a polynomial of degree 0.
+\end{definition}
+
+\begin{remark}
+    If $R$ is a domain, then $R[x]$ is also a domain (consider the product of terms with highest degree); where $\deg (f g) \leq \deg (f) + \deg (g)$.
+\end{remark}
+
+\begin{theorem}[Universal Property of Polynomial Ring]
+    Let $R$ be a ring and $\pair{S, f}$ an $R$-algebra, and $\varphi$ be the inclusion map from $R$ to $R[x]$. For all $s\in S$, there exists a unique morphism of $R$-algebra $g: R[x] \to S$ s.t. $g(x) = a$, and the following diagram commutes, i.e. $f = g\circ \varphi$:
+    \begin{figure}[htbp]
+        \centering    
+        \begin{tikzcd}[]
+            R \arrow[rrdd, hookrightarrow, "f"] \arrow[rr, "\varphi"] & & R[x] \arrow[dd, "g"]  \\
+            & & \\
+            & & S
+        \end{tikzcd}
+    \end{figure}
+\end{theorem}
+
+\begin{proof}
+    Proceed similarly by first determining the form that $g$ takes, and then showing the uniqueness and existence. 
+    \begin{itemize}
+        \item \textbf{Uniqueness.} Since it is required that $g$ is a morphism of $R$-algebras, we have
+        \[
+            g\left( \sum\limits_{i=0}^n a_i x^i\right) = \sum\limits_{i=0}^{n} g(a_i) g(x^i) = \sum\limits_{i=0}^{n} f(a_i) g(x^i) = \sum\limits_{i=0}^{n} f(a_i) a^i
+        \]
+        by the requirement that $g(x) = a$. This is the only form that $g$ could take, and thus proves its uniqueness.
+        \item \textbf{Existence.} For existence it suffices to check that $g$ is indeed a ring homomorphism. By the uniqueness $g$ is fixed by sending $x\in R[x]$ to $a\in R$. Notice that $R$ is commutative, which indicates that both left and right composition is satisfied; with the addition condition verified in the uniqueness part. 
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}[Universal Property of Polynomial Ring of Several Variables]
+    Let $A$ be a commutative $R$-algebra and $g$ be the inclusion map from $R$ to $R[x_1, \cdots, x_n]$ with a fixed $n$. For every $R$-algebra $S$ and $(a_1, \cdots, a_n)\in S$, there exists a unique homomorphism of $R$-algebra $h: R[x_1, \cdots, x_n] \to S$ s.t. $h(x_i) = a_i$ for all $i\in \llbracket 1, n \rrbracket$, and the following diagram commutes, i.e. $f = h\circ g$:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}[]
+            R \arrow[rrdd, hookrightarrow, "g"] \arrow[rr, "f"] & & S \\
+            & & \\
+            & & R[x_1, \cdots, x_n] \arrow[uu, "h"]
+        \end{tikzcd}
+    \end{figure}
+\end{theorem}
+
+\begin{proof}[Sketch of Proof]
+    The idea is similarly consider substitution $x_i \mapsto a_i$, and proceed to verify that this is indeed a ring homomorphism. One step that requires caution is that polynomials of several variables are defined in an inductive manner; therefore here proof should also be done inductively, on the number of variables involved. 
+\end{proof}
+
+Using polynomial of several variables, it is clearer to formalize the ``generating set'' of a ring via specifying which element each variable maps to:
+
+\begin{definition}[Finitely Generated $R$-algebra]
+    Let $R$ be a commutative ring, with $A$ a commutative $R$-algebra. Fix $(a_1, \cdots, a_n)\in A$. By the universal property of polynomial of several variables, there exists a unique homomorphism $\varphi: R[x_1, \cdots, x_n]$ s.t. $\varphi(x_i) = a_i$. Then the subalgebra $\im \varphi$ is said to be \textbf{generated} by $\{a_1, \cdots, a_n\}$. 
+\end{definition}
+
+\begin{remark}
+    Using the same formalization as in the definition above, $\im \varphi$ is smallest $R$-subalgebra of $A$ that contains $\{ a_1, \cdots, a_n \}$. 
+\end{remark}
+
+\begin{proof}
+    It is clear that $\im \varphi$ contains $\{ a_1, \cdots, a_n \}$. To see that it is smallest, suppose there is a smaller one $A'$, then there must be some $\sum_{i=0}^n a_i x^i \notin A'$, which contradicts with the fact that a ring should be closed. 
+\end{proof}
+
+Notice that in the definition of polynomial ring it is only required that $x$ could be multiplied with powers of itself. This enables making polynomial a representation of groups:
+
+\begin{definition}[Group Ring]
+    Let $R$ a commutative ring, and $G$ a group. A \textbf{group ring of $R$ on $G$} is defined as
+    \[
+        R[G] := \left\{ \sum\limits_{g\in G} a_g g \mid a_g \in R \right\}
+    \]
+    with the addition and multiplication the same as that in the polynomial ring. 
+\end{definition}
+
+\begin{remark}
+    The operation between the ring and the group is not required to be defined and is simply a notation. The polynomial cannot admit any structure that is more complicated (e.g. changing the group to be a ring) as otherwise the addition will not be well-defined. 
+\end{remark}
 
 \section{Ideals}
 
