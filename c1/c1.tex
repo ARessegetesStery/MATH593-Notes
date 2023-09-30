@@ -348,7 +348,58 @@ Specify $R$ to be a commutative ring, with $I \subseteq R$ an ideal of $R$. Cons
     \end{itemize}
 \end{example}
 
+\newpage
 \section{Noetherian Ring}
+
+\begin{lemma}[Zorn's Lemma] \label{lem:Zorn}
+    
+\end{lemma}
+
+\begin{definition}[Noetherian Ring]
+    A ring $R$ is (left) \textbf{Noetherian} if it satisfies the \underline{Ascending Chain Condition (ACC)}, for (left) ideals, i.e. there is no infinite strictly increasing sequence of (left) ideals:
+    \[
+        I_1 \subsetneqq I_2 \subsetneqq \cdots
+    \]
+\end{definition}
+
+\begin{proposition}\label{prop:Noeth f.g.}
+    Let $R$ be a ring, then the followings are equivalent:
+    \begin{enumerate}
+        \item $R$ is (left) Noetherian.
+        \item Let $P$ be a family of (left) ideals in $R$, then $P$ has a maximal element.
+        \item Every (left) ideal in $R$ is finitely generated.  
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \begin{itemize}
+        \item (i) being equivalent to (ii) is via simply reformalizing the definition.
+        \item (i) implies (iii). Proceed by proving the contraposition. Suppose that there exists an ideal $I_0 \subseteq R$ that is not finitely generated, then there exists an infinite sequence of generators of $I_0$ $(a_i)$, $i\in \mathcal{I}$. Then there exists an infinite ACC $(a_1) \subsetneqq (a_1, a_2) \subsetneqq (a_1, \cdots, a_k), \subsetneqq\cdots$. 
+        \item (iii) implies (i). Prove by showing a contradiction. Suppose that there exists an infinite ACC $I_1 \subsetneqq I_2 \subsetneqq \cdots \subsetneqq I_k \subsetneqq\cdots$. Then consider $I := \bigcup_{n\geq 1} I_n$. By the hypothesis it is finitely generated, i.e. there exists some $(a_1, \cdots, a_m)$ s.t. $a_i \in I_{n_i}$ for all $i\in \llbracket 1, m \rrbracket$. Define $n := \max\{ n_i \mid i\in \llbracket 1, m \rrbracket \}$. Then $I_n = I_{n+1}$ which is a contradiction.
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}[Hilbert's Basis Theorem]
+    Let $R$ be a commutative Noetherian ring. Then $R[x]$ is a Noetherian ring.
+\end{theorem}
+
+\begin{proof}
+    By proposition \ref{prop:Noeth f.g.} it suffices to show that every ideal of $R[x]$ is finitely generated. 
+
+    In the case that $I = (0)$, it is finitely generated as $R$ is Noetherian. For the case of that $I \neq (0)$, consider a family of ideals where $f_1 \in I\smallsetminus\{0\}$, with $f_k \in I \smallsetminus (f_1, \cdots, f_k)$ for $k > 1$ s.t. $\deg f_k = \min \{\deg f \mid f \in I \smallsetminus (f_1, \cdots, f_k) \}$. If there exists some $k$ s.t. $(f_1, \cdots, f_k) = I$ then $R[x]$ is by definition Noetherian. Suppose that it is not. Then there exists an infinite ascending chain. Denote $f_n = a_n x^{d_n} + \sum\limits_{k=0}^{d_n - 1} a_k x^k$. From the construction it is clear that $d_1 \leq d_2 \leq\cdots\leq d_n\leq\cdots$.
+
+    Define $I := (a_1, \cdots, a_n \mid n \geq 1)$. By hypothesis $I \subseteq R$, which implies that it is finitely generated. Then there exists some $k$ s.t. $I = (a_1, \cdots, a_k)$, with $d_i \geq 1$ (otherwise suppose there exists some $a_0\in R\smallsetminus (a_1, \cdots, a_k)$, simply add $a_0 x$ to the generators; and do the similar to ensure that the degree of polynomial associated with the corresponding coefficients is at least one. Since $R$ is Noetherian, it is finitely generated, i.e. the process above will terminate, which does not interfere with the condition that the ascending chain does not terminate.) 
+    
+    For $f_{k+1}$, we know that there exists a family $(c_j)_{j=1}^k$ s.t. $a_{k+1} = \sum\limits_{j=1}^k c_j a_j$ since $(a_1, \cdots, a_k)$ are generators. Then consider
+    \[
+        f = f_{k+1} - \sum\limits_{i=1}^k c_i x^{d_{k+1} - d_i} f_i
+    \]
+    which is a polynomial that is not in $I\smallsetminus (f_1, \cdots, f_n)$, which is a contradiction.
+\end{proof}
+
+\begin{corollary}
+    By induction $R[x_1, \cdots, x_n]$ is also Noetherian if $R$ is Noetherian. Quotient and localization preserves the property that a ring is Noetherian.
+\end{corollary}
 
 \section{Euclidean Domain, PIDs and UFDs}
 
