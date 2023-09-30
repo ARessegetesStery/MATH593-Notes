@@ -21,6 +21,8 @@
 \RequirePackage{titlesec}
 \RequirePackage{libertinus}
 \RequirePackage{tikz-cd}
+\RequirePackage{xspace}
+\RequirePackage{enumitem}
 
 % \geometry{a4paper,left=0.5in,right=0.5in,top=1in,bottom=1in}
 % \linespread{1.4}
@@ -42,21 +44,46 @@
 \def\nequiv{\centernot\equiv}
 \def\im{\mathrm{im}\ }
 
+\newtheoremstyle{example}
+{3pt} % Space above
+{3pt} % Space below
+{\textup} % Body font
+{} % Indent amount
+{\bfseries} % Theorem head font
+{.} % Punctuation after theorem head
+{.5em} % Space after theorem head
+{} % Theorem head spec (can be left empty, meaning `normal')
+
+\newtheoremstyle{parenthesis}
+{3pt} % Space above
+{3pt} % Space below
+{\textup} % Body font
+{} % Indent amount
+{\bfseries} % Theorem head font
+{.} % Punctuation after theorem head
+{.5em} % Space after theorem head
+{} % Theorem head spec (can be left empty, meaning `normal')
+
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{problem}{Problem}[section]
 \newtheorem{conjecture}{Conjecture}[section]
 \newtheorem{lemma}{Lemma}[section]
 \newtheorem{proposition}{Proposition}[section]
-\theoremstyle{definition}
 \newtheorem{remark}{Remark}[section]
 \newtheorem{corollary}{Corollary}[section]
+\theoremstyle{definition}
+\newtheorem{parenthesis}{Parenthesis}[section]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
 
 \geometry{a4paper,left=0.5in,right=0.5in,top=1in,bottom=1in}
 \linespread{1.4}
 
 \titlespacing{\section}{0pt}{0pt}{0pt}
 \titlespacing{\subsection}{0pt}{0pt}{0pt}
+
+\setlist[itemize]{topsep=0pt}
 
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
 
