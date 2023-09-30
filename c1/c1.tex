@@ -119,6 +119,30 @@ The natural homomorphism $\pi_I: R\to (R/I)$ is defined as $\pi(a) = \bar{a}$, w
 
 \subsection{Localization of a Ring}
 
+\begin{definition}
+    A commutative ring $R\neq \{0\}$ is \textbf{local} if it admits a unique maximal ideal $M$. Local rings are denoted by a pair $(R, M)$.
+\end{definition}
+
+\begin{example}
+    Let $R$ be a commutative ring, with $\mathfrak{p} \subseteq R$ a prime ideal. Let $S = R\smallsetminus p$ be a multiplicative system. Then the ring $S^{-1}R$ is local, with the maximal ideal of it being $S^{-1}\mathfrak{p}$. This results from the fact that $S^{-1}I$ is an ideal if and only if $I$ is an ideal in $R$. Further since $\Z$ is a PID (see next section), all prime ideals are maximal, $S^{-1}\mathfrak{p}$ is indeed maximal. The fact that there is only one such maximal ideal results from that all other primes are in $S$, i.e. $S^{-1}\mathfrak{p}'=S^{-1}R$ for all $\mathfrak{p}' \neq \mathfrak{p}$. 
+\end{example}
+
+\begin{proposition}
+    Let $R\neq \{0\}$ be a commutative ring. Then $R$ being local if and only if for all $a\in R$, either $a$ is invertible or $(1-a)$ is invertible. In this case, the maximal ideal $M$ is the set of all non-invertible elements. 
+\end{proposition}
+
+\begin{proof}
+    Proceed by showing implication in both directions:
+    \begin{itemize}
+        \item[$\Rightarrow$:] Suppose that $(R, M)$ is the local ring of interest. Proceed by showing a contradiction: suppose that both $a$ and $(1-a)$ are non-invertible. Then since $R$ is local $(a) \subseteq M$, $(1-a) \subseteq M$ indicating that $1\in M$ which is a contradiction. In this case for all $a$ non-invertible, $(a) \subseteq M$, which implies that $M$ is the set of all non-invertible elements. 
+        \item[$\Leftarrow$:] Define set $M := \{ a\in R \mid \forall x\in R, ax \neq 1 \}$. By construction if $M$ is an ideal then it must be maximal, as including an invertible element expands the ideal to the whole ring. Verify that $M$ is indeed an ideal:
+            \begin{itemize}
+                \item \emph{Closed with addition}. Proceed via showing that the contraposition. Suppose that there exists $a, b\in R$ s.t. both $a$ and $b$ are non-invertible, but there exists some $c\in R$ s.t. $c(a + b) = 1$. Then $ca = 1 - (cb)$ is non-invertible, which implies that $1 - ca$ is invertible. But notice $1 - ca = cb$ is also non-invertible, which is a contradiction.
+                \item \emph{Absorption with multiplication.} This simply results from the fact that a non-invertible element multiplied by a unit is still non-invertible. 
+            \end{itemize}
+    \end{itemize}
+\end{proof}
+
 \newpage
 \section{Polynomial Rings}
 
