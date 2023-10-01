@@ -237,7 +237,7 @@ Using polynomial of several variables, it is clearer to formalize the ``generati
 \end{definition}
 
 \begin{remark}
-    Using the same formalization as in the definition above, $\im \varphi$ is smallest $R$-subalgebra of $A$ that contains $\{ a_1, \cdots, a_n \}$. 
+    Using the samre-formalization as in the definition above, $\im \varphi$ is smallest $R$-subalgebra of $A$ that contains $\{ a_1, \cdots, a_n \}$. 
 \end{remark}
 
 \begin{proof}
@@ -352,8 +352,18 @@ Specify $R$ to be a commutative ring, with $I \subseteq R$ an ideal of $R$. Cons
 \section{Noetherian Ring}
 
 \begin{lemma}[Zorn's Lemma] \label{lem:Zorn}
-    
+    Suppose that $(P, \leq)$ is an ordered set s.t. every totally order subset $P_0 \subseteq P$ has an upper bound, then $P$ has a maximal element. 
 \end{lemma}
+
+\begin{theorem} \label{thm:maximal ideal inclusion}
+    Let $I \subseteq R$ be an ideal of a commutative ring $R$. Then there exists some maximal ideal $M$ s.t. $I \subseteq M$.
+\end{theorem}
+
+\begin{proof}
+    The proof is simply a re-formalization of Zorn's Lemma (Lemma \ref{lem:Zorn}). 
+    
+    Consider $P := \{ J \subseteq R \mid J \text{ ideals}, I \subseteq J, J \neq R \}$, with the order of inclusion. Take $P_0 := \{I_{\alpha} \mid \alpha\in \Lambda\} \subseteq P$ to be totally ordered. Then $J := \bigcup_{\alpha} I_{\alpha}$ is also an ideal. Further $1\notin J$, otherwise there will exist some $\alpha\in \Lambda$ s.t. $I_{\alpha} = R$, which contradicts the hypothesis. Therefore $J$ is the upper bound for the family $P_0$. Applying Zorn's Lemma finishes the proof. 
+\end{proof}
 
 \begin{definition}[Noetherian Ring]
     A ring $R$ is (left) \textbf{Noetherian} if it satisfies the \underline{Ascending Chain Condition (ACC)}, for (left) ideals, i.e. there is no infinite strictly increasing sequence of (left) ideals:
@@ -402,5 +412,201 @@ Specify $R$ to be a commutative ring, with $I \subseteq R$ an ideal of $R$. Cons
 \end{corollary}
 
 \section{Euclidean Domain, PIDs and UFDs}
+
+\begin{definition}[Principal Ideal Domain (PID)]
+    Let $R$ be a integral domain. $R$ is a \textbf{Principal Ideal Domain (PID)} if every ideal in $R$ is principal.
+\end{definition}
+
+\begin{remark}
+    If $R$ is a PID, then $R$ is Noetherian, as principal ideals are by definition finitely generated.
+\end{remark}
+
+\begin{proposition}\label{prop:PID prime is maximal}
+    If $R$ is a PID, then every prime ideal in it is maximal.
+\end{proposition}
+
+\begin{proof}
+    Prove by contradiction. Suppose that $I = (p)$ is a prime ideal that is not maximal. Then by Theorem \ref{thm:maximal ideal inclusion} there exists some maximal ideal $x\notin I$ s.t. $I \subseteq (x)$, i.e. there exists some $r\in R$ s.t. $p = xr$. Since $r\notin I, r\in P$. Write $r = pr'$ for $r'\in R$. Then $xr'=1$, i.e. $(x) = (1)$ which is a contradiction.
+\end{proof}
+
+\begin{definition}[Euclidean Domain]
+    A \textbf{Euclidean Domain} is an integral domain $R$, for which there exists a function (norm) $N: R\smallsetminus\{0\} \to \Z_{\geq 0}$, s.t. $\forall a, b\in R, \neq 0$, there exists some $q, r\in R$ s.t. $a = bq + r$; and either $r = 0$, or $N(r) < N(b)$.
+\end{definition}
+
+\begin{proposition}\label{prop:Euclidean Domain is PID}
+    A Euclidean Domain is a PID.
+\end{proposition}
+
+\begin{proof}
+    Let $R$ be a euclidean domain. Since the domain of the norm is $\Z_{\geq 0}$, there exists some element $b$ s.t. $N(b)$ is minimal. Claim that $R = (b)$.
+
+    This is indeed true, as there does not exist any $r$ s.t. $N(r) < N(b)$. Then apply the definition of a Euclidean Domain.
+\end{proof}
+
+\begin{definition}
+    Let $a, b\in R\smallsetminus\{0\}$. Then $a$ is \textbf{associated with} $b$ (denoted $a \sim b$) if there exists some $u$ invertible, s.t. $a = ub$.
+\end{definition}
+
+\begin{remark}
+    $a \sim b$ if and only if $(a) = (b)$.
+\end{remark}
+
+\begin{definition}[Greatest Common Divisor]
+    Let $a, b\in R$ that are not both zero. The \textbf{Greatest Common Divisor} of $a$ and $b$ is an element in $R\smallsetminus\{0\}$ s.t.
+    $d\mid a, d\mid b$; and for all $x\in R\smallsetminus\{0\}$, $x\mid a \wedge x\mid b \implies x \mid d$.
+\end{definition}
+
+\begin{proposition}\label{prop:gcd ideal}
+    Let $R$ be a domain, and $d$ be the gcd of $a$ and $b$. If $(a, b) = (d)$, then $d = \gcd(a, b)$. 
+\end{proposition}
+
+\begin{proof}
+    $d$ is a common divisor of $a$ and $b$ as $a, b\in (d)$. It is the greatest one as since $d\in (a, b)$, there exists some $\lambda, \mu\in R$ s.t. $\lambda a + \mu b = d$. Both sides should divide $d$, which implies that if there exists some $d' \mid a, d'\mid b$, then $d' \mid d$.
+\end{proof}
+
+\begin{definition}[Prime; Irreducible]
+    Let $R$ be a domain, and $a$ a non-zero element. Then
+    \begin{itemize}
+        \item $a$ is a \textbf{prime} if $(a)$ is a prime ideal.
+        \item $a$ is \textbf{irreducible} if for all $b_1, b_2\in R$ s.t. $a = b_1 b_2$, either $b_1$ is invertible or $b_2$ is invertible.
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}\label{prop:irreducible implies maximal}
+    Let $R$ be a PID and $r\in R$ a non-zero element. Then $r$ is irreducible if and only if $(r)$ is a maximal ideal.
+\end{proposition}
+
+\begin{proof}
+    Proceed by showing implication in two directions:
+    \begin{itemize}
+        \item[$\Rightarrow$:] Let $r$ be an irreducible element. Suppose that there exists an ideal $I$ s.t. $(r) \subsetneqq I \subsetneqq R$. Since $R$ is a PID, there exists some $a\in R$ s.t. $I = (a)$, which indicates that there exists some $x\in R$ s.t. $r = ax$. But since $r$ is irreducible, either $a$ is a unit, i.e. $I = R$, or $x$ is a unit, i.e. $I = (r)$. Both of which lead to a contradiction.
+        \item[$\Leftarrow$:] Proceed by showing the contraposition. Suppose that $r$ is not irreducible, then there exists $p, q\in R$ which are not units s.t. $r = pq$. Then $(r) \subsetneqq (p) \subsetneqq R$ which implies that $(r)$ is not maximal.
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}\label{prop:prime is irreducible}
+    If $a$ is prime, then $a$ is irreducible.
+\end{proposition}
+
+\begin{proof}
+    Let $a$ be a prime. Suppose that there exists $b_1, b_2\in R$ s.t. $b_1 b_2 = a$. Then $b_1 b_2 \in (a)$. Without loss of generality assume $b_1\in (a)$, i.e. there exists some $r\in R$ s.t. $b_1 = ar$. This gives $arb_2 = a$, i.e. $b_2$ is invertible.
+\end{proof}
+
+\begin{remark}
+    The converse is generally not true. Consider in $\Z[\sqrt{5}i]$ which is not a UFD. Then $(2)$ is not prime (as $2\cdot 3 = (1 + \sqrt{5}i)(1 - \sqrt{5}i)$) but $2$ is irreducible.
+\end{remark}
+
+\begin{definition}[Unique Factorization Domain (UFD)]
+    A domain $R$ is a \textbf{Unique Factorization Domain (UFD)} if for all  nonzero $a\in R$ that is not invertible, there exists a decomposition $a = p_1\cdots p_r$ where $p_1, \cdots, p_r$ are irreducible. For all other families of irreducible elements $q_1, \cdots, q_r \in R$ s.t. $a = q_1\cdots q_r$, there exists a permutation $\varepsilon: [r+1] \to [r+1]$ s.t. $p_i \sim q_{\varepsilon(i)} \forall i$. 
+\end{definition}
+
+\begin{proposition}\label{prop:UFD irreducible is prime}
+    Let $R$ be a UFD. Then every irreducible element $p\in R$ is prime.    
+\end{proposition}
+
+\begin{proof}
+    Claim that $(p)$ is a prime ideal given that $p$ is irreducible. Since $p$ is irreducible and $R$ is PID, for all $b_1 b_2\in (p)$, there exists some irreducible $q_i$s for $i\in I$ s.t. $b_1 b_2 = p\cdot \prod_{i\in I} q_i$. Since factorization unique, at least one of $b_1$ and $b_2$ admits a divisor $p$, which indicates that $(p)$ is a prime ideal. 
+\end{proof}
+
+\begin{proposition}\label{prop:irreducible is prime implies UFD}
+    Let $R$ be a domain s.t. every irreducible element is prime. Then $R$ is a UFD.
+\end{proposition}
+
+\begin{proof}
+    It suffices to prove that factorization is unique up to permutation and multiplication by units. Suppose that $p_i$s and $q_i$s are two irreducible decomposition of $a$, i.e. $a = p_1\cdots p_r = q_1 \cdots q_s$. Then either
+    \begin{itemize}
+        \item $r = 0$. Then $a$ is a unit, which indicates that $s = 0$.
+        \item $r\neq 0$. Then $s\neq 0$. Since $p_i$ is prime for all $i$, there exists some $q_j$ s.t. $p_i \mid q_j$. this implies that $r\leq s$. Then consider $q_i$s as prime, which implies $s\leq r$ and therefore $s = r$. Further since $p_i$s and $q_i$s are irreducible, for $p_i \mid q_j$ this implies $q_j = p_i u$ for $u$ a unit. 
+    \end{itemize}
+    This verifies the definition of a UFD.
+\end{proof}
+
+\begin{proposition}\label{prop:Noeth implies decomposition}
+    Let $R$ be a Noetherian ring. Then every element $a\in R$ attains an irreducible decomposition $a = p_1\cdots p_r$ with $p_i$ irreducible for all $i$. 
+\end{proposition}
+
+\begin{proof}
+    This is simply a re-formalization of the fact that Noetherian rings are finitely generated. Consider the following cases:
+    \begin{itemize}
+        \item $a$ is irreducible. Then the factorization process is done.
+        \item $a = b_1 b_2$ where $b_1$ and $b_2$ are both not units. Then consider separately $b_1$ and $b_2$ with this process. This process is sure to terminate at some point as otherwise this gives an ideal of infinite generators.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    Noetherian rings are generally not UFDs. A simple example is $\Z[\sqrt{5}i]$, the Gaussian Integers.
+\end{remark}
+
+\begin{theorem}\label{thm:PID is UFD}
+    Every PID is a UFD.
+\end{theorem}
+
+\begin{proof}
+    Since principal ideals are finitely generated, all PIDs are Noetherian. By proposition \ref{prop:Noeth implies decomposition} there exists a decomposition; and by proposition \ref{prop:irreducible implies maximal} and \ref{prop:PID prime is maximal} irreducible elements are prime. By proposition \ref{prop:irreducible is prime implies UFD} it is a UFD.
+\end{proof}
+
+\begin{example}
+    An example where a ring is a UFD but not a PID (where prime ideals are not maximal) is $\Z[x]$, with the ideal $(2,x)$ which is not principal. $(x)$ is prime, but not maximal.
+\end{example}
+
+The following proves the theorem:
+
+\begin{theorem}\label{thm:R UFD implies R[x] UFD}
+    Let $R$ be a UFD, then $R[x]$ is also a UFD.
+\end{theorem}
+
+\begin{definition}[Primitive; Content]
+    Let $f\in R[x]$ a nonzero polynomial. Then
+    \begin{itemize}
+        \item The \textbf{content} of $f$, denoted as $c(f)$ is the greatest common divisor of the coefficient of its terms.
+        \item $f\in R[x]$ is \textbf{primitive} if its content is a unit.
+    \end{itemize}
+\end{definition}
+
+\begin{lemma}\label{lem:criterion for polynomial irreducible}
+    Let $R$ be a UFD. Define $K := \mathrm{Frac}(R)$, i.e. $K = S^{-1}R$ for $S := R\smallsetminus \{0\}$. A nonzero element $f\in R[x]$ is irreducible if and only if either of the following holds:
+    \begin{itemize}
+        \item $\deg f = 0$, and $f$ is irreducible in $R$.
+        \item $\deg f \geq 1$, $f$ is primitive and is irreducible in $K[x]$. 
+    \end{itemize}
+\end{lemma}
+
+\begin{proof}
+    Consider the following two cases:
+    \begin{itemize}
+        \item $\deg f = 0$. Since $R\subseteq R[x]$, $f$ irreducible in $R[x]$ implies that it is irreducible in $R$. For the converse, notice that $R$ is a domain, where the degree of product of two polynomials is at the sum of the degree of the two polynomials, indicating that $f\in\R[x]$ could only attain degree 0 factors. The fact that $f$ is irreducible in $R$ finishes the proof.
+        \item $\deg f \geq 1$. Consider the two directions:
+            \begin{itemize}
+                \item[$\Rightarrow$:] Suppose that $f$ is irreducible in $R[x]$. Notice that for all $g\in K[x]$, $c(g)^{-1} g\in R[x]$. Proceed by showing a contradiction. Suppose that there exists $f_1, f_2\in K[x]$ of degree at least one s.t. $f = f_1 f_2$ (i.e. $f$ is not irreducible in $K[x]$). Then
+                $$
+                    f = (c(f_1)^{-1} f_1) (c(f_2)^{-1} f_2) c(f_1) c(f_2)
+                $$
+                where the four operands for multiplication are all in $R$. Since $f$ is irreducible in $R$, either $(c(f_1)^{-1} f_1)$ or $(c(f_2)^{-1} f_2)$ is a unit, which contradicts the hypothesis that $\deg f_1 \geq 1 \wedge \deg f_2 \geq 1$.
+                \item[$\Leftarrow$:] Proceed by showing that the contraposition is true. Suppose that $f = f_1 f_2$ where $f_1, f_2$ are both not units, in $R$. Then $f = f_1 f_2 \in K[x]$ which is also not irreducible.
+            \end{itemize}
+    \end{itemize}
+\end{proof}
+
+\begin{lemma}\label{lem:K[x] PID}
+    Let $K$ be a field. Then $K[x]$ is a PID.
+\end{lemma}
+
+\begin{proof}
+    Let $I$ be an ideal in $K[x]$. Define $k := \{ \deg f \mid f\in I \}$. Such $k$ indeed exists as the degree has a lower bound $0$; and $k$ could take only finitely many values with some element $f_0\in I$ fixed; namely $\llbracket 0, \deg f_0 \rrbracket$. Claim that $I = (x^k)$.
+
+    Either $k = 0$, where $I = (1)$; or $k \neq 0$, where for all $f = \sum\limits_{i|d_i\geq d} c_i x^{d_i}$ $\sum\limits_{i} c_i x^{d_i - d} \in K[x]$. 
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:R UFD implies R[x] UFD}]
+    Define $K = S^{-1}R$ for $S = R \smallsetminus\{0\}$. From lemma \ref{lem:K[x] PID} we know $K[x]$ is a PID, which is therefore a UFD. The general strategy is to transform the whole problem into $K[x]$ using lemma \ref{lem:criterion for polynomial irreducible}, and use the fact that $K[x]$ is a UFD, with elements differ only by a factor in $R$ (which is also a UFD) from those in $R[x]$.
+
+    It suffices to show that the decomposition exists and is unique:
+    \begin{itemize}
+        \item \emph{Existence.} Decompose $f$ in $R[x]$ $f = c(f) g$ s.t. $g$ is primitive. Then $c(g) = u$ where $u$ is some unit in $R$. Applying the inclusion map gives $g\in K[x]$, where it could be decomposed into $g = g_1\cdots g_n$ where $g_i$s are irreducible. Denote $g_i = c(g_i) h_i$, which gives $g = \prod_{i=1}^n c(g_i) h_i = c(g) \prod_{i=1}^n h_1 = u\prod_{i=1}^n h_1$. Since $c(f) \in R$ which is a UFD, there exists a decomposition $c(f) = f_1\cdots f_n$. This gives an irreducible decomposition $f = f_1\cdots f_n h_1\cdots h_n$.
+        \item \emph{Uniqueness.} This follows from the fact that both $f$ and $K[x]$ are UFDs, i.e. decomposition of $f\in R$ and $g\in K[x]$ are unique.
+        
+        (Alternatively one could prove that irreducible elements in $R[x]$ are also prime, which is essentially the same approach as the content is prime follows from the fact that $R$ is UFD; and the primitive is prime as $K[x]$ is a UFD).
+    \end{itemize}
+\end{proof}
 
 \end{document}
