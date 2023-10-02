@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage{../refalg}
+
+\begin{document}
+\Makepagesectionhead{MATH 593 - Module}{ARessegetes Stery}
+
+\tableofcontents
+\newpage
+
+\section{Module}
+
+\begin{definition}[$R$-Module]
+    An (left) \textbf{$\bm{R}$-Module} $M$ is a set with two operations, often denoted as $(M, +, \times)$:
+    \begin{itemize}
+        \item Addition $(+): M\times M \to M$ , s.t. $(M, +)$ is an abelian group.
+        \item Multiplication $(\times): R\times M \to M$, s.t. it has the following properties:
+            \begin{itemize}
+                \item \underline{Identity}. For all $x\in M$, there exists $1\in R$ s..t $1\cdot x = x$.
+                \item \underline{Associativity}. For all $a, b\in R, x\in M$, $a(bx) = (ab)x$.
+                \item \underline{Distributivity in $R$}. For all $a_1, a_2\in R$, $(a_1 + a_2)x = a_1 x + a_2 x$.
+                \item \underline{Distributivity in $M$}. For all $a\in R, x_1, x_2\in M$, $a(x_1 + x_2) = a x_1 + a x_2$.
+            \end{itemize}
+    \end{itemize}
+    Right modules are defined with the same structure, but with $a\times b = b\cdot a$ for $a\in R, b\in M$, where $\times$ is the multiplication in $M$, and $\cdot$ the multiplication in $R$.
+\end{definition}
+
+\begin{definition}[Submodule]
+    Let $(M, +, \times)$ be an $R$-module. $N \subseteq M$ is a \textbf{$\bm{R}$-submodule} of $M$ if $(N, +)$ is a subgroup of $M$; and for all $n\in N, r\in R, n\times r\in N$.
+\end{definition}
+
+\begin{remark}
+    Notice that $R$ itself gives an $R$-module, just as $\mathbb{K}$ gives a $\mathbb{K}$-vector space. Therefore $\pair{S, \varphi}$ an $R$-algebra induces a two-sided $R$-module structure. Check that this is indeed the case:
+    \begin{itemize}
+        \item \emph{Addition}. Adopt the addition in $S$ as a ring.
+        \item \emph{Identity}: Since ring homomorphisms map identity to identity, $\varphi(1_R) = 1_S$, implying that $1_R$ is the identity for scalar multiplication.
+        \item \emph{Associativity}. Results from the fact that multiplication in $S$ is associative.
+        \item \emph{Distributivity in $R$/$M$}. Follows from the fact that $\varphi$ is a ring homomorphism.
+    \end{itemize}
+    In this sense, module generalizes the algebra structure. Generally one cannot ``revert'' the structure of a module back to an ideal. Specifically, suppose that $R$ is not commutative, then $R$ is not an $R$-algebra.
+\end{remark}
+
+\begin{remark}
+    (Left) ideals of $R$ are submodules of $R$ taken as an $R$-submodule.
+\end{remark}
+
+\begin{remark}
+    Let $M$ be an abelian group. Making $M$ into a (left) $R$-module is equivalent to specifying a ring homomorphism $\varphi: R\to \mathrm{End}(M)$, where $\mathrm{End}(\cdot)$ denotes the ring of endomorphisms on the specific structure. 
+    
+    It is worth noticing how the ring of endomorphism structure is defined. Specifically, the multiplication is the composition of endomorphisms on $M$. This can be viewed in two aspects:
+    \begin{itemize}
+        \item The associativity for $R$-modules is essentially stating that multiplication, i.e. elements of $R$ ``acting'' on those in $M$ is associative. Applying one action after another is the same as applying the composition of action.  
+        \item Consider the definition of function as a set of pairs. Then
+        \[
+            R\times M \to M \cong (R\to M) \to M \cong R\to(M\to M)
+        \]
+        as the application of functions is associative. 
+    \end{itemize}
+
+    In particular, in the consideration of $\Z$-modules, the map $\varphi_{\Z}: \Z \to \mathrm{End}(M)$ is determined uniquely by the requirement that $1\mapsto 1_M = \Id_M$. Since addition and multiplication should be preserved, $n\mapsto n\cdot \Id_{M}$ for all $n\in \Z$. With the specification above one could observe the correspondence:
+    \begin{itemize}
+        \item $\{\Z \text{ modules}\} \Longleftrightarrow \{ \text{Abelian groups} \}$
+        \item  $\{\Z/n\Z \text{ modules}\} \Longleftrightarrow \{ \text{Abelian groups } M { s.t. } nx = 0\forall x\in M \}$
+    \end{itemize}
+\end{remark}
+
+\section{Morphism of $R$-Modules}
+
+\section{Construction of Submodules}
+
+\section{Free Modules}
+
+\section{Finiteness Conditions on Modules}
+
+\end{document}
