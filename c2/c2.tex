@@ -59,11 +59,128 @@
     In particular, in the consideration of $\Z$-modules, the map $\varphi_{\Z}: \Z \to \mathrm{End}(M)$ is determined uniquely by the requirement that $1\mapsto 1_M = \Id_M$. Since addition and multiplication should be preserved, $n\mapsto n\cdot \Id_{M}$ for all $n\in \Z$. With the specification above one could observe the correspondence:
     \begin{itemize}
         \item $\{\Z \text{ modules}\} \Longleftrightarrow \{ \text{Abelian groups} \}$
-        \item  $\{\Z/n\Z \text{ modules}\} \Longleftrightarrow \{ \text{Abelian groups } M { s.t. } nx = 0\forall x\in M \}$
+        \item  $\{\Z/n\Z \text{ modules}\} \Longleftrightarrow \{ \text{Abelian groups } M \text{ s.t. } nx = 0\forall x\in M \}$
     \end{itemize}
 \end{remark}
 
 \section{Morphism of $R$-Modules}
+
+\begin{definition}[Morphism of $R$-Modules]
+    A \textbf{morphism of (left) $\bm{R}$-modules} $f: M\to N$ is an \underline{$R$-linear map}, which satisfies:
+    \begin{itemize}
+        \item $f(u_1 + u_2) = f(u_1) + f(u_2)$ for all $u_1, u_2\in M$.
+        \item $f(au) = af(u)$, for all $u \in M, a\in R$.
+    \end{itemize} 
+
+    An \underline{isomorphism} of $R$-modules $f: M\to N$ is equivalently stating that
+    \begin{itemize}
+        \item There exists $g: N\to M$ s.t. $f\circ g = \Id_{M}$, $g\circ f = \Id_{N}$.
+        \item $f$ is a bijection.
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}\label{prop:R-module morphism injective iff kernel is 0}
+    Let $f: M\to N$ be a morphism of $R$-modules. Then $\im f\subseteq M$ and $\ker f \subseteq M$ are submodules; and $f$ is injective if and only if $\ker f = \{0\}$. 
+\end{proposition}
+
+\begin{proof}
+    By the fact that $f$ is $R$-linear, both the image and kernel should be closed w.r.t. addition and scalar multiplication, i.e. are submodules. For the condition of injectivity, check
+    \begin{itemize}
+        \item[$\Rightarrow$:] Consider the contraposition. Suppose that $0 \neq a\in\ker f$. Then $f(1) = f(1 + a)$ with $1 \neq 1+a$ which is a contradiction.
+        \item[$\Leftarrow$:] Consider the contraposition. Suppose that there exists $a \neq b \in R$ s.t. $f(a) = f(b)$, i.e. $f$ is not injective; then $f(a-b) = 0$ which indicates that $0 \neq (a - b)\in \ker $. 
+    \end{itemize}
+\end{proof}
+
+\begin{definition}[Quotient Module]
+    Let $N\subseteq M$ be a $R$-submodule. Define the equivalence relation $\sim: a\sim b$ if and only if $a - b \in N$. Then $M/N := M/\sim$ is a \textbf{quotient module}, with $\pi: m \to M/N$ the induced morphism of $R$-modules. 
+\end{definition}
+
+\begin{theorem}[Universal Property of Quotient Modules]
+    \label{thm:Universal Property of Quotient Modules}
+    Let $f: M\to P$ be a morphism of $R$-modules. Let $N$ be a submodule of $M$, with $\pi$ the induced morphism of $R$-modules. Further suppose that $N \subseteq \ker f$. Then there exists a unique $g: M/N \to P$ s.t. $f = g\circ \pi$, i.e. the following diagram commutes:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            M \arrow[rr, two heads, "\pi"] \arrow[rrdd, "f"] & & M/N \arrow[dd, dashed, "g"] \\
+            & & \\
+            & & P \\
+        \end{tikzcd}
+    \end{figure}
+\end{theorem}
+
+\begin{proof}
+    It suffices to verify that such map exists and is unique.
+    \begin{itemize}
+        \item \emph{Uniqueness}. Since the diagram is required to commute, if such function exists, it is fixed by $f(x) = g(\pi(x)) = g(\bar{x})$.
+        \item \emph{Existence}. Then it suffices to check that $g$ such defined is indeed a morphism of $R$-modules. This is indeed the case as $f$ is a morphism of $R$-modules.
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}[First Isomorphism]\label{thm:First Isomorphism}
+    Let $f: M\to N$ be a surjective morphism of $R$-modules. Define $K := \ker f$. If there exists a morphism of $R$-modules $\bar{f}: M/K\to N$ s.t. it is $R$-linear and $\bar{f}\circ \pi = f$, i.e. the following diagram commutes:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            M \arrow[rr, "f"] \arrow[rrdd, "\pi"] & & N \\
+            & & \\
+            & & M/K \arrow[uu, dashed, "\bar{f}"]
+        \end{tikzcd}
+    \end{figure}
+
+    Then $\bar{f}$ is an isomorphism.
+\end{theorem}
+
+\begin{proof}
+    By the universal property of morphism of $R$-modules (Theorem \ref{thm:Universal Property of Quotient Modules}), a morphism $f: M/K\to N$ s.t. the diagram above commutes exists. It suffices to verify that $\bar{f}$ is bijective. It is surjective as $f$ is surjective; and is injective as $f(x) - f(y) = 0$ if and only if $(x - y)\in K$.
+\end{proof}
+
+\begin{definition}[Direct Product; Direct Sum]
+    Let $(R_i)_{i\in I}$ be a family (potentially infinite) of modules. Then
+    \begin{itemize}
+        \item The \textbf{direct product} of them is the cartesian product $\prod_{i\in I} R_i$, where addition and multiplication is defined element-wise.
+        \item The \textbf{direct sum} is a sub-ring of the direct sum $\bigoplus_{i\in I} R_i$ where only finitely many elements can be non-zero.
+    \end{itemize}
+\end{definition}
+
+\begin{theorem}[Universal Property of Direct Product]\label{thm:Universal Property of Direct Product}
+    Let $P$ be an $R$-module, $(M_i)_{i\in I}$ be a family of $R$-modules, with $f_j: P \to M_j$ a morphism of $R$-modules. Further let $p_j : \prod_{i\in I} M_i \to M_j$ the projection map s.t. $p_j(x) = x_j$ which is the $j$-th entry of the input. Then there exists a unique morphism of $R$-modules $f: P\to\prod_{i\in I} M_i$ s.t. $f(x) = (f_1(x), \cdots, f_n(x), \cdots)$; i.e. the following diagram commutes:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            P \arrow[rr, dashed, "f"] \arrow[rrdd, "f_j"] & & \prod_{i\in I} M_i \arrow[dd, "p_j"] \\
+            & & \\
+            & & M_j
+        \end{tikzcd}
+    \end{figure}
+\end{theorem}
+
+\begin{proof}
+    Uniqueness follows from the fact that $p_j\circ f$ should commute with $f_j$ for all $j$. Existence holds as $f_j$ is itself a morphism of $R$-modules.
+\end{proof}
+
+\begin{theorem}[Universal Property of Direct Sum]\label{thm:Universal Property of Direct Sum}
+    Let $(M_i)_{i\in I}$ be a family of modules, with $f_j: M_j \to Q$ a family of morphism of $R$-algebras. Denote $\alpha_j$ to be the \underline{natrual embedding} s.t.
+    \[
+        \alpha_j: M_j  \to \bigoplus_{i\in I} M_i, \qquad \alpha_j(x) = (x_i)i, \quad\text{where } x_i = \begin{cases} x, & i = j \\ 0, & \text{otherwise} \end{cases}
+    \]
+    Then there exists a unique $R$-linear map $f: \bigoplus_{i\in I} M_i \to Q$ s.t. $f\circ \alpha_j = f_j$ for all $j$, i.e. the following diagram commutes:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            M_j \arrow[rr, hookrightarrow, "\alpha_j"] \arrow[rrdd, "f_j"] & & \bigoplus_{i\in I} M_i \arrow[dd, dashed, "f"]\\
+            & & \\
+            & & Q
+        \end{tikzcd}
+    \end{figure}
+\end{theorem}
+
+\begin{proof}
+    Since $f$ is required to be a morphism of $R$-modules, for all $x = (x_i)_{i\in I} \in \bigoplus_{i\in I} M_i$ it should satisfy the following conditions:
+    \[
+        f(x) = f\left( \sum\limits_{k\in I} \alpha_k(p_k(x)) \right) = \sum\limits_{k\in I} f(\alpha_k(p_k(x))) = \sum\limits_{k\in I} f_k(p_k(x))
+    \]
+    which is unique as $f_k$s and $p_k$s are uniquely defined. Since both $f_k$ and $p_k$ are homomorphisms, the composition is also a homomorphism.
+\end{proof}
 
 \section{Construction of Submodules}
 
