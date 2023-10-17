@@ -15,7 +15,7 @@
         \item Addition $(+): M\times M \to M$ , s.t. $(M, +)$ is an abelian group.
         \item Multiplication $(\times): R\times M \to M$, s.t. it has the following properties:
             \begin{itemize}
-                \item \underline{Identity}. For all $x\in M$, there exists $1\in R$ s..t $1\cdot x = x$.
+                \item \underline{Identity}. For all $x\in M$, there exists $1\in R$ s.t. $1\cdot x = x$.
                 \item \underline{Associativity}. For all $a, b\in R, x\in M$, $a(bx) = (ab)x$.
                 \item \underline{Distributivity in $R$}. For all $a_1, a_2\in R$, $(a_1 + a_2)x = a_1 x + a_2 x$.
                 \item \underline{Distributivity in $M$}. For all $a\in R, x_1, x_2\in M$, $a(x_1 + x_2) = a x_1 + a x_2$.
@@ -34,9 +34,9 @@
         \item \emph{Addition}. Adopt the addition in $S$ as a ring.
         \item \emph{Identity}: Since ring homomorphisms map identity to identity, $\varphi(1_R) = 1_S$, implying that $1_R$ is the identity for scalar multiplication.
         \item \emph{Associativity}. Results from the fact that multiplication in $S$ is associative.
-        \item \emph{Distributivity in $R$/$M$}. Follows from the fact that $\varphi$ is a ring homomorphism.
+        \item \emph{Distributivity in $R$ and $M$}. Follows from the fact that $\varphi$ is a ring homomorphism.
     \end{itemize}
-    In this sense, module generalizes the algebra structure. Generally one cannot ``revert'' the structure of a module back to an ideal. Specifically, suppose that $R$ is not commutative, then $R$ is not an $R$-algebra.
+    In this sense, module generalizes the algebra structure. Generally one cannot ``revert'' the structure of a module back to an algebra. Specifically, suppose that $R$ is not commutative, then $R$ is not an $R$-algebra.
 \end{remark}
 
 \begin{remark}
@@ -59,7 +59,7 @@
     In particular, in the consideration of $\Z$-modules, the map $\varphi_{\Z}: \Z \to \mathrm{End}(M)$ is determined uniquely by the requirement that $1\mapsto 1_M = \Id_M$. Since addition and multiplication should be preserved, $n\mapsto n\cdot \Id_{M}$ for all $n\in \Z$. With the specification above one could observe the correspondence:
     \begin{itemize}
         \item $\{\Z \text{ modules}\} \Longleftrightarrow \{ \text{Abelian groups} \}$
-        \item  $\{\Z/n\Z \text{ modules}\} \Longleftrightarrow \{ \text{Abelian groups } M \text{ s.t. } nx = 0\forall x\in M \}$
+        \item  $\{\Z/n\Z \text{ modules}\} \Longleftrightarrow \{ \text{Abelian groups } M \text{ s.t. } nx = 0\ \forall x\in M \}$
     \end{itemize}
 \end{remark}
 
@@ -218,7 +218,7 @@ This interlude provides some general constructions on how to obtain submodules o
 
          \begin{proof}
             Consider two functions $f: M_1 \to (M_1 + M_2)/M_2$ and $g: M_1 \to M_1\cap M_2$. Attempt to show this via applying the first isomorphism theorem. Consider the following diagram:
-            \begin{figure}
+            \begin{figure}[htbp]
                 \centering
                 \begin{tikzcd}
                     M_1 \arrow[rr, two heads, "g"] \arrow[rrdd, "f"] & & M_1/(M_1\cap M_2) \arrow[dd, dashed, "h"] \\
@@ -242,7 +242,7 @@ This interlude provides some general constructions on how to obtain submodules o
 \section{Free Modules}
 
 \begin{definition}[Linear Combination (Module)]
-    Let $M$ be an $R$-module, with $(x_i)_{i\in I}$ a finite family of elements in $M$. Then a \textbf{linear combination} of $x_i$s are for some fixed family of elements $(r_i)_{i\in I}$ in $R$ $\sum\limits_{i\in I} x_i r_i$.
+    Let $M$ be an $R$-module, with $(x_i)_{i\in I}$ a finite family of elements in $M$. Then a \textbf{linear combination} of $x_i$s for some fixed family of elements $(r_i)_{i\in I}$ in $R$ is the sum $\sum\limits_{i\in I} x_i r_i$.
 \end{definition}
 
 For the following definitions, fix $M$ to be an $R$-module.
@@ -266,32 +266,129 @@ For the following definitions, fix $M$ to be an $R$-module.
     $M$ is a \textbf{Free $\bm{R}$-module} if it admits a basis.
 \end{definition}
 
-\begin{remark}
+\begin{remark}\label{rmk:4.1}
     $R$ not admitting a multiplicative inverse makes modules slightly different from vector spaces. Consider the following examples:
     \begin{enumerate}
         \item A nonzero module may not admit an independent subset. For example $R=\Z$ with $M = \Z/n\Z$. Then $n$ annihilates the whole ring.
-        \item For $N\subseteq M$ a submodule, generally $M \cong N \oplus M/N$ does not hold. Take the example where $M = \Z$ and $N = n\Z$. $N \oplus (M/N)$ is not a domain as $n\cdot(0, 1) = (0, 0)$; but $M$ is effectively an integral domain.
+        \item For $N\subseteq M$ a submodule, generally $M \cong N \oplus M/N$ does not hold. Take the example where $M = \Z$ and $N = n\Z$. $N \oplus (M/N)$ is not an integral domain as $n\cdot(0, 1) = (0, 0)$; but $M$ is effectively an integral domain.
         \item Similar to the case of vector spaces, it is useful to think in terms of modules in the canonical form. A useful result in vector space is that all $K$-vector spaces with dimension $n$ is isomorphic to $K^n$. We make the analogy in terms of modules. 
         
-        Let $I$ be a set. Denote $R^{(I)} := \bigoplus_{i\in I} M_i = \left\{ (x_i)_{i\in I}\ \Big|\ \text{ finitely nonzero }x_i \right\}$, where $M_i = R$. This has a basis $(e_j)_{j\in I}$ which has 1 in the $j$-th entry. Every free (left) $R$-module is isomorphism to some $R^{(I)}$ which sends the bases to bases.
+        Let $I$ be a set. Denote $R^{(I)} := \bigoplus_{i\in I} M_i = \left\{ (x_i)_{i\in I}\ \Big|\ \text{ finitely nonzero }x_i\text{s} \right\}$, where $M_i = R$. This has a basis $(e_j)_{j\in I}$ which has 1 in the $j$-th entry. Every free (left) $R$-module is isomorphism to some $R^{(I)}$ which sends the bases to bases.
         \item If $R$ is commutative, then any two bases of a free $R$-module has the same cardinality (which is given by considering the quotient of maximal ideals and observe that every basis is a basis in the field; which has the same cardinality as this is in a vector space). But this can fail if $R$ is not commutative.
     \end{enumerate}
 \end{remark}
 
-\begin{theorem}[Universal Property of Free Modules]
+\begin{theorem}[Universal Property of Free Modules]\label{thm:Universal Property of Free Modules}
     Let $F$ be a free $R$-module with basis $(e_i)_{i\in I}$, and $N$ an arbitrary $R$-module. For all $(u_i)_{i\in I} \subseteq N$, there exists a unique morphism of $R$-modules $f: F\to N$ s.t. $f(e_i) = u_i$ for all $i$.
 \end{theorem}
 
 \begin{proof}
-    $f$ gives the definition and therefore restricts the map to be unique. The fact that both sides are bases ensures that this is a morphism of $R$-modules. 
+    $f$ gives the definition and therefore restricts the map to be unique. The fact that $e_i$s construct a basis in $F$ ensures that this is a morphism of $R$-modules. 
 \end{proof}
 
 \begin{remark}
-    The general thought is the same as where the universal property of ring homomorphisms of polynomial rings, where it is possible to decomposition the whole structure into several discrete structures; and designate maps on them correspondingly.
+    The general thought is the same as that of the universal property of ring homomorphisms of polynomial rings, where it is possible to decomposition the whole structure into several discrete structures; and designate maps on them correspondingly.
 \end{remark}
 
 \section{Finiteness Conditions on Modules}
 
+\begin{definition}[Noetherian Module]
+    Let $R$ be a ring and $M$ a left $R$-module. Then $M$ is \textbf{Noetherian} if it satisfies the ACC (Ascending Chain) condition on submodules, i.e. there does not exist a family of submodules of $M$ $(M_i)_{i\in I}$ s.t. 
+    \[
+        (0)\subseteq M_0 \subsetneq M_1 \subsetneq \cdots \subsetneq M_n \subsetneq \cdots
+    \]    
+\end{definition}
+    
+\begin{definition}[Artinian Module]
+    Let $R$ be a ring and $M$ a left $R$-module. Then $M$ is \textbf{Artinian} if it satisfies the DCC (Descending Chain) condition on submodules, i.e. there does not exist a family of submodules of $M$ $(M_i)_{i\in I}$ s.t.
+    \[
+        \cdots \subsetneq M_n \subsetneq \cdots \subsetneq M_1 \subsetneq M_0 \subseteq M
+    \]
+\end{definition}
+
+\begin{remark}
+    $R$ is Noetherian (or Artinian) if it is a Noetherian (or Artinian) $R$-module. 
+\end{remark}
+
+\begin{proof}
+    This simply results from the fact that when $R$ is taken as an $R$-module, then its submodules are the ideals of $R$. 
+\end{proof}
+
+\begin{remark}
+    $M$ is a Noetherian $R$-module if and only if all of its submodules are finitely generated. The proof is generally the same as that for rings.
+\end{remark}
+
+\begin{remark}
+    Modules generally are not Artinian. The ring of integers $\Z$ is a clear counterexample, with the infinite descending chain $(2^n)$. The following are some examples:
+    \begin{itemize}
+        \item All $K$ fields. This is trivial as the only ideals in $K$ are (1) and (0); and submodules of a ring corresponds to its ideals.
+        \item $\Z/n\Z$ for all $n\in\Z_{\geq 0}$. Rings of such form are finite, which can only admit finitely many ideals as they are by definition subsets of $R$.
+        \item $K[x]/(x^n)$ for all $n\in\Z_{\geq 0}$ and $K$ fields. Since $K[x]/(x^n)$ contains only elements of degree less than or equal to $(n-1)$ and $K$ is a field, any element with degree $n_0 < n$ linearly spans all elements of the same degree. 
+        
+        Claim that if $I_1\subsetneq I_2$ in $k[x]/x^n$, then there exists some $k$ s.t. $n^k\notin I_1$ and $n^k\in I_2$. Suppose not, i.e. for all $k$ there exists some $a_1^{(k)}, a_2^{(k)}\in K$ s.t. $a_1^{(k)} n^k\in I_1$ and $a_2^{(k)} n^k\in I_2$. Since $(a_1^{(k)})^{-1}a_2^{(k)}\in K$, this implies that $I_2\subseteq I_1$, which is a contradiction.
+
+        Therefore, for each proper submodule the number of monomials with different degrees in the submodule must decrease; and since there are only finitely many $(n)$ of them, the descending chain must terminate at some point. 
+    \end{itemize}
+\end{remark}
+
+\begin{proposition}\label{thm:Module Noeth iff sub and quot Noeth}
+    Let $N$ be a submodule of $M$. Then $M$ is Noetherian (or Artinian) if and only if both $N$ and $M/N$ are Noetherian (or Artinian)
+\end{proposition}
+
+\begin{proof}
+    Consider implication in both directions:
+    \begin{itemize}
+        \item[$\Rightarrow$:] Since $M$ is Noetherian, all of its submodules are finitely generated. Since $N$ is a submodule of $M$, all of its submodules are also submodules of $M$, which are finitely generated, i.e. $N$ is Noetherian.
+        
+        To verify that the quotient module $M/N$ is Noetherian, consider the following parenthesis:
+        \begin{parenthesis}[Correspondence]
+            There is a bijection between submodules of $M/N$ and submodules of $M$ containing $N$. 
+        \end{parenthesis}
+
+        \begin{proof}
+            It suffices to specify the map and check that it is indeed bijective. Define $\pi: M\to M/N$ which is the induced morphism of $R$-modules. Check that it is bijective:
+            \begin{itemize}
+                \item For any submodule $U\subseteq M/N$, $\pi^{-1}(U) = \{ u + n \mid u \in U, n\in N_s \}$ where $N_s\subseteq N$ is an arbitrary submodule of $N$. Codomain being submodules in $M$ containing $N$ restricts $N_s = N$. This gives $\pi(\pi^{-1}(U)) = U$ by definition of the quotient.
+                \item For any submodule $S\subseteq M$, $\pi(S) = \{ \pi(s) \mid s\in S \}$; with $\pi^{-1}(\pi(S)) = \{ s + n \mid s\in S, n\in N_s \}$ where $N_s$ is some submodule of $N$. Similarly since it is required that the module in $M$ should contain $N$, it fixes $N_s = N$. 
+            \end{itemize}
+        \end{proof}
+        \item[$\Leftarrow$:] The general idea is to split $M$ into those contained in $N$ and those which maps non-trivially to $M/N$, and use the fact that both $N$ and $M/N$ are Noetherian to conclude that any ascending chain in $M$ must also stabilize.
+        
+        Consider $\{M_1, \cdots, M_n, \cdots\}$ to be an infinite ascending chain s.t. $M_1\subseteq M_2\subseteq \cdots \subseteq M_n \subseteq \cdots$. We seek to verify that this ascending chain stabilizes at some time, i.e. there exists some $n_0$ s.t. for all $n \geq n_0$, $M_n = M_{n+1}$. Consider the following two ascending chains:
+        \begin{enumerate}[label=(\arabic*)]
+            \item $M_1\cap N \subseteq \cdots \subseteq M_k\cap N \subseteq \cdots $
+            \item $\pi(M_1)\subseteq \cdots \subseteq \pi(M_k) \subseteq \cdots$
+        \end{enumerate}
+        Since both $N$ and $M/N$ are Noetherian, the two chains must stabilize, i.e. there exists some $i_0$ s.t. beyond which both chains stabilize. Claim that $n_0 = i_0$. It suffices to verify that $\forall i \geq i_0$, $M_{i+1} = M_i$. By definition $M_i\subseteq M_{i+1}$. For inclusion in the other direction consider $x\in M_i$ and $y\in M_{i+1}$. Notice $\pi(x) = \pi(y)$ since $M_i/N = M_{i+1}/N$ by hypothesis, i.e. $x - y \in \ker\pi = N$. Further notice that $x - y \in M_{i+1}$ by inclusion $M_i \subseteq M_{i+1}$. Therefore $x - y \in M_{i+1} \cap N$. Since the first chain stabilizes, $x - y \in M_i \cap N$, i.e. $x \in M_i\cap N$, which implies $x\in M_i$. This gives $M_{i+1} \subseteq M$, i.e. $M_i = M_{i+1}$.
+    \end{itemize}
+\end{proof}
+
+\begin{corollary}
+    Let $M_1, M_2$ be left $R$-modules. Then $M_1\oplus M_2$ is Noetherian (Artinian) if and only if both $M_1$ and $M_2$ are Noetherian (Artinian). If $R$ is Noetherian, then $R^n$ is Noetherian for all $n\in\Z_{\geq 0}$.
+\end{corollary}
+
+\begin{remark}
+    In Remark \ref{rmk:4.1} it is mentioned that generally $M \centernot\simeq M/N \times N$. However this is true if the product is an internal direct sum. Generally, if there exists some submodule $K \subseteq M_1 \oplus M_2$ s.t. $K \simeq M_1$, then $(M_1 \oplus M_2)/K \simeq M_2$. 
+\end{remark}
+
+\begin{proposition}\label{prop:Noeth modules on Noeth rings}
+    Let $R$ be a left Noetherian ring. Then a left $R$-module $M$ is Noetherian if and only if $M$ is finitely generated.
+\end{proposition}
+
+\begin{proof}
+    Proceed via showing implication in two directions:
+    \begin{itemize}
+        \item[$\Rightarrow$:] $M$ being Noetherian implies that every submodule of it is finitely generated. Specifically, $M$ is finitely generated. 
+        \item[$\Leftarrow$:] Proceed via finding a surjective map from a Noetherian $R$-module to $M$. Since $M$ is finitely generated, it attains a system of generators in the form of $\{ u_1, \cdots, u_n \}$. Consider the morphism of $R$-modules $\varphi: R^n \to M$ s.t. $\varphi(e_i) = u_i$, where $e_i$ is the $i$-th element of the canonical basis of $R^n$. Since $u_i$s give a system of generators, $\varphi$ is surjective. $M$ having an infinite ascending chain implies there exists an infinite ascending chain in $R^n$, which contradicts the hypothesis that $R$ is Noetherian. Therefore $M$ is Noetherian.
+    \end{itemize}
+\end{proof}
+
 \section{Modules of Finite Length}
+
+\section{Digression on Commutative Algebra}
+
+\section{Artinian/Noetherian Commutative Ring}
+
+\section{Finitely Generated Modules Over PIDs}
 
 \end{document}
