@@ -89,6 +89,15 @@
 \setlist[itemize]{topsep=0pt}
 \setlist[enumerate]{topsep=0pt}
 
+% Customize symbol in tikzcd 
+\tikzset{
+  symbol/.style={
+    draw=none,
+    every to/.append style={
+      edge node={node [sloped, allow upside down, auto=false]{$#1$}}}
+  }
+}
+
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
 
 % #1 General Title
