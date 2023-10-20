@@ -140,6 +140,8 @@ The natural homomorphism $\pi_I: R\to (R/I)$ is defined as $\pi(a) = \bar{a}$, w
                 \item \emph{Closed with addition}. Proceed via showing that the contraposition. Suppose that there exists $a, b\in R$ s.t. both $a$ and $b$ are non-invertible, but there exists some $c\in R$ s.t. $c(a + b) = 1$. Then $ca = 1 - (cb)$ is non-invertible, which implies that $1 - ca$ is invertible. But notice $1 - ca = cb$ is also non-invertible, which is a contradiction.
                 \item \emph{Absorption with multiplication.} This simply results from the fact that a non-invertible element multiplied by a unit is still non-invertible. 
             \end{itemize}
+
+        Further notice that this is indeed the only maximal ideal, as for all $u\in R\smallsetminus M$, it is invertible, i.e. for all ideals $I\subseteq R$, $u\in I\implies 1\in I \implies I = R$. Therefore $(R, M)$ is local. 
     \end{itemize}
 \end{proof}
 
