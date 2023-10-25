@@ -7,6 +7,9 @@
 \tableofcontents
 \newpage
 
+\def\Ann{\mathrm{Ann}}
+\def\Supp{\mathrm{Supp}}
+
 \section{Module}
 
 \begin{definition}[$R$-Module]
@@ -596,17 +599,135 @@ For discussions in this section, fix $R$ to be a commutative ring.
     \[
         ut^n = \sum\limits_{i=0}^n (f_i) t^{a_i} = \sum\limits_{i=0}^n (g_i t^{n - a_i}) t^{a_i}
     \]
-    By construction $u\in I^nM\cap N$. Further, for all $i$, $t^{n-a} \mid t^{n-a_i}$, giving $u\in I^{n-a}N$.
+    By construction $u\in I^nM\cap N$. Further, for all $i$, $t^{n-a} \mid t^{n-a_i}$, giving $u\in I^{n-a}N$. This finishes the proof. 
+\end{proof}
+
+\begin{theorem}[Krull's Intersection Theorem]\label{thm:Krull's Intersection}
+    Let $R$ be a Noetherian commutative ring, and $M$ a finitely generated $R$-module. Let $I\subseteq R$ be an ideal. If $N = \bigcap_{n\geq 1} I^n M$, then $IN = N$.
+\end{theorem}
+
+\begin{proof}
+    Proceed by showing inclusion in both directions:
+    \begin{itemize}
+        \item[$\subseteq$] By definition.
+        \item[$\supseteq$] Apply Artin-Rees with $n= a + 1$ which gives $N \subseteq I^{a+1}M \cap N \subseteq IN$.
+    \end{itemize}
 \end{proof}
 
 \section{Artinian/Noetherian Commutative Ring}
 
-\subsection{Artinian implies Noetherian: Module and Ring}
+\begin{definition}[Minimal Prime Ideal]
+    A prime ideal $\mathfrak{p}$ is a \textbf{minimal prime ideal over $I$} if it is minimal among all ideals containing $I$. Prime ideal $\mathfrak{p}$ is a \textbf{minimal prime ideal} if it is a minimal prime ideal over the zero ideal.
+\end{definition}
+
+\begin{theorem}\label{thm:Criterion for Artinian ring}
+    Let $R$ be a commutative ring. Then $R$ is Artinian if and only if $R$ is Noetherian, and the following two conditions are satisfied:
+    \begin{itemize}
+        \item $R$ has only finitely many maximal ideals.
+        \item Every maximal ideal in $R$ is a minimum prime ideal. 
+    \end{itemize}
+\end{theorem}
+
+\begin{remark}
+    In Section \ref{sec:Artin-Noeth Ring Implication} it will be shown that a ring being Artinian implies that is Noetherian. However, this generally does not hold in modules, as modules attain a ``weaker'' structure than rings as multiplication is not defined there.
+
+    Consider the following construction that specifically takes advantage of the absence of multiplication:
+    
+    Let $k$ be a field, with $S = k[x]$ the polynomial ring. Consider $R = k[x]_{(x)} := T^{-1}k[x]$ where $T := S\smallsetminus (x)$, i.e. the localization of $S$ at $(x)$. Further consider $K := \mathrm{Frac}(R) := V^{-1}k[x]$ where $V := S\smallsetminus \{0\}$, with the inclusion map $R \hookrightarrow K$. Since $R$ is a submodule of $K$, it is valid to consider the pre-image of elements in the quotient module $M := K/R$ of the induced homomorphism, which gives the infinite ascending chain in $K$:
+    \[
+        R = M_0 \subsetneq M_1 \subsetneq \cdots, \qquad M_k = R\cdot\left( \frac{1}{x^k} \right)
+    \]
+    indicating that $K$ is not Noetherian. Further notice that modules in the form of $M_k$ as specified above are the only submodules of $K$, as for all $f\in K$ s.t. f = $\frac{f_n}{f_d}$ with $f_d \neq 0$, either
+    \begin{itemize}
+        \item $f_d \in T$. Then $f\in R$, i.e. $f\in M_0$.
+        \item $f_d \notin T$. Then there exists some $k\in\Z_{>0}$ s.t. $f_d = x^k f_d'$ s.t. $f_d'\in T$. Then $f\in M_k$.
+    \end{itemize}
+    Since for all $f_i, f_j \in M_i$ and $f_i, f_j \notin M_{i+1}$, s.t. $f_i \neq f_j$, there exists $r = \frac{f_{jn}}{f_{in}}\in R$ s.t. $r\cdot f_i = f_j$ as $R$ is a field (otherwise either $f_i$ or $f_j$ is in $M_{i+1}$). Therefore any chain of modules must be a subchain of the one listed above, which indicates that $K$ is Artinian.
+
+    Notice that the absence of multiplication is really important here, as otherwise $(\frac{1}{x^m}) \subseteq (\frac{1}{x^k})$ for all $m \geq k$, where the chain collapses s.t. the module is Noetherian. 
+\end{remark}
+
+The following gives the proof of the theorem:\
+
+\begin{proof}[Proof of Theorem \ref{thm:Criterion for Artinian ring}]
+    First prove the implication where $R$ is Artinian:
+    \begin{enumerate}[label=\roman*)]
+        \item \emph{$R$ has finite many maximal ideals}. Proceed by showing the contraposition. Suppose that there exists infinitely many distinct maximal ideals $(m_1, \cdots, m_k, \cdots)$. Consider the descending chain:
+        \[
+            m_1 \supsetneq m_1 m_2 \supsetneq \cdots \supsetneq m_1\cdots m_k \supsetneq \cdots
+        \]
+        Claim that $m_1\cdots m_k m_{k+1}$ is indeed a proper sub-ideal of $m_1\cdots m_k$. Suppose that this is not the case. Then, for all $x\in m_1\cdots m_k$ there exists some $p\in m_{k+1}$ s.t. $yp = x$ for some $y\in m_1\cdots m_k$. But this gives $x\in m_{k+1}$, i.e. $m_{k+1} \supseteq m_1\cdots m_k$; in particular $m_{k+1} \supsetneq m_1$ as the ideals are assumed to be distinct, which contradicts the fact that $m_1$ is maximal. Then by the claim the ring is not Artinian.
+        \item \emph{Every maximal ideal in $R$ is a minimal prime ideal.} Notice that this is equivalent to stating that \emph{every prime ideal is maximal}. Therefore, it suffices to prove that for any prime ideal $\mathfrak{p}$, $R/\mathfrak{p}$ is a field. Let $x\notin \mathfrak{p}$. Consider the following descending chain:
+        \[
+            (x) \supseteq (x^2) \supseteq \cdots \supseteq (x^n) \supseteq \cdots
+        \]
+        Since $R$ is Artinian, there can only exist finitely many proper sub-ideals, i.e. there exists some $k$ s.t. $(x^k) = (x^{k+1})$. That is, there exists some $r\in R$ s.t. $r\cdot x^k = x^{k+1}$. This gives $x^k(1 - xr) = 0$. Since $\mathfrak{p}$ is prime, and $0\in\mathfrak{p}$, $(1 - xr) \in \mathfrak{p}$, i.e. $1 - xr = 0$ in $R/\mathfrak{p}$. Therefore, every element $x\notin \mathfrak{p}$ is invertible in $R/\mathfrak{p}$, which gives that $\mathfrak{p}$ is maximal.
+        \item \emph{$R$ is Noetherian.} It suffices to prove that $R$ is of finite length. First verify that there exists a sequence of ideals that are product of maximal ideals that gives a composition series. Then since $R$ is Artinian each factor must be simple, which gives the desired result.
+        
+        By i) there can only exist finitely many maximal ideals. Let them be $(p_1, \cdots, p_r)$. Claim that for $I = p_1\cdots p_r$, there exists some $k$ s.t. $I^k = (0)$. It suffices to verify that $\Ann_{R}(I^k) = R$. 
+
+        Denote $J = \Ann_{R}(I^k)$. Proceed via showing a contradiction. Suppose that $J \neq R$. Then since $J$ is an ideal in $R$ and $R$ is Artinian, there exists a minimal ideal $J'$ that properly contains $J$. Then there exists some $x\in J'\smallsetminus J$. Consider the ideal $J + Ix$. This is indeed an ideal as both $I$ and $J$ are ideals. Further $J \subseteq J + Ix \subseteq J'$ as $J + Ix \subseteq J + Rx \subseteq J'$. Since $J'$ is minimal, and it properly contains $J$, it must fall into one of the following two cases:
+        \begin{itemize}
+            \item $J = J + Ix$. Then $Ix \in J$, which gives $Ix(I^k) = xI(I^k) = xI^{k+1} = xI^k = 0$, i.e. $x\in J$, which is a contradiction.
+            \item $J + Ix = J'$. Since $J'$ is minimal, $J'/J$ is simple, i.e. $x$ generates $J'/J$. As $I$ is contained in every maximal ideal in $R$, it is also the case in $J'/J$ by correspondence. Then in $J'/J$, $x = Ix \implies J'/J = 0$, i.e. $J' = J$ which is a contradiction.
+        \end{itemize}
+        Then a composition series is given via the construction above:
+        \[
+            R \supseteq p_1\supseteq p_1 p_2 \supseteq \cdots \supseteq p_1\cdots p_r \supseteq p_1^2\cdots p_r \supseteq \cdots \supseteq (p_1\cdots p_r)^k = (0)
+        \]
+        Notice that for $S$ a submodule of $R$, $S/Sp_i$ is a $R/p_i$ vector space as $p_i$ is maximal; and it is isomorphic to some ideal of $R$. Therefore, it is Artinian, i.e. it is of finite dimension (otherwise it admits an infinite basis, which gives an infinite descending chain). Therefore, each factor has finite length, which indicates that $R$ has finite length.
+    \end{enumerate}
+    Now show the converse where $R$ is Noetherian, there exists finitely many prime ideals, and they are maximal. 
+
+    By hypothesis, the maximal ideals can be written out as $(p_1, \cdots, p_r)$ for finite $r$. Then every element in $I = p_1\cdots p_r \subseteq p_1 \cap p_2 \cap \cdots \cap p_r$ is nilpotent. Proceed to prove the contradiction: suppose that $a$ is not nilpotent, then the fraction ring $A^{-1} R$ is not the zero ring, where $A = \{ 1, a, \cdots, a^n, \cdots \}$. Consider the natural embedding of $R$ into $A^{-1}R$. Claim that this injective, as if there exists some prime ideal $\mathfrak{p} \subseteq R$ that contains $a$, then it embeds to the whole ring in $A^{-1}R$, which contradicts the correspondence. 
+
+    $I$ is then finitely generated, as $R$ is Noetherian. In particular, all elements in the system of generators of $I$ are nilpotent, which implies that there exists some $k$ s.t. $I^k = (0)$. Adopting the same strategy as above reaches the conclusion.
+\end{proof}
+
+\begin{proposition}\label{prop:Noeth finite minimal prime}
+    If $R$ is Noetherian, then $R$ has finite minimal prime ideals. 
+\end{proposition}
+
+\begin{theorem}\label{thm:associated prime}
+    Let $R$ be a Noetherian commutative ring, and $M$ be a finitely generated $R$-module. Then there exists a finite sequence of $R$-submodules:
+    \[
+        (0) = M_0 \subsetneq M_1 \subsetneq \cdots \subsetneq M_n = M 
+    \]
+    s.t. $M_i / M_{i-1} \simeq R / p_i$ for all $i$. Such $p_i$s are the \underline{associated primes} of the module.
+\end{theorem}
+
+\begin{proof}
+    First we prove that if $M\neq 0$, there exist some $x\in M$ s.t. if $p = \Ann_R(x)$, then $p$ is a prime ideal. Consider $\mathcal{P} = \{ \Ann_R(x) \mid x\in M\smallsetminus \{0\} \}$ which are the set of annihilators of all elements in $R$. Since $R$ is Noetherian, there exists a maximal element $p\in\mathcal{P}$. Claim that the associated $x$ is the element where the statement above holds. Suppose that $ab\in p$, and $a\notin p$. By definition $ax \neq 0$, i.e. $b\in \Ann_R(ax)$ since $R$ is commutative. But since $p$ is maximal, $\Ann_R(ax) \subseteq \Ann_R(x)$, i.e. $b\in \Ann_R(x) = p$ which is a prime ideal. 
+
+    Then for the specific $x$ and $p$, consider the $R$-linear map $f_{x, p}: R\to M, a\mapsto ax$. Since it has kernel $p$, $\im f_{x, p} \simeq R/p$ by the first isomorphism theorem. Since $f_{x,p}$ is an $R$-linear map, its image is a submodule. Designate $\im f_{x, p} =: M_1$. Apply recursively to $R$ and $M/M_1$ to get subsequent quotients. Since $R$ is Noetherian and $M$ is finitely generated, $M$ is a Noetherian $R$-module, which implies that the process will terminate. 
+\end{proof}
+
+This gives a proof for proposition \ref{prop:Noeth finite minimal prime}:
+
+\begin{definition}[Support]
+    The \textbf{support} of an $R$-module $M$ is the set of prime ideals s.t. $M_p := S^{-1}M$ where $S = R \smallsetminus p$.
+\end{definition}
+
+\begin{remark}
+    If $M$ is finitely generated, then an equivalent definition for support is
+    \[
+        \mathrm{Supp} (M) = \{ p \text{ prime ideal } \mid\ p\supseteq \Ann_R(M) \}
+    \]
+\end{remark}
+
+\begin{proof}[Proof of Proposition \ref{prop:Noeth finite minimal prime}]
+    If $M$ is a finitely generated $R$-module and $N\subseteq M$ a submodule, notice $\mathrm{Supp}(M) = \mathrm{Supp}(N) \cup \mathrm{Supp}(M/N)$. as $\Ann_R(N) \subseteq \Ann_R(M)$ and so is the case for the quotient. Then
+    \[
+        \mathrm{Supp}(M) = \bigcup_{i=1}^n \mathrm{Supp}(M_i/M_{i-1}) = \bigcup_{i=1}^n \mathrm{Supp}(R/p_i) = \{ \text{prime ideals of }R \text{ containing } p_i \}
+    \]
+    In particular, the minimal prime ideals containing $\Ann_R(M)$ are the $p_i$s, which since $M$ is Noetherian are only finitely many.
+    If $M = R$, then $\Ann_R(R) = 0$, in which case the $p_i$s are minimal prime ideals (over $(0)$).
+\end{proof}
+
+\subsection{Artinian-Noetherian Implication in Ring}\label{sec:Artin-Noeth Ring Implication}
 
 \section{Finitely Generated Modules Over PIDs}
 
 \subsection{Torsion and Module Structure}
-
-\section{Linear Algebra on Modules}
 
 \end{document}
