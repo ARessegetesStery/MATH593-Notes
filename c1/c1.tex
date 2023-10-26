@@ -428,7 +428,7 @@ Specify $R$ to be a commutative ring, with $I \subseteq R$ an ideal of $R$. Cons
 \end{proposition}
 
 \begin{proof}
-    Prove by contradiction. Suppose that $I = (p)$ is a prime ideal that is not maximal. Then by Theorem \ref{thm:maximal ideal inclusion} there exists some maximal ideal $x\notin I$ s.t. $I \subseteq (x)$, i.e. there exists some $r\in R$ s.t. $p = xr$. Since $r\notin I, r\in P$. Write $r = pr'$ for $r'\in R$. Then $xr'=1$, i.e. $(x) = (1)$ which is a contradiction.
+    Prove by contradiction. Suppose that $I = (p)$ is a prime ideal that is not maximal. Then by Theorem \ref{thm:maximal ideal inclusion} there exists some maximal ideal $x\notin I$ s.t. $I \subseteq (x)$, i.e. there exists some $r\in R$ s.t. $p = xr$. Since $x\notin I, r\in I$. Write $r = pr'$ for $r'\in R$. Then $xr'=1$, i.e. $(x) = (1)$ which is a contradiction.
 \end{proof}
 
 \begin{definition}[Euclidean Domain]
@@ -507,7 +507,7 @@ Specify $R$ to be a commutative ring, with $I \subseteq R$ an ideal of $R$. Cons
 \end{proposition}
 
 \begin{proof}
-    Claim that $(p)$ is a prime ideal given that $p$ is irreducible. Since $p$ is irreducible and $R$ is PID, for all $b_1 b_2\in (p)$, there exists some irreducible $q_i$s for $i\in I$ s.t. $b_1 b_2 = p\cdot \prod_{i\in I} q_i$. Since factorization unique, at least one of $b_1$ and $b_2$ admits a divisor $p$, which indicates that $(p)$ is a prime ideal. 
+    Claim that $(p)$ is a prime ideal given that $p$ is irreducible. Since $p$ is irreducible and $R$ is UFD, for all $b_1 b_2\in (p)$, there exists some irreducible $q_i$s for $i\in I$ s.t. $b_1 b_2 = p\cdot \prod_{i\in I} q_i$. Since factorization unique, at least one of $b_1$ and $b_2$ admits a divisor $p$, which indicates that $(p)$ is a prime ideal. 
 \end{proof}
 
 \begin{proposition}\label{prop:irreducible is prime implies UFD}
