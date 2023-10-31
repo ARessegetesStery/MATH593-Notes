@@ -125,6 +125,141 @@ The direct sum allows describing it with a basis, which gives a generalization o
 
 \section{Rational and Smith Normal Form}
 
+The main idea of this section is to classify (and represent) linear transformations up to similarity. The construction seeks to embed a specific map into the module structure.
+
+Let $k$ be a field, with $V$ a finite-dimensional $k$-vector space. Let $T$ be an endomorphism of $V$. Then $(V, T)$ could be viewed as an $k[x]$-module via specifying that $xu := T(u)$ for all $u\in V$. 
+
+\begin{remark}
+    Since the only difference in module structure introduced by $(V, T)$ from $V$ is the application of $T$ when multiplying by $x$, submodules are preserved as long as it is closed w.r.t. $T$. That is, for all $W \subseteq V$ $k$-vector subspaces, $W\subseteq V$ is a $k[x]$-submodule as long as $T(W) \subseteq W$.  
+\end{remark}
+
+\begin{proposition}\label{prop:(V, T) isom}
+    $(V, T) \simeq (V, T')$ if and only if $T$ and $T'$ are similar.
+\end{proposition}
+
+\begin{proof}
+    Proceed via showing implication in both directions:
+    \begin{itemize}
+        \item[$\Rightarrow$] Suppose that there exists isomorphism $\varphi$ from $(V, T)$ to $(V, T')$. Then for $u\in V$ consider
+        \[
+            \varphi(T(u)) = \varphi(xu) = x \varphi(u) = T'(\varphi(u)) \implies T(u) = \varphi^{-1}(T(\varphi(u)))
+        \]
+        which implies that $T$ and $T'$ are similar.
+        \item[$\Leftarrow$] If $T$ and $T'$ are similar, there exists some isomorphism $\varphi$ s.t. $T' = \varphi^{-1}\circ T\circ\varphi$. Then $\varphi$ gives an isomorphism from $(V, T)$ to $(V, T')$ with the same process as above.
+    \end{itemize}
+\end{proof}
+
+Since $k[x]$ is a PID, applying Structural Theorem gives $V \simeq k[x]^n \oplus k[x]/(f_1) \oplus \cdots \oplus k[x]/(f_r)$. Since $k[x]$ is of infinite dimension if viewed as a $k$-vector space, $n = 0$, which gives 
+\begin{equation}\tag{$\ast$}\label{eq:(V, T) structure}
+    V \simeq k[x]/(f_1) \oplus \cdots \oplus k[x]/(f_r), \quad f_1 \mid \cdots \mid f_r
+\end{equation}
+To make the representation canonical, fix $f_i$s to be monic, i.e. the leading coefficients for $f_i$s are 1 for all $i$. 
+
+Now consider the matrix representation of applying $T$ on $V$. It is sufficient to consider the situation under $k[x]/(f_i)$, as $V$ is isomorphic to the direct sum of some copies of this, which only differs in $f_i$s chosen. This gives the following definition:
+
+\begin{definition}[Companion Matrix]
+    Let $f = a_0 + a_1 x + \ldots + a_{d-1}x^{d-1} + x^d$. Then multiplication by $x$ (application of $T$) is represented as
+    \[
+        \mathcal{C}_{f_i} = \begin{pmatrix}
+            0       & \cdots  & \cdots  & 0      & -a_0   \\
+            1       & \ddots  & \ddots  & \vdots & -a_1   \\
+            0       & \ddots  & \ddots  & \vdots & \vdots \\
+            \vdots  & \ddots  & \ddots  & 0      & \vdots \\
+            0       & \cdots  & 0       & 1      & -a_{d-1}
+        \end{pmatrix}
+    \]
+    which is the \textbf{companion matrix} of $f$. 
+\end{definition}
+
+\begin{definition}[Rational Canonical Form]
+    A matrix $A\in M_n(K)$ is in \textbf{rational canonical form} if it is in the form of
+    \[
+        \begin{pmatrix}
+            \mathcal{C}_{f_1} & & 0 \\
+            & \ddots & \\
+            0 & & \mathcal{C}_{f_r}
+        \end{pmatrix}, \qquad f_1\mid \cdots \mid f_r,\quad f_i \text{ monic,}\quad \deg f_i \geq 1\ \forall\ i
+    \]
+\end{definition}
+
+Then choosing basis to be $x^k \in k[x]/(f_i)$ s.t. $k < \deg f_i$ and appending the basis of the summands gives the matrix of $T$ in rational canonical form. Note that this is a basis as a $k$-vector space, but is not one for $V$ as a $k[x]$-module. 
+
+\begin{remark}
+    $T, T'\in\End_K{V}$ are similar if and only if they can be described in some basis in the rational canonical form:
+\end{remark}
+
+\begin{proof}
+    By Remark \ref{prop:(V, T) isom} this implies that $(V, T) \simeq (V, T')$. Using Eq. \ref{eq:(V, T) structure} gives that they have the same $f_i$s in \ref{eq:(V, T) structure}, i.e. they have the same rational canonical form.
+\end{proof}
+
+\begin{proposition}
+    Let $V$ be a finite-dimensional $k$-vector space with basis $B_V = (u_1, \ldots , u_n)$. Let $(V, T)$ be the extension into $k[x]$-module with $T\in\End_K(V)$, and $A$ be the matrix representation of $T$ using basis $B_V$. Consider $\varphi: k[x]^n \to k[x]^n$ s.t. it is represented by $(x\Id_n - A)$ in the canonical basis. Then $V \simeq k[x]^n/(\im \varphi)$; and $\varphi$ is injective. 
+\end{proposition}
+
+\begin{proof}
+    Consider the following commutative diagram:
+    \clearpage
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}        
+            k[x]^n \arrow[rr, "\pi"] \arrow[rrdd, "\psi"] & & k[x]^n/(\im \varphi) \arrow[dd, dashed, "h"] \\
+            & & \\
+            & & V
+        \end{tikzcd}        
+    \end{figure}
+    Specify $\psi: e_i \mapsto u_i \ \forall\ i$. To prove that $V \simeq k[x]^n / (\im \varphi)$ it suffices to verify that $\ker \psi = \im \varphi$. Proceed via showing inclusion in both directions:
+    \begin{itemize}
+        \item[$\supseteq$:] It suffices to verify that for all $j$, $\psi(\varphi(e_i)) = 0$. Applying the definition of the maps gives
+        \[
+            \psi(\varphi(e_i)) = \psi(xe_i - \sum\limits_{j=1}^n a_{ij} e_j) = x\psi(e_i) - \sum\limits_{j=1}^n a_{ij} \psi(e_j) = T(u_i) - T(u_i) = 0
+        \]
+        \item[$\subseteq$:] Specify $h: \bar{e}_i \mapsto u_i$. $\ker\psi \supseteq \im \varphi$ gives that $h$ is surjective. Notice that $h$ is an isomorphism between $k[x]$-modules if and only if $h$ is an isomorphism of $k$-vector spaces that are closed w.r.t. multiplication by $x$ (or application of $T$). Therefore, to show that $h$ is an isomorphism it suffices to show that the $k$-linear span of $\bar{e}_i$s is $k[x]^n / (\im \varphi) =: U$. 
+        
+        It suffices to verify that $x^m \bar{e}_i \in U$. Proceed via induction:
+        \begin{itemize}
+            \item \emph{Base case.} $e_i$ by definition is in the span of $e_i$s for all $i$. 
+            \item \emph{Inductive step}. Suppose that $x^k \bar{e}_i \in U$. Since $\varphi$ is a map of free $k[x]$-modules, $U \simeq \ker \varphi$, which gives 
+            \[
+                \varphi(e_i) = (xI_n - A) e_i = xe_i - \sum_{j=1}^n a_{ij} e_j = x^m e_i - \sum_{j=1}^n x^{m-1} a_{ij} e_j = 0
+            \]
+            i.e. $x^m e_i$ is spanned by $(x^{m-1} a_{ij} e_j)$s, which by inductive hypothesis are in $k$-linear span of $e_i$s.
+        \end{itemize}
+    \end{itemize}
+    It remains to show that $\varphi$ is injective. Since $\rank_{k[x]}(V) = 0$, by $V \simeq k[x]^n / (\im \varphi)$, $\rank(\im\varphi) = \rank(k[x]^n) = n$. But notice $k[x]^n / \ker \varphi \simeq \im \varphi$, i.e. $\rank{\ker \varphi} = \rank{k[x]^n} - \rank{\im \varphi} = 0$. But $\ker\varphi$ as a submodule of $k[x]$ is free, which implies that $\ker \varphi = \{0\}$, i.e. $\varphi$ is injective. 
+\end{proof}
+
+The map $(x\Id_n - A)$ is important as it annihilates the torsion module of modules on $k[x]$, it reveals the information of $f_i$s. Specifically, for each summand in the direct sum of $\bigoplus_i k[x]/(f_i)$, $f_i$ is the minimal annihilator of the whole module. 
+
+\begin{definition}[Smith Normal Form]
+    Let $(V, T)$ be a $k[x]$-module where $V$ is a finite-dimensional $k$-vector space, and $T\in \End_k(V)$. Let the matrix representation of $T$ in a certain basis to be $A$. The \textbf{Smith Normal Form} of $(x\Id_n - A) =: M$, is a matrix in the form of
+    \[
+        \left(\begin{smallmatrix}
+            1 & & & & & \\[0pt]
+            & \ddots & & & & \\[0pt]
+            & & 1 & & & \\[0pt]
+            & & & f_1 & & \\[0pt]
+            & & & & \ddots & \\[0pt]
+            & & & & & f_r
+        \end{smallmatrix}\right) \qquad \qquad f_1\mid \cdots \mid f_r,\quad f_i \text{ monic,}\quad \deg f_i \geq 1\ \forall\ i
+    \]
+    s.t. it can be transformed from $M$ via the following transformations:
+    \begin{enumerate}
+        \item Swap the rows/columns of $M$.
+        \item Multiply a row/column of $M$ by $\lambda \in k\smallsetminus \{0\}$.
+        \item Add one row/column of $M$ multiplied by $f \in k[x]$ to another row/column.
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    The valid operations allowed in making the transformation of $M$ are the same as applying invertible transformation, with column/row operations corresponding to manipulation of basis in the source/image.
+
+    Multiplication of one row is only allowed up to non-zero elements in $k$ as $k[x]$ is not a domain, where multiplication is not invertible.
+\end{remark}
+
+\begin{remark}
+    It could be read off from the matrix that $\Ann_{k[x]}(V) = \{g \in k[x] \mid f_i \mid g \forall i\}$, as there are no $1$ elements on the diagonal of the matrix.  
+\end{remark}
+
 \section{Minimal and Characteristic Polynomials}
 
 \section{Jordan Normal Form}
