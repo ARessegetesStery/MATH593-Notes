@@ -1,0 +1,132 @@
+\documentclass{article}
+\usepackage{../refalg}
+
+\begin{document}
+\Makepagesectionhead{MATH 593 - Linear Algebra on a Ring}{ARessegetes Stery}
+
+\tableofcontents
+\newpage
+
+\section{Linear Transformations on a Ring}
+
+Recall the two versions of Structural Theorem of finitely generated modules over PID:
+
+\begin{theorem}[Sturcture, v1]\label{thm:Structure f.g. modules over PID v1}
+    Let $M$ be a finitely generated $R$-module, with $R$ a PID. Then there exists $a_1, \ldots, a_m \in R\smallsetminus\{0\}$ s.t. $a_1 \mid a_2 \mid \cdots \mid a_m$. 
+\end{theorem}
+
+\begin{theorem}[Structure, v2]\label{thm:Structure f.g. modules over PID v2}
+    Let $M$ be a finitely generated $R$-module, with $R$ a PID. Then there exists primes $p_i$s and $n_i$ $\in \N$ s.t. $M \simeq R^r \oplus R/(p_1^{n_1}) \oplus \cdots \oplus R/(p_r^{n_r})$.
+\end{theorem}
+
+\begin{example}
+    Let $R = \Z$, with $M$ an $R$-module. Since defining scalar multiplication on modules is equivalent to defining maps from $R$ to endomorphisms on $M$, it is sufficient for $M$ to be an abelian group. By Structural Theorem, there exists $p_i$s and $m_i$s s.t. $M \simeq \Z^r \oplus \Z/(p_1^{m_1}) \oplus \cdots \oplus \Z/(p_k^{m_k})$. $M$ is finite (as a group) if and only if $r = 0$.    
+\end{example}
+
+The direct sum allows describing it with a basis, which gives a generalization of linear algebra defined on ring (module) structure. 
+
+\begin{parenthesis}
+    Linear maps between elements in free modules can be represented as invertible matrices. 
+\end{parenthesis}
+
+\begin{proof}
+    The reasoning is similar to that under the context of vector spaces. Fix $R$ to be a commutative ring, with $M$ a finitely generated $R$-module. Let $n = \rank(M)$. Then $M \simeq R^n$. Choose $B = (e_1, \ldots, e_n)$ to be a basis of $M$. 
+
+    For all $u\in M$, there exists a unique decomposition of $u$ into the basis, i.e. there exists $a_1, \ldots, a_n$ s.t. $u = \sum_{k=1}^n a_k e_k$. Denote $M_B(u) = (a_1, \ldots, a_k)^T$. 
+
+    Now consider change of basis. Suppose that $B' = (e_1', \ldots, e_n')$ is another basis of $M$. There exists $b_{ik}$s s.t. $e_i = \sum_{k=1}^n b_{ik} e_k'$; and there exists $c_{ik}$s s.t. $e_i' = \sum_{k=1}^n b_{ik} e_k$. Apply the substitution twice gives
+    \[
+        e_i = \sum\limits_{j=1}^n b_{ij} e_j' = \sum\limits_{j=1}^n b_{ij} \left( \sum\limits_{k=1}^n c_{jk} e_k \right) = \sum\limits_{k=1}^n \sum\limits_{j=1}^n (b_{ij} c_{jk}) e_k \implies \left(\sum\limits_{k=1}^n \sum\limits_{j=1}^n (b_{ij} c_{jk}) e_k\right) - e_i = 0
+    \]
+    Since $e_i$s give a basis, this implies that $\sum_{j=1}^n (b_{ij} c_{jk}) = \delta_{ik}$. Let $V = (b_{ij}) \in M_n(R)$ to be the transition matrix from $B$ to $B'$, abd $U = (c_{ij}) \in M_n(R)$ the transition matrix from $B'$ to $B$. Conducting this concurrently gives $UV = \Id_{B}$. Similarly $VU = \Id_{B'}$.
+\end{proof}
+
+\begin{proposition}
+    The converse of the above also holds, i.e. If $(c_{kl})$ is invertible in $M_n(R)$, then for $e_k' = \sum_{l=1}^n c_{kl} e_l$, $e_k'$s also give a basis. 
+\end{proposition}
+
+\begin{proof}
+    It suffices to verify that $e_k'$s are $R$-linearly independent, and they span the whole module:
+    \begin{itemize}
+        \item If there exists $\lambda_i$s that are not all zero, that $\sum_{i=1}^n \lambda_i e_i' = 0$, then $\sum_{i=1}^n \lambda_i \sum_{k=1}^n c_{ik} e_k = 0$ which implies that $e_k$ are not $R$-linearly independent, which is a contradiction.
+        \item Since $(c_{kl})$ is invertible, there exists some $(b_{kl})$ s.t. $e_k = \sum_{l=1}^n b_{kl} e_l$. Then, for all $u\in M$ with decomposition into the original basis $u = \sum_{i=1}^n u_i e_i$, there exists a decomposition into $e_k'$s: $u = \sum_{i=1}^n u_i \sum_{j=1}^n b_{ij} e_j$. 
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    The transition matrix is compatible with representation of an element in the basis. Let $M \ni u = \sum_{i=1}^n u_i e_i$, with $U = (b_{ij})$ the transition matrix from $B = (e_i)$ to $B' = (e_i')$. Then 
+    \[
+        u = \sum\limits_{i = 1}^n u_i e_i = \sum\limits_{i=1}^n \left(u_i \sum\limits_{j=1}^n b_{ij} e_i'\right) \implies M_{B'}(u) = U\cdot M_{B}(u)
+    \]
+\end{remark}
+
+\begin{remark}
+    Using such formalization the operations are represented in the identical way as that in vector spaces:
+    \begin{enumerate}
+        \item \emph{Applying a linear map.} If $T: F\to G$ is not an endomorphism and $T$ is specified via specifying the image of the basis $T(e_j) = \sum_{i=1}^n a_{ij} f_j$, where $F$ and $G$ are finitely generated free $R$-modules; and $B_F = (e_i), B_G = (f_i)$ give a basis in the corresponding module. Then the matrix representation of $T$ under such bases is $M_{B_F B_G}(T) = (a_{ij})$. It acts in the same way as matrices acting on vectors, as for $M_{B_F}(u) = (b_1, \ldots, b_u)^T$
+        \begin{align*}
+            T(u) & = T\left( \sum_{j=1}^n b_j e_j \right) = \sum_{j=1}^n b_j T\left( e_j \right) = \sum_{j=1}^n b_j \left( \sum_{i=1}^n a_{ij} f_j \right) = \sum_{i=1}^n \sum_{j=1}^n (a_{ij} b_j) f_j \\
+            & \implies M_{B_G}(T(u)) = M_{B_F B_G}(T) \cdot M_{B_F}(u) \qquad \qquad \qquad \qquad \qquad \quad
+        \end{align*}
+        \item \emph{Composition of linear maps.} Consider $T: F \to G$ and $S: G \to H$ where $B_F = (e_i), B_G = (f_i)$ and $B_H = (g_i)$. To specify the linear maps, it suffices to specify where the elements of the basis is mapped to. Suppose that $T(e_i) = \sum_{j=1}^n a_{ji} f_j; S(f_i) = \sum_{j=1}^n b_{ji} h_j$. For $F \ni u = \sum_{i=1}^n u_i e_i$, considering $g \circ f$ gives
+        \begin{align*}
+            (S\circ T)(u)
+            & = (S\circ T)\left( \sum_{i=1}^n u_i e_i \right) = S\left( \sum_{i=1}^n u_i \sum_{j=1}^n a_{ji} f_j \right) = \sum_{i=1}^{n} u_i \sum_{j=1}^{n} a_{ji} S(f_j) \\
+            & = \sum_{i=1}^{n} u_i \sum_{j=1}^{n} a_{ji} \sum_{k=1}^n b_{kj} h_j = \sum_{i=1}^n u_i \sum_{j=1}^{n} \left(\sum_{k=1}^{n} (a_{ji}b_{kj}) h_j\right) \\
+            & \implies M_{B_F B_H} (S\circ T) = B_{B_G B_H}(S) \cdot M_{B_F B_G}(T)
+        \end{align*}
+        where the elements of $M_{B_F B_H} (S\circ T)$ is specified by $\sum_{j=1}^{n}\sum_{k=1}^{n} (a_{ji} b_{kj})$.
+        \item \emph{Change of basis.} Now consider change of basis under the context of a linear transformation. Let $T: F\to G$ be an $R$-linear map, with $M_{B_F B_G}(T)$ the matrix representation of $T$ under $B_F$ and $B_G$. Now consider change of basis maps $U: B_F\to B_F'$ and $\tilde{U}: B_G \to B_G'$. We are interested in the corresponding map $\tilde{T}$ of $T$ after applying the change of basis:
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzcd}
+                B_F'\arrow[rr, "\tilde{T}"] & & B_G' \\[7pt]
+                B_F \arrow[u, "U"] \arrow[rr, "T"] & & B_G \arrow[u, "\tilde{U}"]
+            \end{tikzcd}
+        \end{figure}
+
+        As proven above it is valid to express linear transformation and change of basis using matrices, and matrices corresponding to change of basis are invertible, we have for $u\in F$,
+        \[
+            M_{B_G'}(T(u)) = M_{B_G B_G'}(\tilde{U}) M_{B_F B_G}(T) M_{B_F' B_F}(U) = M_{B_G B_G'}(\tilde{U}) M_{B_F B_G}(T) (M_{B_F B_F'}(U))^{-1}
+        \]
+        \item \emph{Change of basis on endomorphisms.} Then the equality above becomes
+        \[
+            M_{B_G'}(T(u)) = M_{B_G B_G'}(U) M_{B_G}(T) M_{B_G' B_G}(U) = (M_{B_G' B_G}(U))^{-1} M_{B_G}(T) M_{B_G' B_G}(U)
+        \]
+        which is exactly the conjugate of a matrix. 
+    \end{enumerate}
+\end{remark}
+
+\begin{definition}
+    Two matrices $A$ and $B$ in $M_n(R)$ are \textbf{similar} if there exists some invertible $U\in M_n(R)$ s.t. $A = U^{-1}B U$. Two $R$-linear maps $T$ and $T': F \to F'$ are \textbf{similar} if there exists some isomorphism $\varphi$ s.t. $T' = \varphi^{-1} T \varphi$. 
+\end{definition}
+
+\begin{remark}
+    Similarity is an equivalence relation, with $(A = U^{-1}BU) \wedge (B = V^{-1}CV) \implies A = (VU)^{-1}C(VU)$ for transitivity.
+
+    $R$-linear maps are similar to each other if and only if the corresponding matrix is similar, as on free modules linear maps can be represented by matrices.
+\end{remark}
+
+\begin{proposition}\label{prop:canonical bijection}
+    There exists a canonical bijection between:
+    \[
+        \{ R\text{\upshape{-linear endomorphisms}}\ F\to F \} / \text{\upshape{similarity}}\ \simeq\ M_n(R) / \text{\upshape{similarity}}
+    \]
+\end{proposition}
+
+\begin{proof}
+    Choose $B_F$ to be a basis of $F$. First verify that the map is bijective: as is formalized above since $F$ is free, with a fixed basis linear transformations could be represented via matrices to indicate how the basis is transformed. Therefore, for any linear transformation there exists one matrix to represent it under $B_F$ and vice versa. Further the choice of $M_n$ is unique as matrices under different basis are conjugate w.r.t. the change of basis matrix.
+\end{proof}
+
+% TODO verify whether this is true
+\begin{remark}
+    The bijection will still be valid without the quotient. However this will cease to be canonical as the map differs by the choice of basis on which the matrix conducts the representation.
+\end{remark}
+
+\section{Rational and Smith Normal Form}
+
+\section{Minimal and Characteristic Polynomials}
+
+\section{Jordan Normal Form}
+    
+\end{document}
