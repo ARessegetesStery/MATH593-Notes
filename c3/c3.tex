@@ -192,6 +192,7 @@ Then choosing basis to be $x^k \in k[x]/(f_i)$ s.t. $k < \deg f_i$ and appending
     By Remark \ref{prop:(V, T) isom} this implies that $(V, T) \simeq (V, T')$. Using Eq. \eqref{eq:(V, T) structure} gives that they have the same $f_i$s in \eqref{eq:(V, T) structure}, i.e. they have the same rational canonical form.
 \end{proof}
 
+% TODO Think about a more straightforward approach to this
 \begin{proposition}
     Let $V$ be a finite-dimensional $k$-vector space with basis $B_V = (u_1, \ldots , u_n)$. Let $(V, T)$ be the extension into $k[x]$-module with $T\in\End_K(V)$, and $A$ be the matrix representation of $T$ using basis $B_V$. Consider $\varphi: k[x]^n \to k[x]^n$ s.t. it is represented by $(x\Id_n - A)$ in the canonical basis. Then $V \simeq k[x]^n/(\im \varphi)$; and $\varphi$ is injective. 
 \end{proposition}
@@ -329,6 +330,83 @@ The conclusion is that for $V \simeq k[x]/(f_1) \oplus \cdots \oplus k[x]/(f_r),
 
 Further, since $f_r$ is the monic generator of $\Ann_{k[x]}(V)$, $m_T(T)(u) = f_r\cdot u = 0$ for all $u\in V$, i.e. $m_T(T) = 0$. Since $m_T \mid c_T$, $c_T(T) = 0$, which is the result from Cayley-Hamilton.
 
+% TODO Check whether this is true.
+\begin{remark}
+    Notice that the structure of $V$ is closely connected to that of $T$. Since application of $k[x]$ is specified by $T$; and $V$ is a $k$-vector space, i.e. no element in $k$ annihilates non-zero elements in $V$, $\Ann_{k[x]}(V) = \Ann_{k[x]}(T).$
+\end{remark}
+
 \section{Jordan Normal Form}
-    
+
+\begin{parenthesis}
+    Let $f$ be monic in $k[x]$. Then
+    \begin{enumerate}
+        \item $k = \C$. Then irreducible polynomials $f$ has form $f = x - a$ for some $a\in \C$. 
+        \item $k = \R$. Then $f$ irreducible takes either of the following forms:
+            \begin{itemize}
+                \item $f = x - a$ for $a\in \R$.
+                \item $f = (x - \lambda)(x - \bar{\lambda})$ for $\lambda \in \C$.
+            \end{itemize}
+    \end{enumerate}
+\end{parenthesis}
+
+\begin{proof}
+    1.) follows directly from the fact that $\C$ is algebraically closed.  2.) follows from the fact that if $f$ is of degree higher than 1, it must admit a root in $\C$, which indicates that the conjugate of that is also a root. Otherwise this is the case as in $\C$.
+\end{proof}
+
+\begin{remark}
+    This classification is harder for $\Q$, as it is easy to construct a polynomial with all of its roots being irrational numbers.
+\end{remark}
+
+Now consider $k$ to be an algebraically closed field, i.e. all irreducible factors of $f\in k[x]$ are of degree 1. Then applying Structural Theorem gives
+\[
+    M \simeq \bigoplus_{i=1}^s k[x]/(x - \lambda_i)^{m_i}
+\]
+Now adopt the basis $\overline{(x - \lambda_i)^{m_i - 1}}, \ldots, \overline{x - \lambda_i}, 1$ s.t. multiplication by $x$ on polynomials of degree $m_i - 1$ can be represented by a single entry on the matrix. Then the alternative transition companion matrix is
+\[
+    \widetilde{\mathcal{C}_f} = \begin{pmatrix}
+        \lambda_i & 1 & & 0 \\
+        0 & \ddots & \ddots & \\
+        \vdots & \ddots & \ddots & 1 \\
+        0 & \cdots & 0 & \lambda_i
+    \end{pmatrix} =: J_i
+\]
+which is a \textbf{Jordan block}. Therefore, combination of such basis in each summands of $V$ gives the matrix in \textbf{Jordan Canonical Form} or \textbf{Jordan Normal Form}:
+\[
+    T = \begin{pmatrix}
+        J_1 & & \\
+        & \ddots & \\
+        & & J_s
+    \end{pmatrix}
+\]
+
+\begin{definition}
+    A matrix $M$ is \textbf{diagonalizable} if it is similar to a diagonal matrix (or equivalently its Jordan Normal Form is diagonal). A linear transformation is \textbf{diagonalizable} if it can be represented by a diagonal matrix in some basis. 
+\end{definition}
+
+\begin{remark}
+    A matrix has a Jordan Normal Form where all Jordan blocks are of size 1 is diagonal.
+\end{remark}
+
+\begin{proposition}
+    $T\in\End_k(V)$ is diagonalizable if and only if $m_T$ splits as a product of distinct degree-1 monic polynomials.
+\end{proposition}
+
+\begin{proof}
+    Proceed via showing implication in both directions:
+    \begin{itemize}
+        \item[$\Rightarrow$:] Prove the contraposition. Suppose that $m_T$ does not split into distinct monic polynomials. Then the summands of direct sum of $M$ includes $k[x]/(x - \lambda_i) m_i$ for $m_i \geq 2$, i.e. there exists a Jordan block of size greater than 1, which indicates that $T$ is not diagonalizable.
+
+        An alternative proof for this part would be to consider $p(x) = \prod_{i=1}^r (x - \lambda_i)$, which gives $p(A) = 0$. Since $p$ splits, and $m_T$ generates $p$, $m_T\mid p$, i.e. $m_T$ splits.
+        \item[$\Leftarrow$:] Suppose that $m_T$ splits. Then $V \simeq \bigoplus_{i=1}^r k[x]/(f_i)$ where $f_r$ splits. Since $f_i \mid f_r$ for all $i$, $f_i$ splits; and by Chinese Remainder Theorem $M = \bigoplus_{i=1}^s k[x]/(f_i)$ where $f_i$s are not necessarily different. Then all Jordan blocks of $T$ are of size 1.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    Given a linear transformation $T$ with its matrix representation $A$. Then 
+    \[
+        c_T(x) = x^n - \mathrm{tr}(A) x^{n-1} + \cdots + (-1)^n \det A
+    \]
+    which is clear via considering the permutation of elements in $A$. 
+\end{remark}
+
 \end{document}
