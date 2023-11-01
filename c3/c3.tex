@@ -172,7 +172,7 @@ Now consider the matrix representation of applying $T$ on $V$. It is sufficient 
 \end{definition}
 
 \begin{definition}[Rational Canonical Form]
-    A matrix $A\in M_n(K)$ is in \textbf{rational canonical form} if it is in the form of
+    A matrix $A\in M_n(k)$ is in \textbf{rational canonical form} if it is in the form of
     \[
         \begin{pmatrix}
             \mathcal{C}_{f_1} & & 0 \\
@@ -189,7 +189,7 @@ Then choosing basis to be $x^k \in k[x]/(f_i)$ s.t. $k < \deg f_i$ and appending
 \end{remark}
 
 \begin{proof}
-    By Remark \ref{prop:(V, T) isom} this implies that $(V, T) \simeq (V, T')$. Using Eq. \ref{eq:(V, T) structure} gives that they have the same $f_i$s in \ref{eq:(V, T) structure}, i.e. they have the same rational canonical form.
+    By Remark \ref{prop:(V, T) isom} this implies that $(V, T) \simeq (V, T')$. Using Eq. \eqref{eq:(V, T) structure} gives that they have the same $f_i$s in \eqref{eq:(V, T) structure}, i.e. they have the same rational canonical form.
 \end{proof}
 
 \begin{proposition}
@@ -248,6 +248,7 @@ The map $(x\Id_n - A)$ is important as it annihilates the torsion module of modu
         \item Multiply a row/column of $M$ by $\lambda \in k\smallsetminus \{0\}$.
         \item Add one row/column of $M$ multiplied by $f \in k[x]$ to another row/column.
     \end{enumerate}
+    The $f_i$s are called \underline{elementary divisors}, or \underline{invariant factors}.
 \end{definition}
 
 \begin{remark}
@@ -257,10 +258,76 @@ The map $(x\Id_n - A)$ is important as it annihilates the torsion module of modu
 \end{remark}
 
 \begin{remark}
-    It could be read off from the matrix that $\Ann_{k[x]}(V) = \{g \in k[x] \mid f_i \mid g \forall i\}$, as there are no $1$ elements on the diagonal of the matrix.  
+    It could be read off from the matrix that $\Ann_{k[x]}(V) = \{g \in k[x] : f_i \mid g\ \forall\ i\}$, as there are no $1$ elements on the diagonal of the matrix.  
 \end{remark}
 
 \section{Minimal and Characteristic Polynomials}
+
+Return to the case where $V$ is a finite-dimensional $k$-vector space; and morphisms are considered in the context of $k[x]$-modules. Recall that the structure of $V$, given as a $k[x]$-module, is 
+\[
+    V \simeq k[x]/(f_1) \oplus \cdots \oplus k[x]/(f_r), \quad f_1 \mid \cdots \mid f_r
+\]
+
+\begin{definition}[Minimal Polynomial]
+    The \textbf{minimal polynomial} of $T\in \End_{k}(V)$ is the monic generator of $\Ann_{k[x]}(V)$, denoted to be $m_T(x)$. Expressing $V$ in the form of Eq. \eqref{eq:(V, T) structure}, or using Smith Normal Form, $m_T(x) = f_r$.
+\end{definition}
+
+\begin{definition}[Characteristic Polynomial]
+    Let $A \in M_n(k)$. The \textbf{characteristic polynomial} of $A$ is given as $c_A(x) = \det(x\Id_n - A) \in k[x]$. 
+\end{definition}
+
+\begin{remark}
+    Inheriting the notations in Smith Normal Form of $V$, $c_T(x) = f_1\ldots f_r$.
+\end{remark}
+
+\begin{remark}
+    If $A \sim A'$, then $m_A(x) = m_{A'}(x)$, and $c_A(x) = c_{A'}(x)$; but the converse does not necessarily hold.
+\end{remark}
+
+\begin{remark}
+    Since the minimal/characteristic polynomial is defined on the structure or invariant factors in Smith Normal Form, they are invariant w.r.t. change of basis.
+\end{remark}
+
+\begin{definition}[Eigenvalue]
+    Given $T \in \End_k(V)$, $\lambda$ is an \textbf{eigenvalue} of $T$ if the following equivalent conditions are satisfied:
+    \begin{itemize}
+        \item There exists some $v\in V \smallsetminus\{0\}$ s.t. $\lambda v = T v$, i.e. $(\lambda \Id - T)v = 0$.
+        \item $\det(\lambda \Id - T)v = 0$, i.e. $c_T(\lambda) = 0$.
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}
+    If $(V, T) \simeq \bigoplus_{i=1}^r k[x]/(f_i)$ where $f_i$s are the invariant factors of $T$ as a morphism of $k[x]$-modules. Then $c_T(x) = \Pi_{i=1}^r f_i$. 
+\end{proposition}
+
+\begin{proof}
+    There exists some basis in which $V$ is in the rational canonical form. Then $c_T(x) = \Pi_{i=1}^r \det \mathcal{C}_{f_i}$. It then suffices to show that $\det \mathcal{C}_{f_i} = f_i$ for all $i$. Notice
+    \[
+        \det \begin{pmatrix}
+            x   &           & 0         & a_0    \\
+            -1  & \ddots    &           & a_1    \\
+                & \ddots    & x         & \vdots \\
+            0   &           & -1        & x + a_{d-1}
+        \end{pmatrix} = x\begin{pmatrix}
+            x   &           & 0         & a_1    \\
+            -1  & \ddots    &           & a_2    \\
+                & \ddots    & x         & \vdots \\
+            0   &           & -1        & x + a_{d-1}
+        \end{pmatrix} + \underbrace{a_0 \cdot (-1)^{n+1} \cdot (-1)^{n-1}}_{a_0}
+    \]
+    where, performing finitely many ($d$) steps recovers the full polynomial. 
+\end{proof}
+
+\begin{remark}
+    This proposition is also a direct result of the existence of Smith Normal Form, as after finitely many elementary row/column operations which do not change the determinant, $(x\Id_n - A)$ has $f_i$s and $1$s on the diagonal; and the result is given via simply multiplying all of them.
+\end{remark}
+
+The conclusion is that for $V \simeq k[x]/(f_1) \oplus \cdots \oplus k[x]/(f_r), \quad f_1 \mid \cdots \mid f_r$ where $f_1 \mid \cdots \mid f_r$, $m_T = f_r$; and $c_T = f_1 \ldots f_r$. This gives
+\[
+    m_T \mid c_T, \qquad c_T \mid m_T^{r}
+\]
+
+Further, since $f_r$ is the monic generator of $\Ann_{k[x]}(V)$, $m_T(T)(u) = f_r\cdot u = 0$ for all $u\in V$, i.e. $m_T(T) = 0$. Since $m_T \mid c_T$, $c_T(T) = 0$, which is the result from Cayley-Hamilton.
 
 \section{Jordan Normal Form}
     
