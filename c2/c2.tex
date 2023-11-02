@@ -802,13 +802,17 @@ The following work seeks to reveal the structure of $R$-modules over PIDs:
         \item $R$ being a PID is used in obtaining both the maximality condition, and concluding the divisibility. If $R$ is not a PID, it may be the case that $\varphi$ above is not injective. 
         
         Consider $R = k$, $F = k[x, y]$, with $G = (x) \subseteq k[x, y]$ where $k$ is a field. Take the basis $F = (1, x + y, x - y)$. There are no such basis of $G$ that could be obtained from that specific one of $F$.
+        \item The $a_1$ in the proof is not necessarily 1, although $G$ is free, which implies that there exists a surjective map from $G$ to $R$. The homomorphisms $\varphi$s are considered as elements in $\Hom_R(F, R)$, which does not necessarily maps $G$ surjectively to $R$ as one can not complete a basis of a free submodule of $F$ to the basis of $F$. $a_1$ is 1 if and only if $F$ and $G$ shares at least one same component in the basis. 
     \end{itemize}
 \end{remark}
 
 Using this it is possible to generalize the structure of finitely generated modules over PIDs:
 
 \begin{theorem}[Sturcture, v1]\label{thm:Structure f.g. modules over PID v1}
-    Let $M$ be a finitely generated $R$-module, with $R$ a PID. Then there exists $a_1, \ldots, a_m \in R\smallsetminus\{0\}$ s.t. $a_1 \mid a_2 \mid \cdots \mid a_m$. 
+    Let $M$ be a finitely generated $R$-module, with $R$ a PID. Then there exists $a_1, \ldots, a_m \in R\smallsetminus\{0\}$ s.t. $a_1 \mid a_2 \mid \cdots \mid a_m$, and 
+    \[
+        M \simeq R^k \oplus R/(a_1) \oplus \cdots \oplus R/(a_m)
+    \] 
 \end{theorem}
 
 \begin{proof}
@@ -824,7 +828,10 @@ Using this it is possible to generalize the structure of finitely generated modu
 \end{remark}
 
 \begin{theorem}[Structure, v2]\label{thm:Structure f.g. modules over PID v2}
-    Let $M$ be a finitely generated $R$-module, with $R$ a PID. Then there exists primes $p_i$s and $n_i$ $\in \N$ s.t. $M \simeq R^r \oplus R/(p_1^{n_1}) \oplus \cdots \oplus R/(p_r^{n_r})$.
+    Let $M$ be a finitely generated $R$-module, with $R$ a PID. Then there exists primes $p_i$s and $n_i$ $\in \N$ s.t. 
+    \[
+        M \simeq R^r \oplus R/(p_1^{n_1}) \oplus \cdots \oplus R/(p_r^{n_r})
+    \]
 \end{theorem}
 
 \subsection{Torsion and Module Structure}
