@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage{../refalg}
+
+\begin{document}
+\Makepagesectionhead{MATH 593 - Categories and Functors}{ARessegetes Stery}
+
+\def\cat#1{\underline{\textup{#1}}}
+\def\coker{\mathrm{coker}}
+\def\catsets{\cat{Sets}}
+\def\catrings{\cat{Rings}}
+\def\catab{\cat{Ab}}
+\def\catlmod#1{{}_{#1}\cat{Mod}}
+\def\catrmod#1{\cat{Mod}_{#1}}
+\def\cattop{\cat{Tops}}
+\def\Ob{\mathrm{Ob}}
+
+\def\catc{\mathcal{C}}
+\def\catd{\mathcal{D}}
+
+\tableofcontents
+\newpage
+
+\section{Category; Functor}
+
+\begin{definition}[Category]
+    A \textbf{category} $\catc$ consists of 
+    \begin{itemize}
+        \item A \underline{class} of objects $\catc$ (which, for example, could contain all sets), denoted $\Ob(\catc)$.
+        \item For all $A, B \in \Ob(\catc)$, a \underline{set} $\Hom_{\catc}(A, B)$ the ``morphisms in $\catc$ from $A$ to $B$'' with map $\Hom_{\catc}(A, B) \times \Hom_{\catc}(B, C) \to \times \Hom_{\catc}(A, C)$ the ``morphism composition'' denoted $f \times g \rightsquigarrow (g\circ f)$, satisfying
+        \begin{itemize}
+            \item \emph{Existence of an identity}. for all $A \in \Ob(\catc)$, there exists $1_{A} \in \Hom_{\catc}(A, A)$ s.t. 
+            \[
+            \begin{cases}
+                1_{A} \circ f = f & \forall f \in \Hom_{\catc}(A, B) \\
+                g \circ 1_{A} = g & \forall g \in \Hom_{\catc}(B, A)
+            \end{cases}
+            \]
+            \item \emph{Associativity}. For all $f \in \Hom_{\catc}(A, B), g\in \Hom_{\catc}(B, C), h \in \Hom_{\catc}(C, D)$, 
+            \[
+                (h \circ g) \circ f = h \circ (g \circ f)
+            \]
+        \end{itemize}
+    \end{itemize}
+\end{definition}
+
+\begin{remark} The definition much resembles previous algebraic structures; but the morphisms and composition laws could be defined in a particularly strange way: 
+    \begin{enumerate}
+        \item Similar to monoids, the definition implies that the identity is unique. Suppose that there are two identities $1_{A}, 1_{A}' \in \Hom_{\catc}(A, A)$ for $A \in \Ob(\catc)$, then $1_A = 1_A \circ 1_A' = 1_A'$.
+        \item The morphism is not necessarily a function; and in such cases composition needs to be re-defined respectively.
+    \end{enumerate}
+\end{remark}
+
+\begin{example}
+    Consider the following categories:
+    \begin{itemize}
+        \item \emph{Category of Sets} $\catsets$, where the objects are sets, and morphisms are maps between sets.
+        \item \emph{Category of Rings} $\catrings$, where the objects are rings, and morphisms are ring homomorphisms.
+        \item \emph{Category of (left) $R$-modules} $\catlmod{R}$, where objects are lef $R$-modules, and morphisms $R$-linear maps.
+        \item Consider the category $\catc$ defined on a partially-ordered set $(A, \leq)$ where 
+        \begin{itemize}
+            \item $\Ob(\catc)$ consists of elements in $A$. 
+            \item Morphisms are defined as
+            \[
+                \Hom_{\catc}(A, B) = \begin{cases}
+                    \{\ast\} & A \leq B \\
+                    \emptyset & \text{otherwise}
+                \end{cases}
+            \]
+            where the composition of maps is defined as intersection. This is due to the fact that there can be no maps whose image is the empty set.
+        \end{itemize}
+    \end{itemize}
+\end{example}
+
+\begin{definition}[Functor]
+    Let $\catc$ and $\catd$ be categories. The \textbf{functor} $F: \catc \to \catd$ consists of mappings for both objects and morphisms:
+    \begin{itemize}
+        \item For all $A \in \Ob(\catc)$, $F(A) \in \catd$.
+        \item For all $f\in \Hom_{\catc}(A, B)$. $F(f) \in \Hom_{\catd} (F(A), F(b))$ s.t. 
+        \begin{itemize}
+            \item $F(1_A) = 1_{F(A)}$ for all $A \in \Ob(\catc)$. 
+            \item For all $f \circ g$ where $f \in \Hom_{\catc}(A, B)$, $g \in \Hom_{\catc}(B, C)$, $F(f \circ g) = F(f) \circ F(g)$.
+        \end{itemize}
+    \end{itemize}
+    The composition of functors is conducted in a natural way, i.e. applying consecutively. 
+\end{definition}
+
+\begin{example}
+    Functors represent the induced maps w.r.t. a transformation in the structure:
+    \begin{enumerate}
+        \item Let $R$ be a commutative ring and $S \subseteq R$ a multiplicative system. Consider the functor $F: \catlmod{R} \to \catlmod{S^{-1}R}$ where
+        \begin{itemize}
+            \item $F(M) = S^{-1}M$ for all $M \in \Ob(\catlmod{R})$.
+            \item For $f: M \to N$, define $F(f) := S^{-1}M \to S^{-1}N$, where $\frac{u}{s} \mapsto \frac{f(u)}{s}$.
+        \end{itemize}
+        \item Let $R$ be a ring, with $I \subseteq R$ a two-sided ideal of $R$; and $M$ a left $R$-module. Consider the functor $F: \catlmod{R} \to \catlmod{R/I}$ where
+        \begin{itemize}
+            \item $F(M) = M/IM$ for all $M \in \catlmod{R}$. 
+            \item Let $f: M \to N$ be a morphism of left $R$-modules. Then it induces a map $\bar{f}: M/IM \to N/IN$ s.t. $\bar{f}(\bar(u)) = \overline{f(u)}$. Define $F(f) = \bar{f}$.
+        \end{itemize}
+        \item Functors generally can abandon structures. Let $M$ be a left $R$-module. By definition it is valid to view $M$ as an abelian group. Then functor $F: \catlmod{R} \to \catab$ where objects are taken to itself; and morphisms are taken to group homomorphisms. These are called \underline{forgetful functors}.
+    \end{enumerate}
+\end{example}
+
+\section{Morphism of Categories}
+
+
+
+\section{Products and Coproducts}
+
+\section{Kernels and Cokernels}
+
+For the motivation of kernel one could refer to \href{https://ncatlab.org/nlab/show/kernel}{\color{blue}{this}} article.
+
+\section{Natural Transformations of Functors}
+      
+\end{document}
