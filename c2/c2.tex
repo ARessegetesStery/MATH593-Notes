@@ -757,6 +757,15 @@ This gives a proof for proposition \ref{prop:Noeth finite minimal prime}:
     \end{itemize}
     where all the conditions are satisfied by the fact that they are satisfied in both $M, N$ and $R$; and $R$ is commutative. 
 \end{definition}
+
+\begin{remark}
+    It is vital that $R$ is commutative, as otherwise the multiplication will not be necessarily $R$-linear.
+
+    Suppose that $r_1, r_2 \in R, f\in \Hom_R(M, N)$, and $s\in M$. Then 
+    \[
+        (r_1f)(r_2 s) = (r_1 r_2) f(s) \overset{?}{=} (r_2 r_1) f(s) = r_2 (r_1 f) (s)
+    \]
+\end{remark}
     
 The following work seeks to reveal the structure of $R$-modules over PIDs:
 
