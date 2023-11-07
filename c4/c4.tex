@@ -8,11 +8,13 @@
 \def\coker{\mathrm{coker}}
 \def\catsets{\cat{Sets}}
 \def\catrings{\cat{Rings}}
+\def\catfields{\cat{Fields}}
 \def\catab{\cat{Ab}}
 \def\catlmod#1{{}_{#1}\cat{Mod}}
 \def\catrmod#1{\cat{Mod}_{#1}}
 \def\cattop{\cat{Tops}}
 \def\Ob{\mathrm{Ob}}
+\def\dual#1{#1^{\circ}}
 
 \def\catc{\mathcal{C}}
 \def\catd{\mathcal{D}}
@@ -53,8 +55,8 @@
 \begin{example}
     Consider the following categories:
     \begin{itemize}
-        \item \emph{Category of Sets} $\catsets$, where the objects are sets, and morphisms are maps between sets.
-        \item \emph{Category of Rings} $\catrings$, where the objects are rings, and morphisms are ring homomorphisms.
+        \item \emph{Category of Sets} \catsets, where the objects are sets, and morphisms are maps between sets.
+        \item \emph{Category of Rings} \catrings, where the objects are rings, and morphisms are ring homomorphisms.
         \item \emph{Category of (left) $R$-modules} $\catlmod{R}$, where objects are lef $R$-modules, and morphisms $R$-linear maps.
         \item Consider the category $\catc$ defined on a partially-ordered set $(A, \leq)$ where 
         \begin{itemize}
@@ -94,16 +96,154 @@
         \end{itemize}
         \item Let $R$ be a ring, with $I \subseteq R$ a two-sided ideal of $R$; and $M$ a left $R$-module. Consider the functor $F: \catlmod{R} \to \catlmod{R/I}$ where
         \begin{itemize}
-            \item $F(M) = M/IM$ for all $M \in \catlmod{R}$. 
+            \item $F(M) = M/IM$ for all $M \in \Ob(\catlmod{R})$. 
             \item Let $f: M \to N$ be a morphism of left $R$-modules. Then it induces a map $\bar{f}: M/IM \to N/IN$ s.t. $\bar{f}(\bar(u)) = \overline{f(u)}$. Define $F(f) = \bar{f}$.
         \end{itemize}
-        \item Functors generally can abandon structures. Let $M$ be a left $R$-module. By definition it is valid to view $M$ as an abelian group. Then functor $F: \catlmod{R} \to \catab$ where objects are taken to itself; and morphisms are taken to group homomorphisms. These are called \underline{forgetful functors}.
+        \item Functors generally can abandon structures. Let $M$ be a left $R$-module. By definition it is valid to view $M$ as an abelian group. Then functor $F: \catlmod{R} \to \catab$ where objects are taken to itself; and morphisms are taken to group homomorphisms. These are called \emph{forgetful functors}.
     \end{enumerate}
 \end{example}
 
 \section{Morphism of Categories}
 
+The dual of a category is where the direction of morphisms is inverted. The following gives a formalization of this:
 
+\begin{definition}[Contravariant Functor]
+    A \textbf{contravariant functor} $F: \catc \to \catd$ is a functor which maps composition to that in the inverse order, i.e.
+    \begin{itemize}
+        \item For all $A \in Ob(\catc)$, $F(A) \in \Ob(\catd)$.
+        \item For all $f \in \Hom_{\catc}(A, B), F(f) \in \Hom_{\catc}(F(B), F(A))$ s.t. 
+        \begin{itemize}
+            \item $F(1_A) = 1_{F(A)}$ for all $A \in \Ob(\catc)$.
+            \item For all $f \circ g$ where $f \in \Hom_{\catc}(A, B)$, $g \in \Hom_{\catc}(B, C)$, $F(f \circ g) = F(g) \circ F(f)$.
+        \end{itemize}
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[Dual Category]
+    Let $\catc$ be a category. Then the \textbf{dual category} $\dual{\catc}$ of $\catc$ is a category with
+    \begin{itemize}
+        \item $\Ob(\catc) = \Ob(\dual{\catc})$.
+        \item $\Hom_{\catc}(A, B) = \Hom_{\dual{\catc}}(B, A)$. 
+    \end{itemize}
+    The composition is compatible as the inversion is done in the functor. 
+\end{definition}
+
+\begin{remark}
+    Since the dual category is defined on the contravariant of the functor, replacing a functor with its contravariant is equivalent to replacing the category with its dual.
+\end{remark}
+
+Similar to the case of modules we can define the \emph{Hom Functors}; but as a concept one level up it leaves the image unspecified:
+
+\begin{definition}[Hom Functor]
+    Let $\catc$ be a category, and $A \in \Ob(\catc)$. Then the \textbf{Hom functor} $\Hom_{\catc}(A, -): \catc \to \catsets$ where
+    \begin{itemize}
+        \item For $B \in \Ob(\catc)$, $F(B) = \Hom_{\catc}(A, B)$.
+        \item For $f: \Hom_{\catc}(B_1, B_2)$, $F(g): \Hom_{\catc}(A, B_1) \to \Hom_{\catc}(A, B_2)$, $g\mapsto f \circ g$. 
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Similarly, we can consider the contravariant functor of the Hom functor. $\Hom_{\dual{\catc}}(-, A) : \dual{\catc} \to \catsets$. By definition $\Hom_{\catc}(A, -) = \Hom_{\dual{\catc}}(-, A)$.
+\end{remark}
+
+\begin{remark}
+    Let $\catc = \catlmod{R}$. Then $\Hom_{\catc}(X, -)$ could be lifted to $\catc \to \catab$. It can be further lifted to $\catc \to \catlmod{R}$ if $R$ is commutative, which ensures that the morphisms will be $R$-linear. In this case this is just the Hom Module of (left) $R$-modules. 
+\end{remark}
+
+\begin{definition}
+    Let $\catc$ be a category. Then $u\in \Hom_{\catc}(A, B)$ is an \textbf{isomorphism} if there exists $v \in \Hom_{\catc}(B, A)$ s.t. $u\circ v = \Id_B, v\circ u = \Id_A$.
+\end{definition}
+
+\begin{remark}
+    For a fixed $u$, such $v$ is unique. Suppose that there exists two distinct $v$s, we have
+    \[
+        v = v \circ \Id_B = v \circ (u \circ v') = (v \circ u) \circ v' = v'
+    \]
+    which is a contradiction.
+\end{remark}
+
+\begin{remark}
+    Let $F: \catc \to \catd$ a functor. Then $u\in \Hom_{\catc} (A, B)$ being an isomorphism implies that $F(u)$ is an isomorphism.
+
+    This results from the fact that $\Id_{F(B)} = F(\Id_B) = F(u \circ v) = F(u) \circ F(v)$. Result for $A$ is similar; and uniqueness follows from the same reasoning. 
+\end{remark}
+
+\begin{definition}
+    Let $\catc$ be a category:
+    \begin{itemize}
+        \item $X \in \Ob(\catc)$ is an \textbf{initial object} if $\ \forall Y \in \Ob(\catc), \abs{\Hom_{\catc}(X, Y)} = 1$.
+        \item $X \in \Ob(\catc)$ is a \textbf{final object} if $\ \forall Y \in \Ob(\catc), \abs{\Hom_{\catc}(Y, X)} = 1$.
+        \item $X \in \Ob(\catc)$ is a \textbf{zero-object} if it is both an initial object and a final object. 
+    \end{itemize} 
+\end{definition}
+
+\begin{remark}
+    Let $X \in \Ob(\catc)$ be an initial (final, zero) object. Then $X'$ is initial (final, zero) if and only if there exists an isomorphism between $X$ and $X'$.
+
+    Proof is similar for all three cases. Suppose that $X$ and $X'$ are both initial. Then there exists a unique $f \in \Hom_{\catc}(X, X')$ and $f'\in \Hom_{\catc}(X', X)$, i.e. $f' \circ f \in \Hom_{\catc}(X, X)$. $X$ being initial implies that this is the unique morphism from $X$ to itself, which contains $\Id_{X}$. Therefore $f' \circ f = \Id_{X}$. Similar result holds for $f \circ f' = \Id_{X'}$, which implies that $X$ and $X'$ are isomorphic.
+\end{remark}
+
+\begin{example}
+    Although if initial/final objects are unique up to isomorphism if they exist, but they actually do not necessarily exist:
+    \begin{enumerate}
+        \item In $\catlmod{R}$, $\{0\}$ is a zero-object. 
+        
+        The only element in a left $R$-module that should be preserved in a morphism of $R$-module is the zero element. For any element $a \neq 0$, there exists two maps that either maps $a$ to 0, or another non-zero element, which indicates that this is not initial. 
+
+        Suppose that the final object has (at least) two elements $\{0, a\}$ for $a \neq 0$, then there exists at least two maps from a non-trivial module generated by $(u_1, \cdots, u_r)$ to it: for each $u_i$ it is either mapped to $0$ or $a$, which gives two morphisms. 
+        \item In \catsets, $\emptyset$ is initial, and $\{\ast\}$ (a set containing an arbitrary element) is final.
+        
+        Suppose that there exists an element in the initial object, then it could be mapped to any element as morphisms of \catsets do not have constraints. 
+        \item In \catrings, $\Z$ is initial; and $\{0\}$ is final. 
+        
+        $\Z$ being initial results from the fact that ring homomorphisms are required to preserve the $0$ and $1$ elements; and the maximal ring generated by $(0, 1)$ is isomorphic to $\Z$.
+        \item In \catfields, there are no initial or final objects.
+        
+        This results directly from the fact that $1 \neq 0$ in fields. For every two fields, there exists two maps: one that maps $1$ to $1$; and the other maps $1$ to $0$.
+    \end{enumerate}
+\end{example}
+
+\begin{definition}
+    Let $\catc$ be a category. $u\in \Hom_{\catc}(A, B)$ is a \textbf{monomorphism} if for all $C \in \Ob(\catc)$ and $v_1, v_2 \in \Hom_{\catc}(C, A)$ s.t. $u \circ v_1 = u \circ v_2$ implies $v_1 = v_2$. $u\in \Hom_{\catc}(A, B)$ is an \textbf{epimorphism} if for all $v_1, v_2$ with the same comdition above satisfies $v_1 \circ u = v_2 \circ u$ implies $v_1 = v_2$, i.e. it is a monomorphism in $\dual{\catc}$.
+\end{definition}
+
+\begin{remark}
+    These are analogies of injective/surjective in the context of category. Since on the category level it is only valid to consider objects or morphisms, such analogies could be only made to morphisms.
+\end{remark}
+
+\begin{example}
+    It is not always the case that monomorphisms could correspond to injective maps, and epimorphisms could correspond to surjective maps:
+    \begin{enumerate}
+        \item In \catsets, monomorphisms correspond to injective maps, and epimorphisms correspond to surjective maps.
+        \item In $\catlmod{R}$, such analogy is still true via choosing the $v_1, v_2$:
+        \begin{figure}[htbp]
+            \centering
+            \begin{minipage}{0.48\linewidth}
+                \centering
+                \begin{tikzcd}
+                    \ker u \arrow[r, hookrightarrow, shift left, "\text{incl.}"] & \arrow[l, <-, shift left, "0"] A \arrow[r, "u"] & B
+                \end{tikzcd}
+            \end{minipage}
+            \begin{minipage}{0.48\linewidth}
+                \centering
+                \begin{tikzcd}
+                    A \arrow[r, "u"] & B \arrow[r, shift left, two heads, "\pi"] & \arrow[l, <-, shift left, "0"] B / \im u
+                \end{tikzcd}
+            \end{minipage}
+        \end{figure}
+        \begin{itemize}
+            \item For $u$ being a monomorphism, $u(\ker u) = u(0) = 0$, i.e. the inclusion map from $\ker u$ to $A$ is the same as the zero map, i.e. $\ker u = \{0\}$. 
+            \item For $u$ being an epimorphism, $\pi(u(A)) = 0$ in $B / \im u$, i.e. $\pi(B) = 0$ which indicates that $\im u = B$.
+        \end{itemize}
+        \item In \catrings, monomorphisms are still injective, via for $f: R\to S$ considering
+        \begin{tikzcd}
+            \Z[x] \arrow[r, "x \mapsto u", shift left] & \arrow[l, <-, shift left, "0"] R \arrow[r, "f"] & S
+        \end{tikzcd}
+        for all $u \in \ker f$. This implies that $u = 0$, i.e. $\ker f = \{0\}$.
+
+        But epimorphisms in rings are not necessarily surjective. Take the example $\alpha: \Z \hookrightarrow \Q$ which is the inclusion map. This is an epimorphism as $v_1 \circ \alpha = v_2 \circ \alpha$ if and only if $1$ is mapped to the same element; but this always holds as ring homomorphisms preserve the multiplicative unit. 
+    \end{enumerate}
+\end{example}
 
 \section{Products and Coproducts}
 
