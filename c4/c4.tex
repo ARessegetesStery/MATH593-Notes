@@ -4,21 +4,6 @@
 \begin{document}
 \Makepagesectionhead{MATH 593 - Categories and Functors}{ARessegetes Stery}
 
-\def\cat#1{\underline{\textup{#1}}}
-\def\coker{\mathrm{coker}}
-\def\catsets{\cat{Sets}}
-\def\catrings{\cat{Rings}}
-\def\catfields{\cat{Fields}}
-\def\catab{\cat{Ab}}
-\def\catlmod#1{{}_{#1}\cat{Mod}}
-\def\catrmod#1{\cat{Mod}_{#1}}
-\def\cattop{\cat{Tops}}
-\def\Ob{\mathrm{Ob}}
-\def\dual#1{#1^{\circ}}
-
-\def\catc{\mathscr{C}}
-\def\catd{\mathscr{D}}
-
 \tableofcontents
 \newpage
 
@@ -246,7 +231,7 @@ Similar to the case of modules we can define the \emph{Hom Functors}; but as a c
 \end{example}
 
 \clearpage
-\section{Products and Coproducts}
+\section{Product and Coproduct}
 
 \begin{definition}[Product]
     Let $\catc$ be a category, with $(X_i)_{i\in I}$ a family of objects in $\catc$. Then the \textbf{product} of this family is given by an object $\Pi_{i\in I} X_i$ where for all $Y \in \Ob(\catc)$, with morphisms $q_j: Y \to X_j$ for $j\in I$, there exists a unique morphism $f$ s.t. $q_j = p_j \circ f$ for all $j$, i.e. the following diagram commute. The $p_j$ is the projection morphism, where $p_j (\Pi_{i\in I} x_i) = x_i$.
@@ -343,9 +328,114 @@ Similar to the case of modules we can define the \emph{Hom Functors}; but as a c
     \end{enumerate}
 \end{remark}
 
-\section{Kernels and Cokernels}
+\section{Kernel and Cokernel}
 
-For the motivation of kernel one could refer to \href{https://ncatlab.org/nlab/show/kernel}{\color{blue}{this}} article.
+Throughout the discussion, fix $\catc$ to be a preadditive category. 
+
+\begin{definition}[Kernel]
+    Let $f\in \Hom_{\catc}(A, B)$. The \textbf{kernel} of $f$ is a morphism $i: K \to A$ s.t.
+    \begin{itemize}
+        \item $f \circ i = 0$.
+        \item $f$ is universal with this property (factors uniquely through $i$), i.e. for $i': L \to A$, there exists a unique morphism $g: L \to K$ s.t. $i' = i \circ g$:
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzcd}
+                K \arrow[rr, "i"] & & A \arrow[rr, "f"] & & B \\
+                & & \\
+                L \arrow[uu, "g"] \arrow[rruu, "i'"] & & 
+            \end{tikzcd}
+        \end{figure}
+    \end{itemize} 
+\end{definition}
+
+\begin{remark}
+    Using exactly the same reasoning as in products, the kernel of a morphism is unique up to isomorphism. Adopting the same notation as above, consider $i'$ to be the kernel. Then there exists a unique $g': K \to L$ s.t. the diagram commute, which gives $g \circ g' = \Id$.
+\end{remark}
+
+\begin{remark}
+    Let $i: K \to A$ be the kernel. Then $i$ is a monomorphism.
+
+    This follows directly from the uniqueness in the universal property. Suppose that there exists $f_1, f_2: V \to K$ s.t. $i \circ f_1 = i \circ f_2 = g$, then $g: V \to F$ factors uniquely through $i$, i.e. there exists a unique $h$ s.t. $g = i \circ h$. This implies that $f_1 = f_2 = h$.
+\end{remark}
+
+\begin{example}
+    The kernel often comes with an associated $K$, which is the kernel in the algebraic sense.
+
+    Take $M, N \in \Ob(\catlmod{R})$, and $f: M \to N$ is a morphism of $R$-modules. Then naturally one can construct the following s.t. $g = \ker f$.
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            \ker f \arrow[r, hookrightarrow, "g"] & M \arrow[r, "f"] & N \\
+        \end{tikzcd}
+    \end{figure}
+\end{example}
+
+\begin{definition}[Cokernel]
+    The \textbf{cokernel} of $f$ is the kernel in the dual category, which effectively annihilates a morphism.
+
+    Explicitly, let $f \in \Hom_{\catc}(A, B)$, $p \in \Hom_{\catc}(B, C)$. $p$ is the cokernel of $f$ if
+    \begin{itemize}
+        \item $p \circ f = 0$.
+        \item For all $g: B \to C'$, there exists a unique morphism $h: C \to C'$ s.t. $g = h \circ p$; i.e. any cokernel of $f$ factors uniquely through $p$:
+    \end{itemize}
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            A \arrow[rr, "f"] & & B \arrow[rr, "p"] \arrow[rrdd, "g"] & & C \arrow[dd, "h"] \\
+            & & & & \\
+            & & & & C'
+        \end{tikzcd}
+    \end{figure}
+\end{definition}
+
+\begin{remark}
+    The dual argument w.r.t. kernel holds. That is, if cokernel exists, it is unique up to isomorphism; and cokernel is always an epimorphism.
+\end{remark}
+
+\begin{example}
+    Let $f: M \to N$ be a morphism of $\catlmod{R}$. Then the cokernel of $f$ is given via $\pi: N \to N/\im f$ which is the quotient map.
+\end{example}
+
+It is in particular interesting to put in juxtaposition of the two concepts. Let $\catc$ be a preadditive category, and for all morphisms in $\catc$ its kernel and cokernel exist. Then consider the following commutative diagram:
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzcd}
+        \ker f \arrow[rr, "i"] & & A \arrow[rr, "f"] \arrow[dd, "q"] \arrow[rrdd, dashed, "g", pos = 0.3] & & B \arrow[rr, "p"] & & \coker f \\
+        & & & & & & \\[8pt]
+        & & \coker i \arrow[rruu, dashed, "r", pos = 0.7] \arrow[rr, dashed, "h"] & & \ker p \arrow[uu, "j"] & & \\
+    \end{tikzcd}
+\end{figure}
+
+The universal property of kernel and cokernel gives:
+\begin{itemize}
+    \item $f$ factors uniquely through $q$, i.e. there exists a unique $r$ s.t. $f = r \circ q$.
+    \item $f$ factors uniquely through $j$, i.e. there exists a unique $g$ s.t. $f = j \circ g$.
+    \item $g$ factors uniquely through $q$, i.e. there exists a unique $h$ s.t. $g = h \circ q$.
+\end{itemize}
+
+Combining these gives the uniqueness of $h$ s.t. $f = j \circ h \circ q$.
+
+\begin{remark}
+    This resembles the first isomorphism theorem. 
+    
+    In $\catlmod{R}$, it is given that $\coker i = A / \ker f$, and $\ker p = B / (B / \im f) \simeq \im f$, which is exactly the first isomorphism theorem. 
+\end{remark}
+
+\begin{definition}[Additive Category]
+    An \textbf{additive category} $\catc$ is a preadditive category s.t. 
+    \begin{itemize}
+        \item $\catc$ has a zero object.
+        \item $\forall X, Y \in \Ob(\catc)$, the product $X \times Y$ exists (and it's isomorphic to their coproduct).
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[Abelian Category]
+    An \textbf{abelian category} is an additive category $\catc$ s.t. 
+    \begin{itemize}
+        \item Every morphism has a kernel and a cokernel.
+        \item ``The first isomorphism theorem holds'', i.e. for $f$ considered as above, the morphism $h: \coker i \to \ker p$ is an isomorphism. 
+    \end{itemize}
+\end{definition}
 
 \section{Natural Transformations of Functors}
       
