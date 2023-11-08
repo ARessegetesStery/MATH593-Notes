@@ -437,6 +437,53 @@ Combining these gives the uniqueness of $h$ s.t. $f = j \circ h \circ q$.
     \end{itemize}
 \end{definition}
 
-\section{Natural Transformations of Functors}
+\section{Natural Transformation of Functors}
+
+\begin{definition}[Natural Transformation]
+    Let $F, G: \catc \to \catd$ be functors. Then the \textbf{natural transformation} from $F$ to $G$ $T: F \Rightarrow G$ is given by $T_U: F(U) \to G(U)$ for all $U \in \Ob(\catc)$ s.t. for all $f: A \to B$ in $\catc$ the following diagram commutes:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            F(A) \arrow[rr, "T_A"] & & G(A) \arrow[dd, "G(f)"] \\
+            & & \\
+            F(B) \arrow[rr, "T_B"] \arrow[uu, <-, "F(f)"] & & G(B) \\
+        \end{tikzcd}
+    \end{figure}
+\end{definition}
+
+\begin{example}
+    In $\catlmod{R}$ where $R$ is commutative, one can consider ideals $I \subseteq J$ the transformation
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            M/IM \arrow[rr, "T_A"] & & M/JM \arrow[dd, "G(f)"] \\
+            & & \\
+            N/IN \arrow[rr, "T_B"] \arrow[uu, <-, "F(f)"] & & N/JN \\
+        \end{tikzcd}
+    \end{figure}
+    which maps $u \mod{IM}$ to $u \mod{JM}$. This is possible as $I \subseteq J$, where no information is missing.
+\end{example}
+
+\begin{remark}
+    The trivial natural transformation is simply the identity $\Id_F: F \Rightarrow F$. Via composing the commutative diagrams, it is easy to see that natural transformations is valid through composition.
+\end{remark}
+
+\begin{definition}
+    A natural transformation $T: \catc \to \catd$ is an \textbf{isomorphism of functors} if for all $A \in \catc$, $T_A$ is an isomorphism (in $\catd$). 
+\end{definition}
+
+\begin{remark}
+    A natural transformation $T$ is an isomorphism if there exists $T': G \Rightarrow F$ s.t. $T \circ T' = \Id_F$, $T' \circ T = \Id_G$.
+
+    This results from the fact that every isomorphism has an inverse in $\catd$; and two natural transformations are equal iff they match on all instances of objects in $\catd$.
+\end{remark}
+
+\begin{example} 
+    Consider two functors $F, G: \catlmod{R} \to \catab$, where $F$ is the forgetful functor, and $G = \Hom_{\catlmod{R}}(R, -)$. Since a morphism of $R$-modules from $R$ suffices to specify where $1$ is mapped to, $\Hom_{\catlmod{R}}(R, M) \simeq M$, which implies that $F$ and $G$ are isomorphic functors.
+\end{example}
+
+\begin{definition}
+    Two categories $\catc$ and $\catd$ are \textbf{isomorphic} if there exists a functor isomorphism $F: \catc \to \catd$ s.t. there exists $G: \catd \to \catc$ s.t. $F \circ G = \Id_{\catd}$, $G \circ F = \Id_{\catc}$. They are \textbf{equivalent} if instead $F \circ G \simeq \Id_{\catd}$, $G \circ F \simeq \Id_{\catc}$.
+\end{definition}
       
 \end{document}
