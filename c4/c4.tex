@@ -16,8 +16,8 @@
 \def\Ob{\mathrm{Ob}}
 \def\dual#1{#1^{\circ}}
 
-\def\catc{\mathcal{C}}
-\def\catd{\mathcal{D}}
+\def\catc{\mathscr{C}}
+\def\catd{\mathscr{D}}
 
 \tableofcontents
 \newpage
@@ -245,7 +245,103 @@ Similar to the case of modules we can define the \emph{Hom Functors}; but as a c
     \end{enumerate}
 \end{example}
 
+\clearpage
 \section{Products and Coproducts}
+
+\begin{definition}[Product]
+    Let $\catc$ be a category, with $(X_i)_{i\in I}$ a family of objects in $\catc$. Then the \textbf{product} of this family is given by an object $\Pi_{i\in I} X_i$ where for all $Y \in \Ob(\catc)$, with morphisms $q_j: Y \to X_j$ for $j\in I$, there exists a unique morphism $f$ s.t. $q_j = p_j \circ f$ for all $j$, i.e. the following diagram commute. The $p_j$ is the projection morphism, where $p_j (\Pi_{i\in I} x_i) = x_i$.
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            Y \arrow[rr, "f"] \arrow[rrdd, "q_j"] & & \Pi_{i\in I} X_i \arrow[dd, "p_j"] \\
+            & & \\
+            & & X_j
+        \end{tikzcd}
+    \end{figure}
+\end{definition}
+
+\begin{remark}
+    Product of a family of objects is unique up to isomorphism. Suppose that there exists another product $X'$ which satisfies the criterion for being a product. Then there exists unique $\varphi$ and $\varphi'$ s.t. 
+    \[
+        \varphi: X \to X' \qquad \varphi': X' \to X
+    \]
+    since both $f$ and $f'$ are unique. But this gives 
+    \[
+        \begin{cases}
+            p_j = p_j' \circ \varphi' \\
+            p_j' = p_j \circ \varphi
+        \end{cases}
+        \implies
+        \exists \varphi, \varphi' \text{ s.t. } \begin{cases}
+            \varphi \circ \varphi' = \Id_{X'} \\
+            \varphi' \circ \varphi = \Id_{X} \\
+        \end{cases}
+    \]
+    By uniqueness this gives that $X$ and $X'$ must be isomorphic.
+\end{remark}
+
+\begin{definition}[Coproduct]
+    Given a family $(X_i)_{i\in I} \in \Ob(\catc)$, the coproduct $\amalg_{i\in I} X_i$ is the product in the dual category, i.e. with all the arrow reversed. That is, for $Y \in \Ob(\catc)$ and $f_j: X_j \to Y$, denote $\alpha_j$ to be the natural embedding of $X_j$ into the product $\amalg_{i\in I} X_i$, then there exists a unique $f$ s.t. $f \circ \alpha_j = f_j$ for all $j$, i.e. the following diagram commute:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            Y \arrow[rr, <-, "f"] \arrow[rrdd, <-, "f_j"] & & \Pi_{i\in I} X_i \arrow[dd, <-, "\alpha_j"] \\
+            & & \\
+            & & X_j
+        \end{tikzcd}
+    \end{figure}
+\end{definition}
+
+\begin{remark}
+    In \catsets, the product is given by Cartesian product, and the coproduct is given by disjoint union. Notice the difference: projection has no corresponding morphism from disjoint union; and so is natural embedding into Cartesian product.
+
+    In $\catlmod{R}$, the coproduct is given by the direct sum; and the product is given by the direct product. 
+\end{remark}
+
+\begin{remark}
+    Product in the context of categories provides a generalization of Cartesian product, where specifying morphisms into the product gives the morphisms into each of its components. Coproduct, being the dual notion of product, simply ``reverses the arrows'', i.e. specifying morphisms from the coproduct gives morphisms from each of its components.
+\end{remark}
+
+\begin{definition}[Preadditive Category]
+    A \textbf{preadditive category} $\catc$ is a category s.t. its morphisms form an abelian group, and is bilinear w.r.t. composition. 
+\end{definition}
+
+\begin{remark}
+    \catrings\ is not a preadditive category, as its morphisms do not have a zero element (since ring homomorphisms are required to map $1$ to $1$.) $\catlmod{R}$, with out such constraint, is a preadditive category.
+\end{remark}
+
+\begin{definition}[Additive Functor]
+    Let $\catc$ and $\catd$ be preadditive categories. $F: \catc \to \catd$ is an \textbf{additive functor} if for all $A, B \in \Ob(\catc)$, $F$ w.r.t. morphisms is a group homomorphism.
+\end{definition}
+
+\begin{remark}
+    The definition of ``linear'', or ``group homomorphism'' implicitly requires that the underlying structure should have a valid operation. Those who don't, for example \catsets, are naturally excluded from such discussion.
+\end{remark}
+
+\begin{example}
+    Let $R$ be a commutative ring and $I \subseteq R$ an ideal. Then the functor
+    \[
+        F: \catlmod{R} \to \catlmod{R}, \qquad M \mapsto M/IM
+    \]
+    is an additive functor. This results from the fact that morphism of $R$-modules $M \to N$ and the quotient morphism are both $R$-linear.
+\end{example}
+
+\begin{remark}
+    Let $\catc$ be a preadditive category. Then
+    \begin{enumerate}
+        \item If $X \in \Ob(\catc)$ is an initial/final object, then it is a zero object. 
+        
+        Consider $\Hom_{\catc}(X, X)$. Since $\catc$ is preadditive, this forms a group of one element, which is zero. Therefore for all $f \in \Hom_{\catc}(X, X)$ this gives $f = 1_X \circ f = 0 \circ f = 0$. This immediately implies that $X$ is a zero object, as for all $g \in \Hom_{\catc}(Y, X)$, $h \in \Hom_{\catc}(X, Y)$
+        \[
+            g = g \circ 1_{X} = g\circ 0 = 0, \qquad h = 1_X \circ h = 0 \circ h = 0
+        \]
+        \item $\catc$ being preadditive implies that $\dual{\catc}$ is preadditive, as reversing the arrow does not interfere with the group structure, or the additive property.
+        \item Let $F: \catc \to \catd$ an additive functor, with $\catc$ and $
+        \catd$ preadditive categories. Then for $0 \in \Ob(\catc)$ the zero object in $\catc$, $F(0)$ is also the zero object in $\catd$.
+        
+        This results directly from the fact that group homomorphisms map $0$ to $0$; and by the first point in the remark, an object $X$ is zero if and only if $1_X = 0$ in $\Hom_{\catc}(X, X)$.
+    \end{enumerate}
+\end{remark}
 
 \section{Kernels and Cokernels}
 
