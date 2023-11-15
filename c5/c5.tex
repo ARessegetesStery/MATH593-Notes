@@ -126,7 +126,7 @@ Similar to the case of Hom Functors, we seek to lift the functor to $\catlmod{R}
 \end{proof}
 
 \begin{proposition}
-    The extra structure on the modules gives extra structure on the morphisms in the universal property.
+    The extra structure on the modules gives extra structure on the morphisms in the universal property:
 
     Let $M$ be a $S$-$R$ bimodule, $N$ a left $R$-module, and $P$ a left $S$-module. Let $\varphi: M \times N \to M \tensor_R N$ the canonical map of tensor product. Suppose further that the map $\psi: M \times N \to P$ is $S$-bilinear. Then there exists a unique \underline{morphism of $S$-modules} $f: M \tensor_R N \to P$.
 \end{proposition}
@@ -166,6 +166,92 @@ Similar to the case of Hom Functors, we seek to lift the functor to $\catlmod{R}
 
 \section{Extension of Scalar}
 
-\section{Adjoint Property of Tensor Product}
+Let $S$ and $R$ be rings, together with a ring homomorphism $\varphi: R \to S$. Then 
+\begin{enumerate}
+    \item It is clear that there is a \emph{restriction of scalar} functor:
+    \[
+        F: \catlmod{S} \to \catlmod{R}, \quad _SM \to {_RM} \qquad \text{ where } a\cdot u := \varphi(a)\cdot u\ \ (\forall a\in R, u\in {_SM})
+    \]
+    \item It is more interesting to consider the \emph{extension of scalar} functor $G: \catlmod{R} \to \catlmod{S}$. Notice that $\varphi$ gives $S$ a natural $R$-module structure, where $rs := \varphi(r)s$ for all $r \in R, s\in S$. This gives a natural extension of scalar functor $(S \tensor_R -)$:
+    \begin{itemize}
+        \item For $M \in \Ob(\catlmod{R})$, this gives $S \tensor_R M$.
+        \item For $f: M_1 \to M_2$ a morphism of $R$-modules, this gives $\Id_S \tensor f$.
+    \end{itemize}
+\end{enumerate}
+
+\begin{example}
+    Consider the following examples:
+    \begin{itemize}
+        \item Let $\varphi: R \to R/I$ the canonical quotient map. Then this induces the isomorphism $G(M) \simeq M/IM$.
+        
+        Extension of scalar gives $G(M) \simeq R/I \tensor M$. To show that these two left $R/I$-modules are isomorphic, it suffices to specify maps between them s.t. the composition gives identity. Consider
+        \[
+            f: R/I \tensor M \to M/IM, \quad \bar{r} \tensor u \mapsto \overline{ru}, \qquad g: M/IM \to R/I \tensor M, \bar{u} \mapsto 1_{R/I} \tensor u
+        \]
+        It is clear that $f \circ g = \Id_{R/I \tensor M}$. Notice
+        \[
+            g \circ f (\bar{r} \tensor u) = \bar{ru} = 1 \tensor \overline{ru} = 1 \tensor \bar{r} \cdot \bar{u} = \bar{r} \tensor \bar{u}
+        \]
+        since the canonical map of tensor product is $R$-balanced.
+        \item Let $R$ be a ring, and $S \subseteq R$ a multiplicative system. Let $\varphi$ be the canonical map $R \to S^{-1}R$, $\varphi(a) = \frac{a}{1}$. Then this induces an isomorphism $G(M) \simeq S^{-1}M$.
+        
+        Apply the similar strategy. It suffices to show that $G(M) = S^{-1}R \tensor M \simeq S^{-1}M$. Consider
+        \[
+            f: S^{-1}R \tensor M \to S^{-1}M, \quad \frac{r}{s} \tensor u \mapsto \frac{ru}{s}, \qquad g: S^{-1}M \mapsto S^{-1}R \tensor M, \quad \frac{u}{s} \mapsto \frac{1}{s} \tensor u
+        \]
+        It is clear $f \circ g(\frac{u}{s}) = f(\frac{1}{s} \tensor u) = \frac{u}{s}$. For the other direction, check
+        \[
+            g \circ f (\frac{r}{s} \tensor u) = g(\frac{ru}{s}) = \frac{1}{s} \tensor (ru) = \left(\frac{1}{s}\right)\cdot r \tensor u = \frac{1}{s} \cdot \frac{r}{1} \tensor u = \frac{r}{s} \tensor u
+        \]
+    \end{itemize}
+\end{example}
+
+\clearpage
+\begin{theorem}[Universal Property of Extension of Scalars] 
+    Let $M$ be a left $M$-module, $N$ be a left $S$-module, together with a ring homomorphism $\varphi: R \to S$. Let $f: M \to N$ a morphism of $R$-modules (in the sense of restriction of scalars). Then there exists a unique morphism of $S$-modules $g: S \tensor_R M \to N$ s.t. $g(1 \tensor u) = f(u)$ for all $u \in M$:
+    
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            M \arrow[rr, "G"] \arrow[rrdd, "f"] & & S \tensor_R M \arrow[dd, dashed, "g"] \arrow[rr, <-, "\tensor"] & &   S \times M  \\
+            & & \\
+            & & N \arrow[rruu, <-, "\psi"]
+        \end{tikzcd}
+    \end{figure}
+\end{theorem}
+
+\begin{proof}
+    Construct using the universal property of tensor product. Since $f$ is a morphism of $S$-modules, it is in particular $S$-linear, i.e.
+        \[
+            f(su) = s f(u) \implies \psi(s, u) = s f(u)
+        \]
+    There exists a canonical morphism into the setting of universal property, as $G(su) = \tensor(1, su) = \tensor(s, u)$ for all $s \in S, u \in M$; and $\psi$ is $R$-linear:
+    \[
+        \psi(sr, u) = (s\varphi(r)) f(u) = s (\varphi(r) f(u)) = s f(\varphi(r) u) = \psi(s, ru)
+    \]
+    \[
+        \psi(ss', u) = ss' f(u) = s f(s'u) = \psi(s, s'u)
+    \]
+    Then the strengthened version of universal property gives the desired result.
+\end{proof}
+
+\begin{remark}
+    Functorially, for tensor products we have the natural transformation (given the ring homomorphism $\varphi: R \to S$)
+    \[
+        \Hom_S(S \tensor_R M, N) \to \Hom_R(M, N), \qquad g \mapsto (u \mapsto g(1 \tensor u))
+    \]
+    The universal property gives that this is actually a bijection. Since $\Hom_R(M, N)$ is in essence the restriction of scalar, there is a bijection (which is exactly rephrasing the result above)
+    \[
+        \Hom_{S}(G(M), N) \simeq \Hom_R(M, F(N))
+    \]
+\end{remark}
+
+\begin{definition}[Adjoint Pair]
+    Consider functors $F: \catc \to \catd$, $G: \catd \to \catc$. They form an \textbf{adjoint pair} ($F, G$) if for all $a \in \Ob(\catc)$ and $b \in \Ob(\catd)$, we have a bijection $\Hom_{\catc}(G(b), a) \simeq \Hom_{\catd}(b, F(a))$ which is functorial w.r.t. both $a$ and $b$, i.e. there exists a natural transformation from $\Hom_{\catc}(G(-), a)$ to $\Hom_{\catd}(-, F(a))$.
+\end{definition}
+
+\begin{remark}
+    This implies that extension of scalar functor $G$ and restriction of scalar functor $F$ form an adjoint pair.
+\end{remark}
 
 \end{document}
