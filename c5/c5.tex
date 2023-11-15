@@ -70,7 +70,7 @@
     \end{itemize}
 \end{proof}
 
-\begin{remark}
+\begin{remark}\label{Rmk:decomp of tensor}
     The construction above, together with the fact that tensor products exist uniquely up to isomorphism, implies that for $R$-modules $M$ and $N$ with their system of generators, $(u_i)$ and $(v_i)$ respectively, for all $x \in M \tensor_R N$, there exists $(d_i) \in \Z$ s.t.
     \[
         x = \sum\limits_{i=1}^n d_i (u_i \tensor_R v_i)
@@ -99,6 +99,70 @@ Let $f: M \to M'$ a morphism of right $R$-modules, and $g: N \to N'$ a morphism 
 Similar to the case of Hom Functors, we seek to lift the functor to $\catlmod{R} \to \catlmod{R}$. This requires extra structure on the module of interest. Similarly, making $R$ commutative, and restricting $M$ and $N$ to be both $R$-modules could resolve the issue, but the condition is too strong.  
 
 \section{Bimodule}
+
+\begin{definition}[Bimodule]
+    Let $S$ and $R$ be rings. An \textbf{$\mathbf{R}$-$\mathbf{S}$ bimodule} $M$ is given by an an abelian group $M$ that is both a left $S$-module and a right $R$-module; and module operations is compatible, i.e.
+    \[
+        (au)b = a(ub) \qquad \forall u \in M, a \in S, b \in R
+    \]
+\end{definition}
+
+\begin{remark}
+    If $R$ is commutative, then every $R$-module is an $R$-$R$ bimodule (which is why making $R$ commutative suffices to ensure the Hom module has an $R$-module structure). Specifically, $R$ is an $R$-$R$ bimodule.
+\end{remark}
+
+\begin{remark}
+    Morphisms between $S$-$R$ bimodules inherits from corresponding modules. Compatibility does not interfere with morphisms.
+\end{remark}
+
+\begin{proposition}\label{Prop:Comp of bimodule}
+    Let $R$ and $S$ be rings, with $M$ an $S$-$R$ bimodule, and $N$ a left $R$-module. Then there exists a unique left $S$-module structure on $M \tensor N$ s.t. $\lambda\cdot (u \tensor v) = (\lambda u) \tensor v$, for all $\lambda \in S, u\in M, v\in N$.
+\end{proposition}
+
+\begin{proof}
+    Use the universal property, with $P = M \tensor N$. Fix $\lambda \in S$; consider $\varphi: M \times N \to M \tensor N$ s.t. $\varphi(u, v) = (\lambda u) \tensor v$. This map is $R$-balanced, as the tensor product on $R$ is balanced. 
+    
+    Then by universal property there exists a unique group homomorphism $f_{\lambda}: M \tensor N \to M \tensor N$, $u \tensor v \mapsto (\lambda u) \tensor v$. This gives the scalar multiplication of $\lambda$, which induces an $S$-module structure on $M \tensor N$.
+\end{proof}
+
+\begin{proposition}
+    The extra structure on the modules gives extra structure on the morphisms in the universal property.
+
+    Let $M$ be a $S$-$R$ bimodule, $N$ a left $R$-module, and $P$ a left $S$-module. Let $\varphi: M \times N \to M \tensor_R N$ the canonical map of tensor product. Suppose further that the map $\psi: M \times N \to P$ is $S$-bilinear. Then there exists a unique \underline{morphism of $S$-modules} $f: M \tensor_R N \to P$.
+\end{proposition}
+
+\begin{proof}
+    By the universal property of tensor product, such morphism $f$ exists, and is uniquely specified by $f(u \tensor v) = \psi(u, v)$. It suffices to check that this is indeed a morphism of $S$-modules, i.e. for all $a \in S$, $f((au) \tensor v) = a f(u \tensor v)$. It then suffices to check that for certain (set of) fixed $u$ and $v$, as every element in $M \tensor N$ is of such form. This is clear as
+    \[
+        f((au) \tensor v) = \psi(au, v) \overset{!}{=} a\psi(u, v) = a\cdot f(u \tensor v)
+    \]
+    Equality (!) requires that $\psi$ is $S$-bilinear, and $M$ being a bimodule ensures that this is well-formed under the context of $S$-modules. 
+\end{proof}
+
+\begin{remark}
+    The proposition above lifts the functor $M \tensor -$ to $\catlmod{R} \to \catlmod{S}$ for all $S$-$R$ bimodule $M$.
+\end{remark}
+
+\begin{remark}
+    It may be interesting to consider the following property of bimodules:
+    \begin{enumerate}
+        \item If $R$ is commutative, then left or right $R$-modules are the same; and in this case $M \tensor_R N$ is an $R$-module. 
+        \item If $M$ is a $T$-$R$ bimodule, and $N$ is an $R$-$S$ bimodule, then $M \tensor_R N$ is a $T$-$S$ bimodule.
+    \end{enumerate}
+
+    For the second remark, it is clear that $M \tensor_R N$ is both a left $T$-module, and a right $S$-module, via applying the same proof as in Proposition \ref{Prop:Comp of bimodule}. It suffices to prove that they are compatible. This is also clear from the construction in the proposition referred:
+    \[
+        (a(u \tensor_R v)) b = (au \tensor v) b = (au) \tensor (vb) = a(u \tensor (vb)) = a ((u\tensor v) b)
+    \]
+\end{remark}
+
+\begin{remark}
+    Let $R$ be a ring. Then $R$ is an $R$-$R$ bimodule. Let $M$ be a left $R$-module, which implies that $R \tensor_R M$ is a left $R$-module. Then there exists a functorial isomorphism $R \tensor_R M \simeq M$ for all $M \in \Ob(\catlmod{R})$. (This is called functorial as this could be regarded as the property of functor $R \tensor_R -$.)
+\end{remark}
+
+\begin{proof}
+    Proof via using the universal property. Consider the morphism of $R$-modules $\alpha: R \times M \to M$, where $\alpha(a, u) = au$ for all $a \in R$, $u \in M$. It is $R$-linear, which is by definition $R$-balanced. The universal property gives that there exists a unique $f: R \tensor M \to M$ s.t. $f(a \tensor u) = au$. Designate $g: M \to R \tensor M$, $g(u) = 1 \tensor u$ for all $u\in M$. This is clearly $R$-balanced. This gives an isomorphism as $g \circ f = \Id_R$, $f \circ g = \Id_{R \tensor M}$.
+\end{proof}
 
 \section{Extension of Scalar}
 
