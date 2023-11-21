@@ -96,7 +96,7 @@ Let $f: M \to M'$ a morphism of right $R$-modules, and $g: N \to N'$ a morphism 
     \]
 \end{remark}
 
-Similar to the case of Hom Functors, we seek to lift the functor to $\catlmod{R} \to \catlmod{R}$. This requires extra structure on the module of interest. Similarly, making $R$ commutative, and restricting $M$ and $N$ to be both $R$-modules could resolve the issue, but the condition is too strong.  
+Similar to the case of Hom Functors, we seek to lift the functor to $\catlmod{R} \to \catlmod{R}$. This requires extra structure on the module of interest. As before, making $R$ commutative, and restricting $M$ and $N$ to be both $R$-modules could resolve the issue, but the condition is too strong.  
 
 \section{Bimodule}
 
@@ -190,7 +190,7 @@ Let $S$ and $R$ be rings, together with a ring homomorphism $\varphi: R \to S$. 
         \]
         It is clear that $f \circ g = \Id_{R/I \tensor M}$. Notice
         \[
-            g \circ f (\bar{r} \tensor u) = \bar{ru} = 1 \tensor \overline{ru} = 1 \tensor \bar{r} \cdot \bar{u} = \bar{r} \tensor \bar{u}
+            g \circ f (\bar{r} \tensor u) = g(\overline{ru}) = 1 \tensor \overline{ru} = 1 \tensor \bar{r} \cdot \bar{u} = \bar{r} \tensor \bar{u}
         \]
         since the canonical map of tensor product is $R$-balanced.
         \item Let $R$ be a ring, and $S \subseteq R$ a multiplicative system. Let $\varphi$ be the canonical map $R \to S^{-1}R$, $\varphi(a) = \frac{a}{1}$. Then this induces an isomorphism $G(M) \simeq S^{-1}M$.
@@ -208,7 +208,7 @@ Let $S$ and $R$ be rings, together with a ring homomorphism $\varphi: R \to S$. 
 
 \clearpage
 \begin{theorem}[Universal Property of Extension of Scalars] 
-    Let $M$ be a left $M$-module, $N$ be a left $S$-module, together with a ring homomorphism $\varphi: R \to S$. Let $f: M \to N$ a morphism of $R$-modules (in the sense of restriction of scalars). Then there exists a unique morphism of $S$-modules $g: S \tensor_R M \to N$ s.t. $g(1 \tensor u) = f(u)$ for all $u \in M$:
+    Let $M$ be a left $R$-module, $N$ be a left $S$-module, together with a ring homomorphism $\varphi: R \to S$. Let $f: M \to N$ a morphism of $R$-modules (in the sense of restriction of scalars). Then there exists a unique morphism of $S$-modules $g: S \tensor_R M \to N$ s.t. $g(1 \tensor u) = f(u)$ for all $u \in M$:
     
     \begin{figure}[htbp]
         \centering
@@ -251,7 +251,66 @@ Let $S$ and $R$ be rings, together with a ring homomorphism $\varphi: R \to S$. 
 \end{definition}
 
 \begin{remark}
-    This implies that extension of scalar functor $G$ and restriction of scalar functor $F$ form an adjoint pair.
+    Extension of scalar functor $G$ and restriction of scalar functor $F$ form an adjoint pair.
+\end{remark}
+
+\section{General Properties of Tensor Product}
+
+\def\op{\text{op}}
+
+\begin{proposition}
+    Tensor product is \emph{commutative}, i.e. there exists an isomorphism of abelian groups $M \tensor_R N \simeq N \tensor_{R^{\op}} M$. Similarly, if $R$ is commutative, then this is an isomorphism of $R$-modules.
+\end{proposition}
+
+\begin{proof}
+    Proceed via using the universal property of tensor product. Consider the map $\varphi: M \times N \to N \tensor_{R^{\op}} M$ given by $\varphi(v, u) = u \tensor_{R^{\op}} v$. It is clear $\varphi$ commutes with addition in either field. To show that $\varphi$ is indeed $R$-balanced it suffices to check the third property, which gives 
+    \[
+        \varphi(va, u) = u \tensor_{R^{\op}} (va) = u \tensor_{R^\op} a^\op v = u a^\op \tensor_{R^\op} v =(au) \tensor_{R^\op} v = \varphi(v, au)
+    \]
+    Similarly there exists an $R$-balanced map $\tilde{\psi}: N \times M \to M \tensor_R N$ (as $R^\op$ modules) which is given by $\psi(u, v) = v \tensor u$. This induces a map $\psi: N \tensor_{R^\op} M \to M \tensor_R N$. It is clear that $\varphi \circ \psi = \Id_{N \tensor_{R^\op} M}$, $\psi \circ \varphi = \Id_{M \tensor_R N}$. 
+\end{proof}
+
+\begin{remark}
+    If $R$ is commutative, then the left $R$-modules are the same as right $R$-modules, which indicates that $M \tensor_R N \simeq N \tensor_R M$ (as in the commutative setting the opposite ring is the same as the original ring).
+\end{remark}
+
+\begin{proposition}
+    Tensor product is \emph{associative}, i.e. for $M$ a right $R$-module, $N$ an $R$-$S$ bimodule, and $P$ a left $S$-module, there exists a unique isomorphism $f: (M \tensor_R N) \tensor_S P \to M \tensor_R (N \tensor_S P)$ s.t. $f((u \tensor_R v) \tensor_S w) = u \tensor_R (v \tensor_S w)$.
+\end{proposition}
+
+\begin{proof}
+    Apply the universal property of tensor product twice. First consider map $f_z: M \times N \to M \tensor_R (N \tensor_S P)$ given by $f_z(x, y) = x \tensor_R (y \tensor_S z)$ for some $z \in P$. $f_z$ is $R$-balanced, as for all $a \in R$, 
+    \[
+        f_z(x, ay) = x\tensor_R (ay \tensor_S z) = x \tensor_R a(y \tensor_S z) = (xa) \tensor_R (y \tensor_S z) = f_z(xa, y)
+    \]
+    By universal property of tensor product this gives a unique map $\tilde{f_z}: M \tensor_R N \to M \tensor_R (N \tensor_S P)$, $f_z(x \tensor y) = x \tensor (y \tensor z)$. Now consider the map $f: M \tensor_R N \times P \to M \tensor_R (N \tensor_S P)$ given by $f(x \tensor y, z) = f_z(x, y)$. This is $S$-linear, as for all $a \in S$,
+    \[
+        f((x \tensor y)a, z) = f((x \tensor ya), z) = x \tensor (ya \tensor z) = x \tensor (y \tensor (az)) = f((x \tensor y), az)
+    \]
+    Similarly this gives a unique map $\tilde{f}: (M \tensor_R N) \tensor_S P \to M \tensor_R (N \tensor_S P)$. Repeat the process in the converse direction gives the inverse map, and it is clear that the composition of them is identity in the corresponding structure.
+\end{proof}
+
+\begin{proposition}
+    Let $R$ be a commutative ring, and $f_1: R \to S_1$ and $f_2: R \to S_2$ be two $R$-algebras. Then there is a unique $R$-algebra structure on $S_1 \tensor_R S_2$ s.t. 
+    \[
+        (u_1 \tensor v_1) \cdot (u_2 \tensor v_2) = (u_1 u_2) \tensor (v_1 v_2)
+    \]
+\end{proposition}
+
+\begin{proof}
+    Since we are in the commutative setting, by using the associativity and commutativity of tensor product, there is an isomorphism $\Phi: (S_1 \tensor S_2) \tensor (S_1 \tensor S_2) \simeq (S_1 \tensor S_1) \tensor (S_2 \tensor S_2)$. By universal of property of $S_1 \tensor S_1$ and $S_2 \tensor S_2$, there exists a unique morphism of $R$-module $f_i(a_i \tensor b_i) = a_i b_i$ for all $i$. This gives $f_1 \tensor f_2: (S_1 \tensor S_1) \tensor (S_2 \tensor S_2) \to S_1 \tensor S_2$, which indicates that there is a unique map $f_1 \tensor f_2 \circ \Phi$ that maps $(S_1 \tensor S_2) \tensor (S_1 \tensor S_2) \to S_1 \tensor S_2$. Composing this with the tensoring of $(S_1 \tensor S_2)$ with itself gives the desired result.
+\end{proof}
+
+\begin{proposition}
+    There exists an isomorphism of abelian groups $\Phi: \Hom_S(M \tensor_R N, P) \simeq \Hom_R(N, \Hom_S(M, P))$ for $N$ a left $R$-module, $P$ a left $S$-module, and $M$ an $S$-$R$ bimodule. 
+\end{proposition}
+
+\begin{proof}
+    The only natural way to define this isomorphism is via $\Phi(\varphi) = (N \mapsto (M \mapsto \varphi(M \tensor N)))$, where for $f\in \Hom_S(M, P)$, $a \in R, u \in M$, $af(u) := f(ua)$. By construction this is a bijection, and additivity is satisfied in $P$.
+\end{proof}
+
+\begin{remark}
+    This indicates that $M \tensor_R -$ and $\Hom_S(M, -)$ form an adjoint pair for $M$ being a $S$-$R$ bimodule. Furthermore, if $f: R \to S$ gives an $R$-algebra structure, then taking $M = S$ gives the adjoint pair of extension/restriction of scalar functors.
 \end{remark}
 
 \end{document}
