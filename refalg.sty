@@ -143,16 +143,16 @@
     \rhead{#3}
 }
 
-\def\Makepagesectionhead#1#2{
-    \title{\vspace{-1.5cm} #1}
-    \author{#2}
+\def\Makepagesectionhead#1#2#3{
+    \title{\vspace{-1.5cm} #1 - #2}
+    \author{#3}
     \date{\today}\maketitle
     \pagestyle{fancy}
     \setlength{\parskip}{1em}
     \setlength{\parindent}{0em}
-    \lhead{#1}
+    \lhead{#2}
     \chead{\leftmark}
-    \rhead{#2}
+    \rhead{#3}
 }
 
 \pagestyle{fancy}
