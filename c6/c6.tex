@@ -419,9 +419,9 @@ The followings turn to the discussion of flat modules:
     \]
     To prove that $M$ is free, it suffices to show that $K = 0$. Note that if $(a_1, \cdots, a_m) \in K$, then $\sum_{i=1}^m a_iu_i = 0 \implies a_i \in \mathfrak{m}$ for all $i$. That is, $K \subseteq \mathfrak{m} R^m$. Now apply the functor $-\tensor R/\mathfrak{m}$. This is an additive functor, which preserves morphisms as it acts as a group homomorphism. This gives the sequence
     \[
-        0 \too K/\mathfrak{m}K \overset{\alpha}{\too} \too F/\mathfrak{m}F \too M/\mathfrak{m}M \too 0
+        0 \too K/\mathfrak{m}K \overset{\alpha}{\too} F/\mathfrak{m}F \too M/\mathfrak{m}M \too 0
     \] 
-    which is also split. Since $K \subseteq \mathfrak{m} R^m$, $K/\mathfrak{m}K = 0$, i.e. $K = 0$. By the fact that the sequence splits, $F \simeq M \oplus K$ which implies $F \simeq M$. 
+    which is also split. Since $K \subseteq \mathfrak{m} R^m$, $K \subseteq \mathfrak{m}F$, which indicates that $\alpha = 0$. Since $\alpha$ is injective as the sequence splits, $K / \mathfrak{m}K = 0 \implies K = 0$.This gives, $F \simeq M \oplus K$ which implies $F \simeq M$. 
 \end{proof}
 
 \end{document}
