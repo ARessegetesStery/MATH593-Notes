@@ -63,7 +63,7 @@
         \end{tikzcd}
     \end{figure}
     \begin{itemize}
-        \item \emph{Existence}. Applying the universal property of quotient groups, which implies that there exists a unique $f$ s.t. $f \circ h = g$ where $h$ is the induced group homomorphism of the quotient. This is indeed valid, as $\psi$ is $R$-linear, which by construction has kernel $G$.
+        \item \emph{Existence}. Applying the universal property of quotient groups, which implies that there exists a unique $f$ s.t. $f \circ h = g$ where $h$ is the induced group homomorphism of the quotient. This is indeed valid, as $\psi$ is $R$-balanced, which by construction has kernel $G$.
         \item \emph{Uniqueness}. This follows from the result of universal property above; and the fact that $\varphi$ is surjective.
     \end{itemize}
 \end{proof}
@@ -106,7 +106,7 @@ Similar to the case of Hom Functors, we seek to lift the functor to $\catlmod{R}
 \end{definition}
 
 \begin{remark}
-    If $R$ is commutative, then every $R$-module is an $R$-$R$ bimodule (which is why making $R$ commutative suffices to ensure the Hom module has an $R$-module structure). Specifically, $R$ is an $R$-$R$ bimodule.
+    If $R$ is commutative, then every $R$-module is an $R$-$R$ bimodule (which is why making $R$ commutative suffices to ensure the Hom module has an $R$-module structure). In particular, $R$ is an $R$-$R$ bimodule.
 \end{remark}
 
 \begin{remark}
@@ -296,7 +296,7 @@ Let $S$ and $R$ be rings, together with a ring homomorphism $\varphi: R \to S$. 
 \end{proposition}
 
 \begin{proof}
-    Since we are in the commutative setting, by using the associativity and commutativity of tensor product, there is an isomorphism $\Phi: (S_1 \tensor S_2) \tensor (S_1 \tensor S_2) \simeq (S_1 \tensor S_1) \tensor (S_2 \tensor S_2)$. By universal of property of $S_1 \tensor S_1$ and $S_2 \tensor S_2$, there exists a unique morphism of $R$-module $f_i(a_i \tensor b_i) = a_i b_i$ for all $i$. This gives $f_1 \tensor f_2: (S_1 \tensor S_1) \tensor (S_2 \tensor S_2) \to S_1 \tensor S_2$, which indicates that there is a unique map $f_1 \tensor f_2 \circ \Phi$ that maps $(S_1 \tensor S_2) \tensor (S_1 \tensor S_2) \to S_1 \tensor S_2$. Composing this with the tensoring of $(S_1 \tensor S_2)$ with itself gives the desired result.
+    Since we are in the commutative setting, by using the associativity and commutativity of tensor product, there is an isomorphism $\Phi: (S_1 \tensor S_2) \tensor (S_1 \tensor S_2) \simeq (S_1 \tensor S_1) \tensor (S_2 \tensor S_2)$. By universal of property of $S_1 \tensor S_1$ and $S_2 \tensor S_2$, there exists a unique morphism of $R$-module $f_i(a_i \tensor b_i) = a_i b_i$ for all $a_i, b_i \in S_i$ with $i\in \{1, 2\}$. This gives $f_1 \tensor f_2: (S_1 \tensor S_1) \tensor (S_2 \tensor S_2) \to S_1 \tensor S_2$, which indicates that there is a unique map $f_1 \tensor f_2 \circ \Phi$ that maps $(S_1 \tensor S_2) \tensor (S_1 \tensor S_2) \to S_1 \tensor S_2$. Composing this with the tensoring of $(S_1 \tensor S_2)$ with itself gives the desired result.
 \end{proof}
 
 \begin{proposition}
