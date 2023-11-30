@@ -77,8 +77,8 @@
 \begin{proposition}\label{prop:criterion for split}
     Given a short exact sequence $0 \too M' \overset{i}{\too} M \overset{p}{\too} M'' \too 0$, the following statements are equivalent:
     \begin{enumerate}[label=\roman*)]
-        \item There exists $q: M \to M'$ s.t. $j \circ i = \Id_{M'}$
-        \item There exists $j: M \to M''$ s.t. $q \circ p = \Id_{M''}$
+        \item There exists $j: M \to M'$ s.t. $j \circ i = \Id_{M'}$
+        \item There exists $q: M'' \to M$ s.t. $p \circ q = \Id_{M''}$
         \item There exists a submodule $N \subseteq M$ s.t. $M$ can be expressed by the internal direct sum $M = i(M') \oplus N$; and $p$ induces an isomorphism $N \simeq M''$.
     \end{enumerate}
     Such a short exact sequence is a \underline{split exact sequence}.
@@ -87,10 +87,10 @@
 \begin{proof}
     It suffices to give the equivalence between i) and iii), as for ii) it is similar.
     \begin{itemize}
-        \item \emph{i) $\Rightarrow$ iii)}. Let $N = \ker q$. Check that this gives an internal direct sum:
+        \item \emph{i) $\Rightarrow$ iii)}. Let $N = \ker p$. Check that this gives an internal direct sum:
             \begin{itemize}
-                \item $N \cap i(M') = 0$. Let $x \in i(M') \cap N$. $x \in N$ implies $q(x) = 0$, while $q \circ i = \Id_{M'}$ implies that $x = 0$.
-                \item $N + i(M') = M$. Notice $v - i \circ q(v) \in \ker q$, and by inspection $i\circ q(v) \in \im i$.
+                \item $N \cap i(M') = 0$. Let $x \in i(M') \cap N$. $x \in N$ implies $p(x) = 0$, while $j \circ i = \Id_{M'}$ and the fact that the sequence is exact implies that $x = 0$.
+                \item $N + i(M') = M$. Notice $v - i \circ j(v) \in \ker q$, and by inspection $i\circ j(v) \in \im i$.
             \end{itemize}
             By the first isomorphism theorem, $\im i = \ker p$ implies $M / \im i \simeq N \simeq M''$.
         \item \emph{iii) $\Rightarrow$ i)}. Define $i: i(M') \oplus N \to i(M') \simeq M'$ since $i$ is injective.
@@ -102,7 +102,7 @@
     \[
         0 \too \Z \overset{i}{\too} 2\Z \overset{p}{\too} \Z/2\Z \too 0
     \]
-    where $i(\Z) \simeq \Z$, but the map cannot be extended properly to the whole $\Z$. If $R$ is a field, then all short exact sequences split as one can complete a basis in a vector space; and subspaces spanned by a subset of a basis is always a direct summand of the whole space.
+    where $i(\Z) \simeq \Z$, but the inverse map cannot be extended properly to the whole $\Z$. If $R$ is a field, then all short exact sequences split as one can complete a basis in a vector space; and subspaces spanned by a subset of a basis is always a direct summand of the whole space.
 \end{remark}
 
 The following present a common technique known as ``diagram chasing'':
@@ -175,7 +175,7 @@ The following present a common technique known as ``diagram chasing'':
 \end{definition}
 
 \begin{proposition}\label{prop:Hom(M,-) left exact}
-    Let $M$ be a left $R$-module. Then functor $F = \Hom_R(M, -): \catlmod{R} \to \catlmod{S}$ is left exact; and the coverse is also true, i.e. if $0 \too \Hom_R(M, A) \too \Hom_R(M, B) \too \Hom_R(M, C)$ is exact, then $0 \too A \too B \too C$ is exact.
+    Let $M$ be an $R$-$S$ bimodule. Then functor $F = \Hom_R(M, -): \catlmod{R} \to \catlmod{S}$ is left exact; and the converse is also true, i.e. if $0 \too \Hom_R(M, A) \too \Hom_R(M, B) \too \Hom_R(M, C)$ is exact, then $0 \too A \too B \too C$ is exact.
 \end{proposition}
 
 \begin{proof}
@@ -201,7 +201,7 @@ The following present a common technique known as ``diagram chasing'':
 \end{proposition}
 
 \begin{proof}
-    From the right exact version of \ref{prop:Hom(M,-) left exact}, it suffices to prove that for left $R$-module $N$ the sequence
+    From the right exact version of Proposition \ref{prop:Hom(M,-) left exact}, it suffices to prove that for left $R$-module $N$ the sequence
     \[
         \Hom(M \tensor A, N) \too \Hom(M \tensor B, N) \too \Hom(M \tensor C, N) \too 0
     \]
@@ -218,7 +218,7 @@ The following present a common technique known as ``diagram chasing'':
         By the universal property of tensor product, it suffices to give every $R$-balanced map $f: M \times C \to N$ a map in \\ $\Hom_R(C, \Hom_S(M, N))$. Denote the isomorphism to be $F$. Let $F(\tilde{f}[u\tensor v \mapsto f(u, v)]) = v\mapsto (u \mapsto f(u, v))$. The inverse exists by inspection.
     \end{proof}
 
-    Then apply the parenthesis and Proposition \ref{prop:Hom(M,-) left exact} gives that it suffices to verify that $\Hom(M, A) \too \Hom(M, B) \too \Hom(M, C)$ $\too 0$ is exact, which holds as $M$ is in particular a right $R$-module. 
+    Then apply the parenthesis and Proposition \ref{prop:Hom(M,-) left exact} gives that it suffices to verify that $0 \too \Hom(M, C) \too \Hom(M, B) \too \Hom(M, A)$ is exact, which holds as $M$ is in particular a right $R$-module; and in this case the functor nested is a contravariant functor. Recall that for a contravariant functor $\Hom(-, N)$, if the sequence $A \too B \too C \too 0$ is exact, then $0 \too \Hom(C, N) \too \Hom(B, N) \too \Hom(A, N)$ is exact. 
 \end{proof}
 
 \begin{remark}
@@ -264,7 +264,7 @@ It is then of specific interest in which modules are the above functors exact.
 \end{remark}
 
 \begin{remark}\label{rmk:Alt def for projective module}
-    The fact that Hom functors in the remark above is surjective is the same as the following definition (for projective modules): $M$ is a projective $R$-module if and only if for all $g: M \to V$, there exists some $R$-module $U$ together with morphisms $f: U \to V$ and $h: M \to U$ with $f$ surjective, such that $g = f \circ h$; that is, making the following diagram commute:
+    The fact that Hom functors in the remark above is surjective is the same as the following definition (for projective modules): $M$ is a projective $R$-module if and only if for all morphism of $R$-modules $g: M \to V$, there exists a morphism of $R$-modules $h: M \to U$ together with surjective morphism of $R$-modules $f: U \to V$ s.t. $g = f \circ h$; that is, making the following diagram commute:
     \begin{figure}[htbp]
         \centering
         \begin{tikzcd}
@@ -293,7 +293,7 @@ It is then of specific interest in which modules are the above functors exact.
     Let $M$ be a left $R$-module. Then the following statements are equivalent:
     \begin{enumerate}[label=\roman*)]
         \item $M$ is a projective $R$-module.
-        \item $M$ is a direct summand of a free $R$-module. That is, there exists a free $R$-module $F$ and a $R$-module $N$ s.t. $F \simeq M \oplus N$.
+        \item $M$ is a direct summand of a free $R$-module. That is, there exists a free $R$-module $F$ and an $R$-module $N$ s.t. $F \simeq M \oplus N$.
         \item Let $P$ be an $R$-module, and $F$ be a free $R$-module. Then every short exact sequence $0 \too P \too F \too M \too 0$ is split exact.
     \end{enumerate}
 \end{proposition}
@@ -339,7 +339,7 @@ Similarly, we would like to prove that there are ``enough'' injective objects in
 \end{proof}
 
 \begin{definition}
-    Let $M$ be a $R$-module. Then it is \textbf{divisble} if and only if for all $u \in M$, $n \in \Z_{\geq 0}$, there exists $v \in M$ s.t. $nv = u$ where multiplication by $n \in \Z_{\geq 0}$ is adding $n$ copies of the elements to itself.
+    Let $M$ be an $R$-module. Then it is \textbf{divisble} if and only if for all $u \in M$, $n \in \Z_{\geq 0}$, there exists $v \in M$ s.t. $nv = u$ where multiplication by $n \in \Z_{\geq 0}$ is adding $n$ copies of the elements to itself.
 \end{definition}
 
 \begin{corollary}
@@ -351,9 +351,9 @@ Similarly, we would like to prove that there are ``enough'' injective objects in
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{thm:enough injectives}]
-    First prove the theorem with restriction $R = \Z$. From the the previous remark it is clear that $\Z$-modules are injective if and only if it is divisible; and $Q$ as a $\Z$ module is divisible. Consider the canonical projection $\pi: \Z^{(I)} \to M$ where bases are mapped to generators. Then $M \simeq \Z^{(I)}/\ker \pi$, which embeds into $\Q^{(I)}/\ker \pi$. Since $\ker\pi$ is a submodule of $\Z^{(I)}$, $\Q^{(I)}/\ker \pi$ is divisible and thus injective; which satisfies the condition of interest.
+    First prove the theorem with restriction $R = \Z$. From the the previous remark it is clear that $\Z$-modules are injective if and only if it is divisible; and $\Q$ as a $\Z$ module is divisible. Consider the canonical projection $\pi: \Z^{(I)} \to M$ where bases are mapped to generators. Then $M \simeq \Z^{(I)}/\ker \pi$, which embeds into $\Q^{(I)}/\ker \pi$. Since $\ker\pi$ is a submodule of $\Z^{(I)}$, $\Q^{(I)}/\ker \pi$ is divisible and thus injective; which satisfies the condition of interest.
 
-    Now consider the general case by reducing the case of $\Z$-modules. As $\Z$ modules, there exists an injection $h: M \hookrightarrow Q$, where $Q$ is an injective module. $Q$ being injective indicates that the functor $\Hom_{\Z}(-, Q)$ is exact (on $R$-modules). But notice that by applying the adjoint property this gives
+    Now consider the general case by reducing to the case of $\Z$-modules. As $\Z$ modules, there exists an injection $h: M \hookrightarrow Q$, where $Q$ is an injective module. $Q$ being injective indicates that the functor $\Hom_{\Z}(-, Q)$ is exact (on $R$-modules). But notice that by applying the adjoint property this gives
     \[
         \Hom_{\Z}(-, Q) \simeq \Hom_{\Z}(R \tensor_R -, Q) \simeq \Hom_{R}(-, \Hom_{\Z}(R, Q))
     \] 
@@ -387,7 +387,7 @@ The followings turn to the discussion of flat modules:
 \end{corollary}
 
 \begin{proof}
-    By Proposition \ref{prop:criterion for projective module}, an $R$-module $M$ is projective if and only if there exists $R$-modules $F$ and $N$ where $F$ is free s.t. $F \simeq M \oplus N$. By the previous proposition, it suffices to prove that $F$ is flat. Since $F \simeq \oplus_i R^{(I)}$, it suffices to prove that $R$ is flat. This is indeed the case as $- \tensor_R R = \Id_R$, which is trivially exact.
+    By Proposition \ref{prop:criterion for projective module}, an $R$-module $M$ is projective if and only if there exists $R$-modules $F$ and $N$ where $F$ is free s.t. $F \simeq M \oplus N$. By the previous proposition, it suffices to prove that $F$ is flat. Since $F \simeq \oplus_{i \in I} R^{(I)}$, it suffices to prove that $R$ is flat. This is indeed the case as $- \tensor_R R = \Id_R$, which is trivially exact.
 \end{proof}
 
 \begin{definition}
@@ -402,7 +402,7 @@ The followings turn to the discussion of flat modules:
     Consider the following flat structures:
     \begin{itemize}
         \item $R \to R[x_1, \cdots, x_n]$ is a flat $R$-algebra, as $R[x_1, \cdots, x_n]$ has a free $R$-module structure, where the basis is all monomials.
-        \item Let $S \subseteq R$ be a multiplicative system. Then $R \to S^{-1}R$ is a flat $R$-algebra. It suffices to verify that $S^{-1}R \tensor -$ is exact. Notice $S^{-1}R \tensor M \simeq S^{-1}M$, this is the sa,e as stating that $S^{-1}(-)$ is exact. 
+        \item Let $S \subseteq R$ be a multiplicative system. Then $R \to S^{-1}R$ is a flat $R$-algebra. It suffices to verify that $S^{-1}R \tensor -$ is exact. Notice $S^{-1}R \tensor M \simeq S^{-1}M$, this is the same as stating that $S^{-1}(-)$ is exact. 
         
         Since $N \subseteq M \implies S^{-1}N \subseteq S^{-1}M$, $S^{-1}(-)$ preserves injections; and since $S^{-1}(M/N) \simeq S^{-1}M/ S^{-1}N$, $S^{-1}(-)$ preserves surjection. Thus verifies the exactness and flatness.
     \end{itemize}
@@ -413,15 +413,15 @@ The followings turn to the discussion of flat modules:
 \end{proposition}
 
 \begin{proof}
-    It suffices to verify that $M$ is free if it is projective. By Nakayama's Lemma, $(u_1, \cdots, u_m)$ forms a minimal system of generators of $M$ if and only if $(\bar{u}_1, \cdots, \bar{u}_m)$ forms a basis in $M/\mathfrak{m}$, This is indeed the case, as denoting $N = (u_1, \cdots, u_m)$, this gives $N + \mathfrak{m}M = M$, which indicates $N = M$. Choose $F = R^m$ with $\varphi: F \to M$ s.t. $\varphi(e_i) = u_i$ for all $i$. Since $M$ is projective, consider the short exact sequence that splits:
+    It suffices to verify that $M$ is free if it is projective. By Nakayama's Lemma, $(u_1, \cdots, u_m)$ forms a minimal system of generators of $M$ if and only if $(\bar{u}_1, \cdots, \bar{u}_m)$ forms a basis in $M/\mathfrak{m}$, This is indeed the case, as denoting $N = (u_1, \cdots, u_m)$, this gives $N + \mathfrak{m}M = M$, which indicates that $N = M$. Choose $F = R^m$ with $\varphi: F \to M$ s.t. $\varphi(e_i) = u_i$ for all $i$. Since $M$ is projective, consider the short exact sequence that splits:
     \[
         0 \too K \too F \overset{\varphi}{\too} M \too 0
     \]
-    To prove that $M$ is free, it suffices to show that $K = 0$. Note that if $(a_1, \cdots, a_m) \in K$, then $\sum_{i=1}^m a_iu_i = 0 \implies a_i \in \mathfrak{m}$ for all $i$. That is, $K \subseteq \mathfrak{m} R^m$. Now apply the functor $-\tensor R/\mathfrak{m}$. This is an additive functor, which preserves morphisms as it acts as a group homomorphism. This gives the sequence
+    To prove that $M$ is free, it suffices to show that $K = 0$. Note that if $(a_1, \cdots, a_m) \in K$, then $\sum_{i=1}^m a_iu_i = 0 \implies a_i \in \mathfrak{m}$ for all $i$. That is, $K \subseteq \mathfrak{m} R^m$. Now apply the functor $-\tensor R/\mathfrak{m}$. This is an additive functor, which preserves morphisms as it acts as a group homomorphism, i.e. split exact sequences remain split exact after applying the functor. This gives the sequence
     \[
         0 \too K/\mathfrak{m}K \overset{\alpha}{\too} F/\mathfrak{m}F \too M/\mathfrak{m}M \too 0
     \] 
-    which is also split. Since $K \subseteq \mathfrak{m} R^m$, $K \subseteq \mathfrak{m}F$, which indicates that $\alpha = 0$. Since $\alpha$ is injective as the sequence splits, $K / \mathfrak{m}K = 0 \implies K = 0$.This gives, $F \simeq M \oplus K$ which implies $F \simeq M$. 
+    which is also split. Since $K \subseteq \mathfrak{m} R^m$, $K \subseteq \mathfrak{m}F$, which indicates that $\alpha = 0$. Since $\alpha$ is injective as the sequence splits, $K / \mathfrak{m}K = 0 \implies K = 0$. The sequence being split exact gives $F \simeq M \oplus K$, which implies $F \simeq M$. 
 \end{proof}
 
 \end{document}
