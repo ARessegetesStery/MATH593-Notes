@@ -406,7 +406,7 @@ The followings turn to the discussion of flat modules:
     \end{itemize}
 \end{example}
 
-\begin{proposition}
+\begin{proposition}\label{prop:free iff projective in local ring}
     Let $(R, \mathfrak{m})$ be a local Noetherian ring, and $M$ a finitely generated $R$-module. Then $M$ is projective if and only if $M$ is free. 
 \end{proposition}
 
@@ -420,6 +420,52 @@ The followings turn to the discussion of flat modules:
         0 \too K/\mathfrak{m}K \overset{\alpha}{\too} F/\mathfrak{m}F \too M/\mathfrak{m}M \too 0
     \] 
     which is also split. Since $K \subseteq \mathfrak{m} R^m$, $K \subseteq \mathfrak{m}F$, which indicates that $\alpha = 0$. Since $\alpha$ is injective as the sequence is exact, $K / \mathfrak{m}K = 0 \implies K = 0$. The sequence being split exact gives $F \simeq M \oplus K$, which implies $F \simeq M$. 
+\end{proof}
+
+\begin{corollary}
+    Let $R$ be a Noetherian commutative ring, and $M$ a finitely generated $R$-module. Them $M$ is projective if and only if for all maximal ideals $p$ in $R$, $M_p$ is a free $R_p$ module.
+\end{corollary}
+
+\begin{proof}
+    By Proposition \ref{prop:free iff projective in local ring}, it suffices to show that $M$ is projective if and only if for all maximal ideals $p$, the module $M_p$ is a projective $R_p$ module:
+    \begin{enumerate}
+        \item[$\Rightarrow$:] We prove a generalization of the statement. Let $\varphi: R \to S$ be a ring homomorphism, and $M$ be a projective $R$-module, then $M \tensor_R S$ is a projective $S$-module. Since $M$ is a projective $R$-module, there exists an $R$-module $N$ s.t. $R^{(I)} \simeq M \oplus N$. As tensor product commutes with direct sum, this gives the isomorphism $(M \tensor_R S) \oplus (N \tensor_R S) \simeq R^{(I)} \tensor_R S \simeq S^{(I)}$.
+        \item[$\Leftarrow$:] Since for all maximal ideals $p$, $M_p$ is a projective $R_p$ module, by the definition of projective modules we have that for all $R$-modules $A$ and $B$ where there exists a surjective map $A \twoheadrightarrow B$, the morphism of $R$-modules $\Hom_{R_p} (M_p, A_p) \to \Hom_{R_p}(M_p, B_p)$ is surjective. Since tensor product is right exact, to show that $\Hom_R(M, A) \to \Hom_R(M, B)$ is surjective it suffices to show that the map $\Hom_R(M, A) \tensor R_p \to \Hom_R(M, B) \tensor R_p$ is surjective. The identification is shown via the following proposition:
+
+        \begin{proposition}
+            Let ring $S$ be a flat $R$-module, and $f: R \to S$ a ring homomorphism. Let $M$ and $N$ be $R$-modules. Then there is a canonical morphism of $S$-modules $\Hom_R(M, N) \tensor_R S \to \Hom_S(M \tensor_R S, N \tensor_R S)$ which is functorial w.r.t. $M$ and $N$. Further, if $R$ is Noetherian, and $M$ is finitely generated, then this is an isomorphism.
+        \end{proposition}
+
+        \begin{proof}
+            Consider the morphism of $R$-modules $\Hom_R(M, N) \to \Hom_S(M \tensor_R S, N \tensor_R S)$, $f \mapsto f \tensor_R \Id_S$. Then by universal property of extension of scalars there exists a unique morphism of $S$-modules
+            \begin{equation}\tag{$\ast$}
+                \theta_M: \Hom_R(M, N) \tensor_R S \to \Hom_S(M \tensor_R S, N \tensor_R S), \qquad f \tensor a \mapsto a (f \tensor \Id_S)
+            \end{equation}
+            This is functorial w.r.t. both $M$ and $N$. Now regard this as a contravariant functor where $M$ is the argument: denote the morphism above to be $U(M) \to V(M)$. Observe the following facts:
+            \begin{itemize}
+                \item If $M = R$, then this is an isomorphism, as both sides are isomorphic to $N \tensor_R S$. 
+                \item If $M$ is free, then this is also an isomorphism. This is a direct result of the fact above, and the fact that the functors are both additive, which commutes with direct sum.
+            \end{itemize}
+            Now consider the general case where $M$ is finitely generated over a Noetherian ring $R$. Then there exists a free module $F$ s.t. $F \to M$ is surjective, where $e_i$ is mapped to $u_i$ which gives a system of generators in $M$. $R$ is Noetherian indicates that $F$ is a Noetherian $R$-module, which gives that $K := \ker \varphi$ is finitely generated.
+
+            Then similarly it is possible to take a free module $G$ where $G \to K$ is surjective. This gives an exact sequence $G \too F \too M \too 0$. (as $\im (G \to F) = \ker (F \to M)$). Applying $U$ and $V$ on the exact sequence gives the commutative diagram where the rows are exact, and the blocks commute:
+            \begin{figure}[htbp]
+                \centering
+                \begin{tikzcd}
+                    0 \arrow[r, dashed] \arrow[d, dashed] & 0 \arrow[r] \arrow[d, dashed] & U(M) \arrow[r] \arrow[d, "\theta_M"] & U(F) \arrow[r] \arrow[d, "\theta_F"] & U(G) \arrow[d, "\theta_G"] \\
+                    0 \arrow[r, dashed] & 0 \arrow[r] & V(M) \arrow[r] & V(F) \arrow[r] & V(G)
+                \end{tikzcd}
+            \end{figure}
+            The lines are indeed exact, as $S$ is flat on $R$, which gives that $- \tensor_S N$ is right exact, and $\Hom(-, N)$ is left exact. By the results on free modules, $\theta_F$ and $\theta_G$ are isomorphisms, which implies that $\theta_M$ is also an isomorphism by the 5-lemma. 
+        \end{proof}
+
+        This is indeed applicable, as in general localization preserves flatness. Consider $M$ a flat $R$-module, $S$ a multiplicative system in $R$, with an exact sequence $0 \too A \too B \too C \too 0$. To verify that this is true, it suffices to verify that the sequence $0 \too A \tensor_{S^{-1}R} S^{-1}M \too B \tensor_{S^{-1}R} S^{-1}M \too C \tensor_{S^{-1}R} S^{-1}M \too 0$ is exact. This is indeed true from the isomorphism 
+        \[
+            A \tensor_{S^{-1}R} S^{-1}M \simeq A \tensor_{S^{-1}R} (S^{-1}R \tensor_R M) \simeq (A \tensor_{S^{-1}R} S^{-1}R) \tensor_R M \simeq A \tensor_R M
+        \]
+        indicates that the sequence can be identified with $0 \too A \tensor_R M \too B \tensor_R M \too C \tensor_R M \too 0$, which is exact as $M$ is flat. In this case $R$ itself is flat as an $R$-module, which indicates that $R_p$ is also flat.
+    \end{enumerate}
+
 \end{proof}
 
 \section{Complexes$^*$}
