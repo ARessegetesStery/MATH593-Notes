@@ -201,10 +201,37 @@ Let $S$ and $R$ be rings, together with a ring homomorphism $\varphi: R \to S$. 
         \[
             g \circ f (\frac{r}{s} \tensor u) = g(\frac{ru}{s}) = \frac{1}{s} \tensor (ru) = \left(\frac{1}{s}\right)\cdot r \tensor u = \frac{1}{s} \cdot \frac{r}{1} \tensor u = \frac{r}{s} \tensor u
         \]
+        \item Tensor of module and localization of a ring is isomorphic to the localization of the module. Let $R$ be a commutative ring, $M$ be an $R$-module, and $U$ a multiplicative system in $R$. Then we have the isomorphism
+        \[
+            M_U \simeq M \tensor_R R_U
+        \]
+        Proof is done via constructing concrete maps. Consider the morphisms
+        \[
+            \begin{array}{c}
+                f: M_U \to M \tensor_R R_U, \quad \dfrac{u}{s} \mapsto u \tensor \dfrac{1}{s} \\[8pt]
+                g: M \tensor_R R_U \to M_U, \quad u \tensor \dfrac{r}{s} \mapsto \dfrac{ru}{s}
+            \end{array}
+        \]
+        for all $u \in M, r \in R, s \in R\smallsetminus U$. First verify that these maps are indeed well-defined morphisms of $R$-modules:
+        \begin{itemize}
+            \item Consider $\frac{u_1}{s_1} \sim \frac{u_2}{s_2}$ where both of which are in $M_U$. By the definition of localization this indicates that there exists some $t \in R \smallsetminus U$ s.t. $t(s_1 u_2 - s_2 u_1) = 0$. This gives
+            \[
+                f\left( \frac{u_1}{s_1} \right) - f\left( \frac{u_2}{s_2} \right) = (s_2 u_1 - s_1 u_2) \tensor \frac{1}{s_1 s_2} = (t(s_2 u_1 - s_1 u_2)) \tensor \frac{1}{s_1 s_2 t} = 0
+            \]
+            which indicates that the image does not depend on the choice of representative.
+            \item Consider $g': M \times R_U \to M_U, g'(u, \frac{r}{s}) = \frac{ru}{s}$. It is clear that $g'$ is bilinear as $R$ is commutative, which implies that $g'$ is $R$-balanced. Then $g$ exists by the universal property of tensor product.
+        \end{itemize} 
+        Then verify that the composition gives identity:
+        \[
+            f \circ g \left(u \tensor \frac{r}{s}\right) = ru \tensor \frac{1}{s} = u \cdot r \tensor \frac{1}{s} = u \tensor \frac{r}{s} \implies f \circ g = \Id_{M \tensor R_U}, \qquad
+            g \circ f \left(\frac{u}{s}\right) = \frac{u}{s} \implies g \circ f = \Id_{M_U}
+        \]
+        This gives the desired isomorphism.
     \end{itemize}
 \end{example}
 
-\clearpage
+\vspace*{1em}
+
 \begin{theorem}[Universal Property of Extension of Scalars] 
     Let $M$ be a left $R$-module, $N$ be a left $S$-module, together with a ring homomorphism $\varphi: R \to S$. Let $f: M \to N$ a morphism of $R$-modules (in the sense of restriction of scalars). Then there exists a unique morphism of $S$-modules $g: S \tensor_R M \to N$ s.t. $g(1 \tensor u) = f(u)$ for all $u \in M$:
     
