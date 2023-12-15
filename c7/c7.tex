@@ -1,0 +1,153 @@
+\documentclass{article}
+\usepackage{../refalg}
+
+\begin{document}
+\Makepagesectionhead{MATH 593}{Multilinear Algebra}{ARessegetes Stery}
+
+\def\catlalg#1{_{#1}\cat{Alg}}
+
+\tableofcontents
+\newpage
+
+\section{The Tensor Algebra}
+
+\begin{definition}[Multilinear]
+    Let $R$ be a commutative ring, and $M_1, \cdots, M_n, N$ be $R$-modules. A map $\varphi: M_1 \times \cdots \times M_n \to N$ is \textbf{multilinear} if for all $i \in \llbracket 1, n \rrbracket$, for all $x_j \in M_j$ for $j \neq i$, the map $\varphi(x_1, \cdots, x_{i-1}, -, x_{i+1}, \cdots, x_n): M_i \to M$ is $R$-linear.
+\end{definition}
+
+\begin{remark}
+    Via performing induction on $n$, it can be shown that for a multilinear map $f: M_1 \times \cdots \times M_n \to N$, with the tensor map $\varphi: M_1 \times \cdots \times M_n \to M_1 \tensor_R \cdots \tensor_R M_n$ (which is multilinear), there exists a $R$-linear map $g: M_1 \tensor_R \cdots \tensor_R M_n \to P$ s.t. $g \circ \varphi = f$.
+\end{remark}
+
+\begin{definition}[Tensor Algebra]
+    Let $M$ be a fixed $R$-module. Define $T^0(M) := R, T^1(M) = M$; and for $n \geq 2$, define $T^n(M) := \underbrace{M \tensor_R \cdots \tensor_R M}_{n\ \text{times}}$. Then the \textbf{tensor algebra} is defined as
+    \[
+        T(M) := \bigoplus_{i \geq 0}T^i(M) = R \oplus M \oplus (M \tensor_R M) \oplus \cdots
+    \]
+\end{definition}
+
+\begin{remark}
+    Since for all $i$, $T^i(M)$ has an $R$-module structure, $T(M)$ is also an $R$-module.
+\end{remark}
+
+\begin{proposition}
+    $T(M)$ also has an $R$-algebra structure.
+\end{proposition}
+
+\begin{proof}
+    It suffices to define multiplication for each summand of $T(M)$ and check that it is well-defined. Define 
+    \[
+        \alpha_{ij}: T^i(M) \times T^j(M) \to T^{i+j}(M), \quad (a_1 \tensor \cdots \tensor a_i, b_1 \tensor \cdots \tensor b_j) \mapsto (a_1 \tensor \cdots \tensor a_i \tensor b_1 \tensor \cdots \tensor b_j)
+    \]
+    This is indeed well-defined, as by applying the universal property of tensor product for $i$ times gives the desired map. Notice that for the case where $i = 0$ or $j = 0$ this is just scalar multiplication, this is just scalar multiplication.
+\end{proof}
+
+\begin{remark}
+    This can be extended to a map $T(M) \times T(M) \to T(M)$, which makes $T(M)$ a ring. The map is given by for $x = \oplus_{i \geq 0} x_i$, $y = \oplus_{j \geq 0} y_j$, the multiplication is defined as $x \cdot y = \oplus_{i, j \geq 0} \alpha_{i, j}(x_i, y_j)$, with $1 \in T^0(M) = R$. Moreover, the inclusion $R = T^0(M) \hookrightarrow T(M)$ is a ring homomorphism which makes $T(M)$ an $R$-algebra.
+\end{remark}
+
+\begin{remark}
+    Notice that this differs from the polynomial ring in that it is not commutative (in terms of the direct summands). Therefore, the terms in $\oplus_{i, j} \alpha_{ij}$ cannot be collected into one. $T^n = M \tensor \cdots \tensor M$ has a basis given by $x_{i_1} \tensor \cdots \tensor x_{i_n}$, where $i_k \in \llbracket 1, d \rrbracket$ for all $k \in \llbracket 1, n \rrbracket$. Therefore, for $n \geq 2$, $T^n(M)$ is not commutative.
+\end{remark}
+
+\begin{proposition}[Universal Property of $T(M)$]
+    Consider the (forgetful) functor $F: \catlalg{R} \to \catlmod{R}, M \mapsto T(M)$. Let $M$ be an $R$-module and $S$ an $R$-algebra. If $f: M \to S$ is a morphism of $R$-modules, then there exists a unique morphism of $R$-algebras $g: T(M) \to S$ s.t. $g\mid_{T^1(M)} = f$, i.e. $g \circ F = f$:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            M \arrow[rr, hookrightarrow, "F"] \arrow[rrdd, "f"] & & T(M) \arrow[dd, dashed, "g"] \\
+            & & \\
+            & & S
+        \end{tikzcd}
+    \end{figure}
+\end{proposition}
+
+\begin{proof}
+    Apply the universal property of tensor product and direct sum. 
+    
+    Define $f_n: \underbrace{M \times \cdots \times M}_{n\ \text{times}} \to S$, where $f_n(x_1, \cdots, x_n) = f(x_1)\cdots f(x_n)$. This is clearly multilinear, which implies that there exists a unique $R$-linear map $g_n: T^n(M) \to S$ s.t. $g_n(x_1 \tensor \cdots \tensor x_n) = f(x_1) \cdots f(x_n)$. Apply the universal property of direct sum on the superscript gives that there exists a unique $R$-linear map $g: T(M) \to S$ s.t. $g|_{T^n(M)} = g_n$. Check the followings:
+    \begin{itemize}
+        \item $g$ is a morphism of $R$-algebras. Since it is already a morphism of $R$-modules, it suffices to check that this definition is compatible with multiplication. For $x = \oplus_{i=0}^n x_i, y = \oplus_{j=0}^m y_j$, this gives
+        \[
+            g(x \cdot y) = g(x_0 \tensor \cdots \tensor x_n \tensor y_0 \tensor \cdots \tensor y_m) = \Pi_{i=0}^n f(x_i) \cdot \Pi_{j=0}^m f(y_j) = g(x_0 \tensor \cdots \tensor x_n) \cdot g(y_0 \tensor \cdots \tensor y_m) = g(x) \cdot g(y)
+        \]
+        \item $g$ is the unique morphism of $R$-algebras $T(M) \to S$, s.t. $g|_{T^1(M)} = f$. This is clear as defining $g|_{T^1(M)}$ gives the map on $g|_{T^n(M)}$ for all $n$, as by the definition of the multiplication. Furthermore, the map restricted to $T^0(M)$ is given by the associated morphism with the $R$-algebra $S$. Both of which are uniquely determined. 
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    This makes $T$ a functor, which maps from $R$-modules to $R$-algebras. For all $R$-linear maps $f: M \to N$, there exists a unique morphism of $R$-algebras $T(f)$ s.t. the following diagram commutes:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            M \arrow[dd, hookrightarrow] \arrow[rr, "f"] & & N \arrow[dd, hookrightarrow] \\
+            & & \\
+            T(M) \arrow[rr, "T(f)"] & & T(N)
+        \end{tikzcd}
+    \end{figure}
+    This makes $T$ a functor as it preserves compositions. Further this is the left adjoint of the forgetful functor $G$ which only regards $S$ as an $R$-module, i.e. we have the following isomorphism
+    \[
+        \Hom_{\catlalg{R}}(T(M), S) \simeq \Hom_R(M, G(S))
+    \]
+    as by the universal property of tensor algebra the morphism from $T(M)$ to $S$ is uniquely defined by the map $f: M \to S$.
+\end{remark}
+
+\begin{definition}[Graded Ring]
+    A ring $R$ is a \textbf{graded ring} if it comes with a decomposition $R = \oplus_{i \geq 0} R_i$ as abelian groups; and multiplication satisfies the relation $R_p \cdot R_q \subseteq R_{p + q}$ for all $p, q \geq 0$.
+\end{definition}
+
+\begin{remark}
+    Consider the subring $R \subseteq R_0$. If $R_0$ lies in the center of $R$, i.e. $R_0 \subseteq \{a \in R \mid ab = ba \forall b \in R\}$, then $R$ becomes an $R_0$-algebra; and the decomposition $R = \oplus_{i \geq 0} R_i$ is a direct sum of $R_0$-modules.
+\end{remark}
+
+\begin{example}
+    Consider the following examples of graded rings:
+    \begin{enumerate}
+        \item The tensor algebra $T(M)$ is a graded ring, where $R_0 = T^0(M) = R$
+        \item The multivariate polynomials $S = R[x_1, \cdots, x_n]$ is a graded ring, where $S_d = \oplus_{\{i_1, \cdots, i_d \mid \sum_k i_k = d\}} R x_1^{i_1} \cdots x_d^{i_d}$.
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[Homogeneous]
+    If $R = \oplus_{i \geq 0} R_i$ is a graded ring, the elements of $R_n$ are \textbf{homogeneous of degree $n$}.
+\end{definition}
+
+\begin{definition}[Morphism of Graded Rings]
+    If $R$ and $S$ are graded rings, then a morphism of graded rings $f: R \to S$ is a ring homomorphism s.t. $f(R_i) \subseteq S_i$ for all $i$. Such definition gives the result that graded rings form a category.
+\end{definition}
+
+\begin{definition}[Homogeneous Ideal]
+    If $R$ is a graded ring, and $I \subseteq R$ an ideal. $I$ is a \textbf{homogeneous ideal} if $I = \oplus_{i \geq 0} (I \cap R_i)$. Equivalently, for all $f \in I$, for all $f_i \in R_i$ s.t. $f = \sum_{i=0}^d f_i$, then $f_j \in I$ for all $j$. 
+\end{definition}
+
+\begin{remark}
+    If further $I$ is two-sided, then $R/I = \oplus_{i \geq 0}(R_i / (R_i \cap I))$ as a direct sum of abelian groups. In this case, $R/I$ is a graded ring, and the quotient $\pi: R \to R/I$ is a morphism of graded rings.
+\end{remark}
+
+\begin{proposition}
+    Let $R$ be a graded ring, and $I \subseteq R$ an ideal. Then $I$ is homogeneous if and only if it can be generated by homogeneous elements. 
+\end{proposition}
+
+\begin{proof}
+    Show implication in two directions:
+    \begin{enumerate}
+        \item[$\Rightarrow$:] Since $I$ is homogeneous, there exists ideals $I_k \subseteq R_k$ s.t. $I = \oplus_{k \geq 0} I_k$. Then it is generated by the generating sets of $I_k$, which are all homogeneous.
+        \item[$\Leftarrow$:] If $I$ can be generated by homogeneous elements, then for all $x \in R$ there exists a decomposition
+        \[
+            x = \sum_{r \in R} c_r r = \sum_{i \geq 0} \sum_{r \in R_i} c_{ri} r_i
+        \]
+        where only finitely many $c_{ri}$s can be non-zero, and $r_i \in I$. Collecting all the terms in the inner summation gives $x = \sum_{i \geq 0} c_i r_i$ for $r_i \in I_i \subseteq R_i$, which satisfies the definition of homogeneous ideals.
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    It is not necessary (and also not true) that all the homogeneous elements must (can) have the same degree. For example, it is completely valid to have $R \cdot (I \cap R_0) \subsetneq I \cap R_1$, which prevents any homogeneous generating set of the same degree from existing. 
+\end{remark}
+
+\section{Exterior and Symmetric Algebra}
+
+\section{Symmetric, Alternating and Hermitian Forms}
+
+\section{The Spectral Theorem}
+
+\end{document}
