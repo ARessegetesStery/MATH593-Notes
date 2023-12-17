@@ -5,6 +5,8 @@
 \Makepagesectionhead{MATH 593}{Multilinear Algebra}{ARessegetes Stery}
 
 \def\catlalg#1{_{#1}\cat{Alg}}
+\def\conj#1{\overline{#1}}
+\def\too{\longrightarrow}
 
 \tableofcontents
 \newpage
@@ -51,7 +53,7 @@
 \end{remark}
 
 \begin{proposition}[Universal Property of $T(M)$]
-    Consider the (forgetful) functor $F: \catlalg{R} \to \catlmod{R}, M \mapsto T(M)$. Let $M$ be an $R$-module and $S$ an $R$-algebra. If $f: M \to S$ is a morphism of $R$-modules, then there exists a unique morphism of $R$-algebras $g: T(M) \to S$ s.t. $g\mid_{T^1(M)} = f$, i.e. $g \circ F = f$:
+    Consider the (forgetful) functor $F: \catlalg{R} \to \catlmod{R}, M \mapsto T(M)$. Let $M$ be an $R$-module and $S$ an $R$-algebra. If $f: M \to S$ is a morphism of $R$-modules, then there exists a unique morphism of $R$-algebras $g: T(M) \to S$ s.t. $g|_{T^1(M)} = f$, i.e. $g \circ F = f$:
     \begin{figure}[htbp]
         \centering
         \begin{tikzcd}
@@ -237,6 +239,143 @@
 \end{example}
 
 \section{Symmetric, Alternating and Hermitian Forms}
+
+\begin{definition}[Hermitian]
+    Let $E$ be a finite-dimensional $\C$-vector space. $g: E \times E \to \C$ is \textbf{Hermitian} if:
+    \begin{enumerate}[label=\roman*)]
+        \item $g(-, v)$ is linear for all $v \in E$. 
+        \item $\conj{g(v, -)}$ is linear for all $v \in E$.
+        \item $g(v, w) = \overline{g(w, v)}$ for all $v, w \in E$.
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    By the definition, if $v = w$ this gives $g(v, v) = \conj{g(v, v)}$, which implies that $g(v, v) \in \R$ if $g$ is Hermitian.
+\end{remark}
+
+\begin{definition}
+    The \textbf{kernel} of a bilinear (Hermitian) map $g$ is defined as
+    \[
+        \ker(g) := \{v \in E \mid g(v, w) = 0\ \forall w \in E \}
+    \]
+    which is a linear subspace of $E$.
+\end{definition}
+
+\begin{definition}[Orthogonality]
+    Let $F \subseteq E$ be a linear subspace. Then its \textbf{orthogonal complement} $F^{\perp} := \{v \in E \mid g(v, w) = 0\ \forall w \in F\}$. which is a linear subspace of $E$. Two vector subspaces $F_1, F_2 \subseteq E$ are \textbf{orthogonal} if $F_1 \subseteq F_2^{\perp}$, which is equivalently $g(v, w) = 0$ for all $v \in F_1, w \in F_2$.
+\end{definition}
+
+\begin{example}
+    $E^{\perp}$ w.r.t. $g$ is the kernel of $g$. 
+\end{example}
+
+\begin{remark}
+    For orthogonal vector subspaces $F_1$ and $F_2$, it is often denoted $F_1 \perp F_2$ for $F_1 \subseteq F_2^{\perp}$; and $E = F_1 \perp F_2$ if $E = F_1 \oplus F_2$ for $F_1 \perp F_2$.
+\end{remark}
+
+\begin{definition}
+    A bilinear (Hermitian) form $g$ is \textbf{nondegenerate} if $\ker(g) = 0$.
+\end{definition}
+
+\begin{remark}
+    If $W \subseteq E$ is a subspace s.t. $E = \ker g \perp W$, then $g|_W$ is nondegenerate. 
+
+    Suppose that there exists $x \in W$ s.t. $x \in \ker g|_W$. By definition $g(x, y) = 0$ for all $y \in \ker g$. This implies that $x \in \ker g$, which contradicts with the hypothesis that $E$ is the internal direct sum of $\ker g$ and $W$.
+\end{remark}
+
+\begin{proposition}
+    Let $F \subseteq E$ be a linear subspace. Suppose that $g$ is nondegenerate. Then
+    \begin{enumerate}[label=\roman*)]
+        \item $\dim F^{\perp} + \dim F = \dim E$; and $(F^{\perp})^{\perp} = F$.
+        \item The following statements are equivalent:
+        \begin{enumerate}
+            \item $g|_{F \times F}$ is nondegenerate.
+            \item $E = F \perp F^{\perp}$.
+            \item $g|_{F^{\perp} \times F^{\perp}}$ is nondegenerate.
+        \end{enumerate}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Consider $V^*$ to be the dual vector space of $V$, which is $\Hom_K(V, K)$ for $g$ bilinear, and conjugate linear maps for $G$ Hermitian. Since to specify the linear maps it suffices to specify where the basis is mapped to, $\dim_K(V) = \dim_K(V^{\ast})$. This gives a natural map $\varphi: E \to E^{\ast}$ defined as $\varphi(v) := g(v, -)$. $\varphi$ is further an isomorphism, as since $g$ is nondegenerate $\ker g = 0$; and by construction $\ker \varphi = \ker g$.
+
+    Define $K := \ker (E^{\ast} \to F^{\ast})$. This gives an exact sequence
+    \[
+        0 \too K \too E^{\ast} \too F^{\ast} \too 0
+    \]
+    where since $F^{\perp} = \varphi^{-1}(K)$ we have $\dim F^{\perp} = \dim K = \dim E - \dim F$. By definition $F \subseteq (F^{\perp})^{\perp}$; and applying the above argument again gives $\dim F = \dim (F^{\perp})^{\perp}$.
+    
+    For the second argument, $g|_{F \times F}$ being nondegenerate implies that $F \cap F^{\perp} = \{0\}$, indicating that $E = F \perp F^{\perp}$. Applying symmetric argument gives the other equivalence.
+\end{proof}
+
+\begin{definition}
+    If $g$ is symmetric of Hermitian, an \textbf{orthogonal basis} of $E$ is a basis $(e_1, \cdots, e_n)$ s.t. for all $i \neq j$, $g(e_i, e_j) = 0$.
+\end{definition}
+
+\begin{remark}
+    This definition is meaningless for $g$ being alternating, as by definition $g(e_i, e_i) = 0$, which implies that the whole space is the kernel of $g$.
+\end{remark}
+
+\begin{proposition}
+    If $g$ is Hermitian; or $g$ is symmetric with $\text{char}(K) \neq 2$, then there exists an orthogonal basis.
+\end{proposition}
+
+\begin{proof}
+    Perform induction on the dimension of the vector space. Since the base case is vacuous, it suffices to show the inductive step.
+
+    Suppose that the above proposition is true for vector spaces whose dimension is no greater than $d$. Consider a vector space $E$ over $K$ s.t. $\dim E = d+1$. Let $F \subseteq E$ to be a vector subspace with dimension $d$, and $v \in E \smallsetminus F$ s.t. $g(v, v) \neq 0$. Assume that $g$ is non-degenerate (or otherwise consider $W$ where $E = \ker(g) \oplus W$; and set up the dimensions accordingly). Now consider the cases separately:
+    \begin{itemize}
+        \item $g$ is symmetric. Since $2$ is invertible, for all $v, w \in E$, $g(v, w) = 2^{-1}(g(v+w, v+w) - g(v, v) - g(w, w))$. which can be set to $0$ for suitable choice of $v$. 
+        \item $g$ is Hermitian. Consider separately the real part and the imaginary part. The above construction gives
+        \[
+            g(v, w) + g(w, v) = g(v+w, v+w) - g(v, v) - g(w, w)
+        \]
+        which indicates that $\mathrm{Re}(g(v, w)) = 0$. Further consider $g(iv, w)$, which gives $\mathrm{Im}(g(v, w)) = 0$.
+    \end{itemize}
+    Since $g_{F\times F}$ is nondegenerate (by the choice of $v$), $E = F \perp F^{\perp}$, which indicates that the basis of $F$ and $F^{\perp}$ combined gives an orthogonal basis. 
+\end{proof}
+
+\begin{theorem}[Sylvester]
+    If $g$ is a symmetric and nondegenerate bilinear form over $K = \R$, then there exists $r \in \N$ s.t. for all orthogonal basis $(e_1, \cdots, e_n)$, from the sets $g(e_k, e_k)$ for $k \in \llbracket 1, n \rrbracket$ exactly $r$ out of them are positive, and the rest are negative since $g$ is nondegenerate. For the $r$ defined as above $(r, \dim E - r)$ is defined as the \textbf{signature} of $g$.
+\end{theorem}
+
+\begin{proof}
+    Let $(e_i)$ and $(e_i')$ be two orthogonal bases. Define $a_i = g(e_i, e_i)$, and $b_j = g(e_j', e_j')$ for all $i$ and $j$. Reorder the basis s.t. $a_i > 0$ if and only if $i \leq r$; and $b_j > 0$ if and only if $j \leq s$. We would like to show that $r = s$, via showing $r \leq s$ through the fact that $(e_1, \cdots, e_r, e_{s+1}', \cdots, e_n')$ are linearly independent; and by symmetric argument.
+
+    Suppose
+    \[
+        \sum_{i=1}^r \alpha_i e_i - \sum_{j = 1}^{n-s} \beta_j e_{s+j}' = 0
+    \]
+    define $u$ as such and notice the follows:
+    \[
+        u = \sum_{i=1}^r \alpha_i e_i = \sum_{j = 1}^{n-s} \beta_j e_{s+j}' \implies g(u, u) = \underbrace{\sum_{i=1}^r \alpha_i^2 a_i}_{\geq 0} = \underbrace{\sum_{j=1}^r \beta^2 b_{s+j}}_{\leq 0}
+    \]
+    which implies that $\alpha_i = \beta_j = 0$ for all $i \leq r$, $j \leq s$.
+\end{proof}
+
+\begin{remark}
+    For the Hermitian case, since $g(r, r) \in \R$ for all $r$, the proof is exactly the same via replacing $\alpha_i^2$ by $\alpha_i \cdot \conj{\alpha_i}$ and same for $\beta_j$s.
+\end{remark}
+
+\begin{remark}
+    If $e_i, \cdots, e_n$ is an orthogonal basis of $g$, one can find $\lambda_i$ s.t. $e_i' = \lambda_i e_i$ satisfying that $g(e_i', e_i') = \pm 1$ for all $i$. Such $(e_i')$ gives an \textbf{orthonormal basis}.
+\end{remark}
+
+\begin{definition}
+    A symmetric (Hermitian) bilinear form $g$ is \textbf{positive definite} if it is nondegenerate with signature $(\dim E, 0)$. Equivalently, $g$ is positive definite if and only if $g(v, v) > 0$ for all $v \in E$ s.t. $v \neq \{0\}$.
+\end{definition}
+
+\begin{example}
+    If $H$ is a positive definite Hermitian form, with $(e_1, \cdots, e_n)$ an orthonormal basis, then for $v = \sum_i \alpha_i e_i$ and $w = \sum_j \beta_j e_j$, $H(v, w) = \sum_i \alpha_i \conj{\beta_i}$.
+\end{example}
+
+\begin{proposition}
+    If $g$ is a nondegenerate alternating form, then $E = E_1 \perp \cdots \perp E_m$; and each $E_i$ has a basis $(u_i, v_i)$ s.t. $g(u_i, v_i) = 1$ for all $i$. 
+\end{proposition}
+
+\begin{proof}
+    For $v, u \in E$ which are linearly independent, $g$ being alternating implies $g(v, u) = 0$. Further if there exists $u_1, u_2 \in E$ s.t. $g(v, u_1)\neq 0$, $g(v, u_2) \neq 0$, this gives that there exists $c \in K$ s.t. $g(v, u_1 - c u_2) = 0$ which implies that $(v, u_1, u_2)$ is not linearly independent.
+\end{proof}
 
 \section{The Spectral Theorem}
 
