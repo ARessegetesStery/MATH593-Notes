@@ -379,4 +379,116 @@
 
 \section{The Spectral Theorem}
 
+\begin{remark}
+    Fix the notation. For $g$ being symmetric bilinear or Hermitian, $g(-, -)$ is often denoted as $\inner{-, -}$.
+\end{remark}
+
+In this part two kinds of maps are considered:
+\begin{enumerate}
+    \item $E$ is a finite dimensional vector space over $K = \R$, with a positive-definite symmetric bilinear form.
+    \item $E$ is a finite dimensional vector space over $K = \C$, with a positive-definite Hermitian form.
+\end{enumerate}
+
+\begin{remark}
+    Any symmetric or Hermitian bilinear form can be described using a matrix w.r.t. any basis $(e_1, \cdots, e_n)$ of $V$: $A = (g(e_i, e_j))$, $1 \leq i, j \leq n$. $g$ being symmetric gives $^t A = A$; and $g$ being Hermitian gives $^t A = \bar{A}$. If the basis is orthonormal, then it has $\pm 1$ on the diagonal.
+\end{remark}
+
+\begin{definition}[Adjoint of linear operators]
+    Fix $y \in E$. Consider $E \ni x \mapsto \inner{y, u(x)} \in K$. This map is in $E^{\ast}$, which is $\Hom_{\R}(E, \R)$ in the first case, and conjugate linear maps to $\C$ in the second. Suppose further that $\inner{-, -}$ is nondegenerate, there exists a unique map $u^{\ast}$ s.t. $\inner{u^{\ast}(y), x} = \inner{y, u(x)}$.
+\end{definition}
+
+\begin{remark}
+    $u^{\ast}$ is also linear. Consider the following identification:
+    \[
+        u^{\ast}(\lambda y) = \inner{\lambda y, u(x)} = \lambda \inner{y, u(x)} = \lambda \inner{u^{\ast}(y), x} = \lambda u^{\ast}(y)
+    \]
+\end{remark}
+
+\begin{definition}
+    For $u$ symmetric or Hermitian, it is \textbf{self-adjoint} if $u = u^{\ast}$, i.e. for all $x, y \in E$, $\inner{u(x), y} = \inner{x, u(y)}$.
+\end{definition}
+
+\begin{proposition}
+    A linear map is self-adjoint if and only if its matrix representation is symmetric or Hermitian.
+\end{proposition}
+
+\begin{proof}
+    Let $(e_1, \cdots, e_n)$ be an orthonormal basis of $E$. By linearity it suffices to consider the evaluation of the map on the basis. Let the matrix representations of $u$ and $u^{\ast}$ be $(a_{ij})$ and $(b_{ij})$, respectively. Then the evaluation can be expressed via
+    \[
+        u(e_k) = \sum\limits_{i=1}^n a_{ik} e_i, \quad u^{\ast} (e_{\ell}) = \sum\limits_{j=1}^n b_{j \ell} e_j
+    \]
+    Now consider the criterion for judging whether an operator is self-adjoint: for $\pair{e_{\ell}, u(e_k)} = \inner{u^{\ast}(e_{\ell}), e_k}$ we have
+    \[
+        \text{LHS} = \inner{e_{\ell}, \sum_{i=1}^n a_{ik} e_k} = \conj{a_{\ell k}}, \qquad \text{RHS} = \inner{\sum_{j=1}^n b_{j\ell} e_j, e_k} = b_{kl}
+    \]
+    which implies that $B = \conj{^tA}$.
+\end{proof}
+
+\begin{theorem}[Spectral Theorem]\label{thm: Spectral}
+    Let $u: E \to E$ be a self-adjoint linear map. Then:
+    \begin{enumerate}[label=\roman*)]
+        \item All eigenvalues of $u$ are in $\R$.
+        \item If $u_1, u_2$ are eigenvectors corresponding to distinct eigenvalues $\lambda_1$, $\lambda_2$, then $\inner{u_1, u_2} = 0$.
+        \item There exists an orthonormal basis of $E$ consisting of eigenvectors of $u$, which implies that $u$ is diagonalizable.
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    In particular, this implies that symmetric linear maps on $\R$, and Hermitian linear maps on $\C$, are diagonalizable.
+\end{remark}
+
+\begin{proof}[Proof of Theorem \ref{thm: Spectral}]
+    Consider the statements sequentially:
+    \begin{enumerate}[label=\roman*)]
+        \item Let $\lambda \in \C$ be a root of the characteristic polynomial of $u$:
+        \begin{itemize}
+            \item First consider $E$ as a vector space over $\C$. Let $y$ be an eigenvector associated to $\lambda$. This gives
+            \[
+                \lambda \inner{y, y} = \inner{\lambda y, y} = \inner{u(y), y} = \inner{y, u(y)} = \inner{y, \lambda y} = \conj{\lambda} \inner{y, y}
+            \]
+            Since $y \neq 0$, $\inner{y, y} \neq 0$, which implies that $\lambda = \conj{\lambda}$.
+            \item Now let $E$ be a vector space over $\R$. Seek to reduce to the case above. Consider the extension of scalars $E_{\C} := E \tensor_{\R} \C$, with the inclusion $E \hookrightarrow E_{\C}$, $x \mapsto x \tensor 1$. This gives an extension of $\inner{-, -}$ to $E_{\C}$, which is also Hermitian. This implies that orthogonality in $E_{\C}$ is well-defined, and any orthonormal basis in $E$ is also orthonormal in $E_{\C}$.
+            
+            Now consider the corresponding map after the extension of scalar $i_{\C} := u \tensor \Id_{\C}$, which is given by the same matrix representation as that in $E$. By the result in the first case, this is self-adjoint; and since the characteristic polynomial of these two maps are the same, all roots are real numbers.
+        \end{itemize}
+        \item Let $\lambda_1, \lambda_2$ be the eigenvalues to which the eigenvectors $v_1, v_2$ are associated to. Since $u$ is self-adjoint, this gives
+        \[
+            \lambda_1 \inner{v_1, v_2} = \inner{u(v_1), v_2} = \inner{v_1, u(v_2)} = \conj{\lambda_2}\inner{v_1, v_2} = \lambda_2 \inner{v_1, v_2}
+        \]
+        By hypothesis $\lambda_1 \neq \lambda_2$, and by definition they are non-zero. This gives $\inner{v_1, v_2} = 0$. 
+        \item Show this via induction on the dimension of $E$:
+        \begin{itemize}
+            \item \emph{Base case}. Then for any element in the vector space it is linear in some basis vector that is normalized. 
+            \item \emph{Inductive step}. Let $v \in E$ be an eigenvector of $u$ associated to the eigenvalue $\lambda$. Define $F = (K\cdot v)^{\perp}$ where $K$ is the underlying field. Since we are working over a vector space, this gives $E = F \oplus F^{\perp}$, indicating that $\inner{-, -}|_{F^{\perp} \times F^{\perp}}$ is positive definite (since the basis is orthonormalized). Let $y \in F^{\perp}$. By construction $\inner{u(y), v} = \inner{\sum_{i} \alpha_i \lambda_i y_i, v} = 0$ where $y_i$ is associated to the eigenvalue $\lambda_i$. Further $u|_{F^{\perp} \times F^{\perp}}$ is self-adjoint, as taking a perspective on its matrix representation a matrix with one column and one row deleted remains to be Hermitian if itself is. Then $v$ together with an orthonormal basis of $F^{\perp}$ gives an orthonormal basis of $E$. 
+        \end{itemize}
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}[Unitary Operator]
+    A linear map $u: E \to E$ is \textbf{unitary} if it is a bijection; and $u^{\ast} = u^{-1}$.
+\end{definition}
+
+\begin{remark}\label{rmk: eq def of unitary}
+    Equivalently, this gives $\inner{u^{-1}(x), y} = \inner{x, u(y)}$, which implies that
+    \[
+        \inner{x, y} = \inner{u(x), u(y)} \implies \inner{x, x} = \inner{u(x), u(x)} \implies x = 0 \text{ if and only if  } u(x) = 0
+    \]
+\end{remark}
+
+\begin{remark}\label{rmk: unitary inverse}
+    Translating this into the matrix representation $A$ of $u$, $u$ is unitary if and only if $A \cdot \conj{^t A} = \Id$. This implies that a matrix is unitary if and only if its inverse is (assuming that it is invertible). 
+\end{remark}
+
+\begin{proposition}
+    If $B$ is an orthonormal basis, and $A$ is a change of basis matrix between $B$ and $B'$. Then $B'$ is orthonormal if and only if $A$ is unitary.
+\end{proposition}
+
+\begin{proof}
+    By the Remark \ref{rmk: unitary inverse} and symmetric argument it suffices to prove that for one direction. Remark \ref{rmk: eq def of unitary} $\inner{u(v_i), u(v_j)} = \inner{v_i, v_j}$ which is $\pm 1$ for $i = j$; and 0 otherwise. This is exactly the definition of an orthonormal basis. 
+\end{proof}
+
+\begin{remark}
+    By Spectral Theorem, there exists an orthonormal basis consists of eigenvectors. Further the matrix $U$ with columns elements of the orthonormal basis is unitary. Then for $A$ Hermitian, $U \cdot A \cdot U^{-1}$ is diagonal. 
+\end{remark}
+
 \end{document}
