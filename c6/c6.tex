@@ -8,6 +8,8 @@
 \newpage
 
 \def\too{\longrightarrow}
+\def\Kom{\underline{\mathrm{Kom}}}
+\def\comp#1{#1^{\circ}}
 
 \section{Exactness}
 
@@ -470,7 +472,137 @@ The followings turn to the discussion of flat modules:
 
 \section{Complexes$^*$}
 
+Recall that a complex is an infinite chain where the composition of any two successive morphisms gives zero. This section is devoted to further study this object.
 
+First present another lemma which again uses the technique of ``chasing the diagram'':
+
+\begin{proposition}[The Snake Lemma]
+    Consider the diagram below, where all objects are in an additive category, where the rows are exact, blocks commute, and $0$ denotes the zero object: 
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            & A \arrow[r, "f"] \arrow[d, "a"] & B \arrow[r, "g"] \arrow[d, "b"] & C \arrow[r] \arrow[d, "c"] & 0 \\
+            0 \arrow[r] & A' \arrow[r, "f'"] & B' \arrow[r, "g'"] & C' & 
+        \end{tikzcd}
+    \end{figure}
+
+    Then there exists an exact sequence
+    \[
+        \ker a \too \ker b \too \ker c \overset{\delta}{\too} \coker a \too \coker b \too \coker c
+    \]
+    where $\delta$ is known as the \underline{connecting homomorphism}.
+\end{proposition}
+
+\begin{proof}[Sketch of Proof]
+    The proof is done only for the case where the category is taken as $\catlmod{R}$.
+
+    First define the map. Let $x \in \ker c$. $g$ being surjective implies that there exists some $y \in B$ s.t. $g(y) = x$. Denote $y' = b(y)$. By the fact that blocks commute, $g'(b(y)) = c(g(y)) = 0$, which implies that $y' \in \ker g'$. Since the second row is exact, $y'$ is in the image of $f'$, which implies that there exists some $z' \in A'$ s.t. $f'(z') = y'$. Define $\delta(x) = \bar{z'} \in A' / \im a$. This is a homomorphism as all maps used above are homomorphisms.
+
+    Now check that this map is well-defined. Since $f'$ is injective by the exactness, it suffices to check that the choice of $z$ does not vary w.r.t. the choice of $y$. Suppose that there exists $y_1, y_2 \in B$ s.t. $(y_1 - y_2) \in \ker g$. By the exactness of the top row there exists $\tilde{z} \in A$ s.t. $f(\tilde{z}) = y_1 - y_2$ as $\ker g = \im f$. Let $z_1, z_2$ be the corresponding output where $y_1$ and $y_2$ are used, respectively. By the commutativity of the left block, together with the fact that $\delta$ is a homomorphism, $z_1' - z_2' = a(\tilde{z})$, which indicates that they have the same image in $\coker a$.
+
+    Now check the exactness. Consider the expanded commutative diagram:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            & \ker a \arrow[d, "a_1"] \arrow[r, "\alpha"] & \ker b \arrow[r, "\beta"] \arrow[d, "b_1"] & \ker c \arrow[r, dashed, "\delta"] \arrow[d, "c_1"] & \ \\
+            & A \arrow[r, "f"] \arrow[d, "a"] & B \arrow[r, "g"] \arrow[d, "b"] & C \arrow[r] \arrow[d, "c"] & 0 \\
+            0 \arrow[r] & A' \arrow[r, "f'"] \arrow[d, "a_2"] & B' \arrow[r, "g'"] \arrow[d, "b_2"] & C' \arrow[d, "c_2"] & \\
+            \arrow[r, dashed, "\delta"] & \coker a \arrow[r, "\alpha'"] & \coker b \arrow[r, "\beta'"] & \coker c & \\
+        \end{tikzcd}
+    \end{figure}
+
+    where the long exact sequence becomes
+    \[
+        \ker a \overset{\alpha}{\too} \ker b \overset{\beta}{\too} \ker c \overset{\delta}{\too} \coker a \overset{\alpha'}{\too} \coker b \overset{\beta'}{\too} \coker c
+    \]
+    Check the exactness respectively:
+    \begin{itemize}
+        \item At $\ker b$. We only need to show $\im \alpha = \ker \beta$. Since $a_1, b_1$ and $c_1$ are embeddings, this is just given by $\ker \beta = \ker b \cap \ker g$. 
+        \item At $\ker c$. We need to show that $\im \beta = \ker \delta $. $x \in \im \beta$ implies that the corresponding $y'$ is zero. Then by injectivity of $f'$ this gives $\delta(x) = 0$, which gives $x \in \ker \delta$.
+    \end{itemize}
+    The exactness at rest two objects can be verified using a symmetric argument. 
+\end{proof}
+
+Now we turn to the subject of complexes.
+
+\begin{definition}[Morphism of Complexes]
+    Let $\comp{K}$ and $\comp{L}$ be complexes whose objects are $R$-modules. A morphism of complexes $f: \comp{K} \to \comp{L}$ is given by a family of $R$-linear maps $f^n: K^n \to L^n$ s.t. all the squares in the following diagram is commutative:
+    \begin{figure}
+        \centering
+        \begin{tikzcd}
+            \cdots \arrow[r] & K^n \arrow[r] \arrow[d, "f^n"] & K^{n+1} \arrow[r] \arrow[d, "f^{n+1}"] & \cdots \\
+            \cdots \arrow[r] & L^n \arrow[r] & L^{n+1} \arrow[r] & \cdots \\
+        \end{tikzcd}
+    \end{figure}
+\end{definition}
+
+\begin{remark}
+    Clearly commutative is transited through composition of morphisms. Since $\catlmod{R}$ gives an additive category structure, this is also a category $\Kom(\catlmod{R})$ (or $\Kom_R$).
+\end{remark}
+
+\begin{definition}[Cohomology]
+    For a complex $\comp{K}: \cdots \overset{d^{n-1}}{\too} K^n \overset{d^n}{\too} K^{n+1} \too \cdots$, the \textbf{$n$-th cohomology} of $\comp{K}$ is defined as $H^n(K) := \ker(d^n)/ \im(d^{n-1})$.
+\end{definition}
+
+\begin{remark}
+    Cohomology measures how far a point in the complex is from being exact. The complex $\comp{K}$ is exact if and only if $H^n(\comp{K}) = 0$ for all $n$. 
+\end{remark}
+
+\begin{proposition}
+    $H^n: \Kom_R \to \catlmod{R}$ is a functor.
+\end{proposition}
+
+\begin{proof}
+    Define $H^n(f) := f^n$ which is the mapping $H^n(\comp{K}) \to H^n(\comp{L})$. Check according to the definition:
+    \begin{itemize}
+        \item For any complex $\comp{K}$, $H^n(\comp{K})$ is by definition an $R$-module. 
+        \item Identity is mapped to identity, as the same complex has the same cohomology.
+        \item $H^n(f \circ g) = H^n(f) \circ H^n(g)$ by the commutativity of the diagram.
+    \end{itemize}
+\end{proof}
+
+\begin{definition}
+    Suppose that $f, g>: \comp{K} \to \comp{L}$ be morphism of complexes. Then $f$ is \textbf{homotopic} to $g$ (denoted $f \sim g$) if there exists $R$-linear maps $\theta^n: K^n \to L^{n-1}$ for all $n \in \Z$, s.t. 
+    \[
+        f^n - g^n = d_L^{n-1} \circ \theta^n + \theta^{n+1} \circ d_K^n \quad \forall n \in \Z
+    \]
+    It may be clearer to consult the following diagram:
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzcd}
+            K^{n-1} \arrow[dd, shift left, dashed, "g^{n-1}"] \arrow[rr, "d_K^{n-1}"] & & K^n \arrow[dd, shift left, dashed, "g^{n}"] \arrow[rr, "d_K^{n}"] \arrow[lldd, "\theta^n"] & & K^{n+1} \arrow[dd, shift left, dashed, "g^{n+1}"] \\
+            & & & & \\
+            L^{n-1} \arrow[uu, shift left, <-, "f^{n-1}"] \arrow[rr, "d_L^{n-1}"] & & L^n \arrow[uu, shift left, <-, "f^{n}"] \arrow[rr, "d_L^{n}"] \arrow[rruu, <-, "\theta^{n+1}"] & & L^{n+1} \arrow[uu, shift left, <-, "f^{n+1}"] \\
+        \end{tikzcd}
+    \end{figure}
+\end{definition}
+
+\begin{remark}
+    Homotopy implies that they induces the same cohomology everywhere. That is, if $f \sim g$, Consider for $x \in \ker d_K^n$,
+    \[
+        f^n(x) - g^n(x) = d_L^{n-1} \circ \theta^n(x) + \theta^{n+1} \circ d_K^n(x) = d_L^{n-1} \circ \theta^n(x) \in \im d_L^{n-1} = \ker d_L^n
+    \]
+\end{remark}
+
+\begin{remark}
+    If $F: \catlmod{R} \to \catlmod{S}$ is an additive functor, then
+    \begin{itemize}
+        \item If $\comp{K}$ is a complex, then the chain given by $\cdots \overset{F(d^{n-1})}{\too} F(K^n) \overset{F^(d^n)}{\too} F(K^{n+1}) \overset{F(d^{n+1})}{\too} \cdots$ is also a complex. Exactness follows directly from considering the image of the corresponding submodules after applying the functor.
+        \item Let $f = (f^n): \comp{K} \to \comp{L}$ be a morphism of complex. Then $F(f)$ is also a morphism of complex. 
+        \item If $f \sim g$, then $F(f) \sim F(g)$, as functors by definition commutes with composition; and additive functors commute with addition.
+    \end{itemize}
+\end{remark}
+
+\begin{proposition}
+    Given a short exact sequence of complexes $0 \too \comp{K} \overset{f}{\too} \comp{L} \overset{g}{\too} \comp{M} \too 0$ (tjhat is, for all $n$ the sequence with corresponding maps $0 \too K^n \too L^n \too M^n \too 0$ is exact), then there exists a canonical morphism $H^{n-1}(\comp{M}) \overset{\delta^{n-1}}{\too} H^n(\comp{K})$ for all $n$ s.t. we have a ``long exact sequence in cohomology'':
+    \[
+        \cdots \too H^n(\comp{K}) \overset{H^n(f)}{\too} H^n(\comp{L}) \overset{H^n(g)}{\too} H^n(\comp{M}) \overset{\delta^n}{\too} H^{n+1}(\comp{K}) \too \cdots
+    \]
+\end{proposition}
+
+\begin{proof}
+    Notice that $(\ker d_M^n/\im d_M^{n-1})$ and $(\ker d_M^{n+1}/\im d_M^n)$ are the kernel and cokernel of $d_M^n$, respectively. Applying Snake Lemma gives the desired result.
+\end{proof}
 
 \section{Projective and Injective Resolution$^*$}
 
