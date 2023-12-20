@@ -10,6 +10,7 @@
 \def\too{\longrightarrow}
 \def\Kom{\underline{\mathrm{Kom}}}
 \def\comp#1{#1^{\circ}}
+\def\projres#1{#1_{\circ}}
 
 \section{Exactness}
 
@@ -605,6 +606,61 @@ Now we turn to the subject of complexes.
 \end{proof}
 
 \section{Projective and Injective Resolution$^*$}
+
+\begin{definition}[Projective Resolution]
+    Given an $R$-module $M$, a \textbf{projective resolution} of $M$ $\projres{P}$ is a complex
+    \[
+        \cdots \too P_n \too \cdots \too P_1 \too P_0 \too 0
+    \]
+    where all $P_i$s are porjective, together with a map $P_0 \to M$ s.t. the following sequence is exact:
+    \[
+        \cdots \too P_1 \too P_0 \too M \too 0
+    \]
+    The projective resolution is often simply denoted by the map $P_0 \to M$.
+\end{definition}
+
+\begin{proposition}
+    Projective resolution approximates an exact sequence to a module:
+    \begin{enumerate}[label=\roman*)]
+        \item Every $R$-module $M$ has a projective resolution.
+        \item Given any morphism $f: M \to M'$ and projective resolutions $P_0 \to M$ and $P_0' \to M'$, there exists $F: P_0 \to P_0'$ a morphism of complex s.t. the diagram is commutative:
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzcd}
+                P_0 \arrow[rr] \arrow[dd, "F"] & & M \arrow[dd, "f"] \\
+                & & \\
+                P_0' \arrow[rr] & & M'
+            \end{tikzcd}
+        \end{figure}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Construct the proof correspondingly:
+    \begin{enumerate}[label=\roman*)]
+        \item Consider $P_0 \to M$ be the map where $P_0$ is free; and elements in the basis is mapped to the system of generators. Similarly let $f_n: P_{n+1} \to \ker f_{n-1}$ be a similar map. This gives the construction of an infinite chain.
+        \item Similarly, do this inductively. Since $P_0$ is projective, by definition there exists $F_0$ s.t. $f \circ \varepsilon = \varepsilon' \circ F_0$ (via considering $P_0' \to M'$ be the projection). Commutativity gives $F_0(\ker \varepsilon) \subseteq \ker \varepsilon'$. Repeat via replacing $M, M'$ with $\ker \varepsilon$ and $\ker \varepsilon'$ respectively. 
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    If there exists two functors $F$ and $F'$ which both satisfy the condition in ii), then $F \sim F'$. The proof is similar to what presented above.
+\end{remark}
+
+\begin{definition}[Injective Resolution]
+    Dually, an \textbf{injective resolution} of an $R$-module $M$ is given by a complex 
+    \[
+        0 \too I^0 \too I^1 \too \cdots
+    \]
+    with $I^n$ injective for all $n$; and a morphism $M \to I$ s.t. the following sequence is an exact complex:
+    \[
+        0 \too M \too I^0 \too I^1 \too \cdots
+    \]
+\end{definition}
+
+\begin{remark}
+    The corresponding propositions as above also hold under the context of injective modules, as by Thoerem \ref{thm:enough injectives} every module can be embedded into some injective module. 
+\end{remark}
 
 \section{Derived Functors$^*$}
 
