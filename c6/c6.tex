@@ -10,7 +10,7 @@
 \def\too{\longrightarrow}
 \def\Kom{\underline{\mathrm{Kom}}}
 \def\comp#1{#1^{\circ}}
-\def\projres#1{#1_{\circ}}
+\def\projres#1{#1_{\bullet}}
 
 \section{Exactness}
 
@@ -612,18 +612,18 @@ Now we turn to the subject of complexes.
     \[
         \cdots \too P_n \too \cdots \too P_1 \too P_0 \too 0
     \]
-    where all $P_i$s are porjective, together with a map $P_0 \to M$ s.t. the following sequence is exact:
+    where all $P_i$s are porjective, together with a map $\projres{P} \to M$ s.t. the following sequence is exact:
     \[
         \cdots \too P_1 \too P_0 \too M \too 0
     \]
-    The projective resolution is often simply denoted by the map $P_0 \to M$.
+    The projective resolution is often simply denoted by $\projres{P} \to M$.
 \end{definition}
 
 \begin{proposition}
     Projective resolution approximates an exact sequence to a module:
     \begin{enumerate}[label=\roman*)]
         \item Every $R$-module $M$ has a projective resolution.
-        \item Given any morphism $f: M \to M'$ and projective resolutions $P_0 \to M$ and $P_0' \to M'$, there exists $F: P_0 \to P_0'$ a morphism of complex s.t. the diagram is commutative:
+        \item Given any morphism $f: M \to M'$ and projective resolutions $\projres{P} \to M$ and $P_0' \to M'$, there exists $F: P_0 \to P_0'$ a morphism of complex s.t. the diagram is commutative:
         \begin{figure}[htbp]
             \centering
             \begin{tikzcd}
@@ -638,7 +638,7 @@ Now we turn to the subject of complexes.
 \begin{proof}
     Construct the proof correspondingly:
     \begin{enumerate}[label=\roman*)]
-        \item Consider $P_0 \to M$ be the map where $P_0$ is free; and elements in the basis is mapped to the system of generators. Similarly let $f_n: P_{n+1} \to \ker f_{n-1}$ be a similar map. This gives the construction of an infinite chain.
+        \item Consider $\projres{P} \to M$ be the map where $P_0$ is free; and elements in the basis is mapped to the system of generators. Similarly let $f_n: P_{n+1} \to \ker f_{n-1}$ be a similar map. This gives the construction of an infinite chain.
         \item Similarly, do this inductively. Since $P_0$ is projective, by definition there exists $F_0$ s.t. $f \circ \varepsilon = \varepsilon' \circ F_0$ (via considering $P_0' \to M'$ be the projection). Commutativity gives $F_0(\ker \varepsilon) \subseteq \ker \varepsilon'$. Repeat via replacing $M, M'$ with $\ker \varepsilon$ and $\ker \varepsilon'$ respectively. 
     \end{enumerate}
 \end{proof}
@@ -663,5 +663,32 @@ Now we turn to the subject of complexes.
 \end{remark}
 
 \section{Derived Functors$^*$}
+
+\begin{definition}[Homological $\delta$-Functor]
+    Let $F: \catlmod{R} \to \catlmod{S}$ be a right exact functor (e.g. $F = N \tensor_R -$ for $N$ an $S$-$R$ bimodule). For all left $R$-module $M$, choose a projective resolution $\projres{P} \to M$. Define the \textbf{homological $\delta$-functor} ${L_iF}(M) := H_i(F(\projres{P})) = \ker \beta/ \im \alpha$ for $F(P_{i+1}) \overset{\alpha}{\too} F(P_i) \overset{\beta}{\too} F(P_{i-1})$. For morphisms, given two projective resolutions $\projres{P} \to M$, $\projres{P}' \to M'$ with $f: M \to M'$ $R$-linear, define $L_I F(f) := H_i(F(P_0)) \to H_i(F(P_0'))$.
+\end{definition}
+
+\begin{remark}
+    The choice of $g$ does not matter, as this is a map on the cohomology, which only makes classification up to homotopy class.
+\end{remark}
+
+\begin{remark}
+    Define $g: \projres{P} \to \projres{P}'$ s.t. $L_i F(f) = H_i(F(g))$. Let $\projres{P} \to M$ and $\projres{\tilde{P}} \to M$ be two projective resolutions of $M$. Then $g \circ h$ (and $h \circ g$) are homotopic to identity. (Applying $H_i$ they are inverse isomorphisms) This implies that up to a canonical isomorphism, the definition does not depend on the choice of resolution.
+\end{remark}
+
+\begin{definition}
+    The $\mathrm{Tor}$ functor is defined as $\mathrm{Tor}_i^R(N, M) := L_i F(M)$ for $F = N \tensor_R -$.
+\end{definition}
+
+\begin{remark}
+    We have the isomorphism $L_0 F \simeq F$, as $L_0 F = H_0(\cdots \too F(P_1) \too F(P_0) \too 0) = \coker(F(P_1) \to F(P_0)) \simeq F(M)$ since $F$ is right exact. 
+\end{remark}
+
+\begin{remark}
+    Similar to the previous chapter where we have the long exact sequence in cohomology, using the same strategy we can prove that there exists a long exact sequence for derived functors. Given the short exact sequence $0 \too M' \too M \too M'' \too 0$, we have
+    \[
+        L_1F(M') \too L_1F(M) \too L_1F(M'') \too F(M') \too F(M) \too F(M'') \too 0
+    \]
+\end{remark}
 
 \end{document}
